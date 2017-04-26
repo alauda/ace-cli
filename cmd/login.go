@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 	"syscall"
 
 	"github.com/spf13/cobra"
@@ -46,7 +47,7 @@ func doLogin(opts loginOptions) error {
 		return err
 	}
 
-	username, err := getUsername(opts)
+	account, username, err := getAccountAndUsername(opts)
 	if err != nil {
 		return err
 	}
@@ -57,7 +58,7 @@ func doLogin(opts loginOptions) error {
 	}
 
 	// TODO: Add SDK integration here.
-	fmt.Println("Logging into", server, "with username", username, "and password", password)
+	fmt.Println("Logging into", server, "with user", account, "/", username, "and password", password)
 
 	return nil
 }
@@ -74,12 +75,33 @@ func getServerFromConfig() (string, error) {
 	return "", errors.New("no API server specified")
 }
 
+func getAccountAndUsername(opts loginOptions) (string, string, error) {
+	username, err := getUsername(opts)
+	if err != nil {
+		return "", "", err
+	}
+
+	return parseUsername(username)
+}
+
 func getUsername(opts loginOptions) (string, error) {
 	if opts.username != "" {
 		return opts.username, nil
 	}
 
 	return getUsernameFromTerminal()
+}
+
+func parseUsername(input string) (string, string, error) {
+	result := strings.Split(input, "/")
+
+	switch len(result) {
+	case 1:
+		return result[0], "", nil
+	case 2:
+		return result[0], result[1], nil
+	}
+	return "", "", errors.New("invalid username")
 }
 
 func getUsernameFromTerminal() (string, error) {
