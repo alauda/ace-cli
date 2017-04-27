@@ -3,8 +3,10 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/alauda/alauda/client"
+	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -19,7 +21,7 @@ func NewRootCmd(alauda client.APIClient) *cobra.Command {
 		Long:  ``,
 	}
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.alauda.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.alauda.yml)")
 
 	addCommands(rootCmd, alauda)
 
@@ -40,13 +42,15 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
+	if cfgFile == "" {
+		// Use default.
+		cfgFile = filepath.Join(os.Getenv("HOME"), util.ConfigFileName)
 	}
+	viper.SetConfigFile(cfgFile)
 
-	viper.SetConfigName(".alauda")
-	viper.AddConfigPath(os.Getenv("HOME"))
 	viper.AutomaticEnv()
+
+	viper.SetDefault(util.SettingServer, util.DefaultAPIServer)
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {

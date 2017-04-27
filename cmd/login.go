@@ -9,7 +9,9 @@ import (
 	"syscall"
 
 	"github.com/alauda/alauda/client"
+	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -42,7 +44,11 @@ func NewLoginCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doLogin(alauda client.APIClient, opts loginOptions) error {
-	server, err := getServer(opts)
+	if viper.GetString(util.SettingToken) != "" {
+		return errors.New("already logged in")
+	}
+
+	server, err := configServer(opts)
 	if err != nil {
 		return err
 	}
@@ -73,19 +79,28 @@ func doLogin(alauda client.APIClient, opts loginOptions) error {
 
 	fmt.Println("Token:", result.Token)
 
+	// Login successful. Save the credentials back to config.
+	viper.Set(util.SettingToken, result.Token)
+
+	err = util.SaveConfig()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func getServer(opts loginOptions) (string, error) {
+func configServer(opts loginOptions) (string, error) {
 	if opts.server != "" {
-		return opts.server, nil
+		viper.Set(util.SettingServer, opts.server)
 	}
 
-	return getServerFromConfig()
-}
+	server := viper.GetString(util.SettingServer)
+	if server == "" {
+		return server, errors.New("no API server specified")
+	}
 
-func getServerFromConfig() (string, error) {
-	return "", errors.New("no API server specified")
+	return server, nil
 }
 
 func getAccountAndUsername(opts loginOptions) (string, string, error) {

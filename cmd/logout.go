@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"github.com/alauda/alauda/client"
+	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // NewLogoutCmd creates a new logout command.
@@ -20,6 +22,12 @@ func NewLogoutCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doLogout() error {
-	// TODO: Implement this.
+	viper.Set(util.SettingToken, "")
+
+	err := util.SaveConfig()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

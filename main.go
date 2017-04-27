@@ -14,9 +14,5 @@ func main() {
 	}
 
 	rootCmd := cmd.NewRootCmd(alauda)
-
-	err = rootCmd.Execute()
-	if err != nil {
-		log.Fatal(err)
-	}
+	rootCmd.Execute()
 }
