@@ -2,6 +2,7 @@ package client
 
 // LoginOptions defines the input options for the login API.
 type LoginOptions struct {
+	Server   string
 	Account  string
 	Username string
 	Password string

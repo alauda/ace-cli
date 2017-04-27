@@ -8,6 +8,7 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/alauda/alauda/client"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -18,10 +19,11 @@ type loginOptions struct {
 	password string
 }
 
-var (
-	opts loginOptions
+// NewLoginCmd creates a new login command.
+func NewLoginCmd(alauda client.APIClient) *cobra.Command {
+	var opts loginOptions
 
-	loginCmd = &cobra.Command{
+	loginCmd := &cobra.Command{
 		Use:   "login [OPTIONS] [SERVER]",
 		Short: "Log onto the Alauda platform",
 		Long:  ``,
@@ -29,19 +31,17 @@ var (
 			if len(args) > 0 {
 				opts.server = args[0]
 			}
-			return doLogin(opts)
+			return doLogin(alauda, opts)
 		},
 	}
-)
-
-func init() {
-	RootCmd.AddCommand(loginCmd)
 
 	loginCmd.Flags().StringVarP(&opts.username, "username", "u", "", "Username")
 	loginCmd.Flags().StringVarP(&opts.password, "password", "p", "", "Password")
+
+	return loginCmd
 }
 
-func doLogin(opts loginOptions) error {
+func doLogin(alauda client.APIClient, opts loginOptions) error {
 	server, err := getServer(opts)
 	if err != nil {
 		return err
@@ -57,8 +57,21 @@ func doLogin(opts loginOptions) error {
 		return err
 	}
 
-	// TODO: Add SDK integration here.
 	fmt.Println("Logging into", server, "with user", account, "/", username, "and password", password)
+
+	data := client.LoginOptions{
+		Server:   server,
+		Account:  account,
+		Username: username,
+		Password: password,
+	}
+
+	result, err := alauda.Login(data)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Token:", result.Token)
 
 	return nil
 }
