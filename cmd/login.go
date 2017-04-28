@@ -65,7 +65,7 @@ func doLogin(alauda client.AlaudaClient, opts loginOptions) error {
 
 	fmt.Println("Logging into", server, "with user", account, "/", username)
 
-	alauda.SetAPIServer(server)
+	alauda.Initialize(server, "")
 
 	data := client.LoginData{
 		Organization: account,

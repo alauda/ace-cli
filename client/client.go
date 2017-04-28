@@ -21,12 +21,8 @@ func (client *Client) Token() string {
 	return client.token
 }
 
-// SetAPIServer sets the apiServer field.
-func (client *Client) SetAPIServer(apiServer string) {
+// Initialize should be called before using the client.
+func (client *Client) Initialize(apiServer string, token string) {
 	client.apiServer = apiServer
-}
-
-// SetToken sets the token field.
-func (client *Client) SetToken(token string) {
 	client.token = token
 }

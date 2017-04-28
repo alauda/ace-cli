@@ -4,8 +4,7 @@ package client
 type AlaudaClient interface {
 	APIServer() string
 	Token() string
-	SetAPIServer(string)
-	SetToken(string)
+	Initialize(string, string)
 	AuthClient
 }
 
