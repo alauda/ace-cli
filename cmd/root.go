@@ -14,7 +14,7 @@ import (
 var cfgFile string
 
 // NewRootCmd creates a new root command for the Alauda CLI.
-func NewRootCmd(alauda client.APIClient) *cobra.Command {
+func NewRootCmd(alauda client.AlaudaClient) *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use:   "alauda",
 		Short: "Alauda CLI",
@@ -32,7 +32,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 }
 
-func addCommands(cmd *cobra.Command, alauda client.APIClient) {
+func addCommands(cmd *cobra.Command, alauda client.AlaudaClient) {
 	cmd.AddCommand(
 		NewVersionCmd(alauda),
 		NewLoginCmd(alauda),

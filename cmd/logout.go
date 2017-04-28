@@ -8,7 +8,7 @@ import (
 )
 
 // NewLogoutCmd creates a new logout command.
-func NewLogoutCmd(alauda client.APIClient) *cobra.Command {
+func NewLogoutCmd(alauda client.AlaudaClient) *cobra.Command {
 	logoutCmd := &cobra.Command{
 		Use:   "logout",
 		Short: "Log out of the Alauda platform",

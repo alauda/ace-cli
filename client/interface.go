@@ -1,14 +1,18 @@
 package client
 
-// APIClient is the interface implemented by the Alauda API client.
-type APIClient interface {
-	AuthAPIClient
+// AlaudaClient is the interface implemented by the Alauda API client.
+type AlaudaClient interface {
+	APIServer() string
+	Token() string
+	SetAPIServer(string)
+	SetToken(string)
+	AuthClient
 }
 
-// AuthAPIClient is the API client for authentication related APIs.
-type AuthAPIClient interface {
-	Login(opts *LoginOptions) (*LoginSuccess, error)
+// AuthClient is the API client for authentication related APIs.
+type AuthClient interface {
+	Login(*LoginData) (*LoginResult, error)
 }
 
-// Type checking to ensure Client correctly implements APIClient.
-var _ APIClient = &Client{}
+// Type checking to ensure Client correctly implements AlaudaClient.
+var _ AlaudaClient = &Client{}

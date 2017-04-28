@@ -22,7 +22,7 @@ type loginOptions struct {
 }
 
 // NewLoginCmd creates a new login command.
-func NewLoginCmd(alauda client.APIClient) *cobra.Command {
+func NewLoginCmd(alauda client.AlaudaClient) *cobra.Command {
 	var opts loginOptions
 
 	loginCmd := &cobra.Command{
@@ -43,7 +43,7 @@ func NewLoginCmd(alauda client.APIClient) *cobra.Command {
 	return loginCmd
 }
 
-func doLogin(alauda client.APIClient, opts loginOptions) error {
+func doLogin(alauda client.AlaudaClient, opts loginOptions) error {
 	if viper.GetString(util.SettingToken) != "" {
 		return errors.New("already logged in")
 	}
@@ -65,11 +65,12 @@ func doLogin(alauda client.APIClient, opts loginOptions) error {
 
 	fmt.Println("Logging into", server, "with user", account, "/", username)
 
-	data := client.LoginOptions{
-		Server:   server,
-		Account:  account,
-		Username: username,
-		Password: password,
+	alauda.SetAPIServer(server)
+
+	data := client.LoginData{
+		Organization: account,
+		Username:     username,
+		Password:     password,
 	}
 
 	result, err := alauda.Login(&data)
