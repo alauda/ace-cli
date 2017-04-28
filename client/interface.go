@@ -7,7 +7,7 @@ type APIClient interface {
 
 // AuthAPIClient is the API client for authentication related APIs.
 type AuthAPIClient interface {
-	Login(opts LoginOptions) (LoginSuccess, error)
+	Login(opts *LoginOptions) (*LoginSuccess, error)
 }
 
 // Type checking to ensure Client correctly implements APIClient.

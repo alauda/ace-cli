@@ -63,7 +63,7 @@ func doLogin(alauda client.APIClient, opts loginOptions) error {
 		return err
 	}
 
-	fmt.Println("Logging into", server, "with user", account, "/", username, "and password", password)
+	fmt.Println("Logging into", server, "with user", account, "/", username)
 
 	data := client.LoginOptions{
 		Server:   server,
@@ -72,7 +72,7 @@ func doLogin(alauda client.APIClient, opts loginOptions) error {
 		Password: password,
 	}
 
-	result, err := alauda.Login(data)
+	result, err := alauda.Login(&data)
 	if err != nil {
 		return err
 	}
@@ -125,7 +125,7 @@ func parseUsername(input string) (string, string, error) {
 
 	switch len(result) {
 	case 1:
-		return result[0], "", nil
+		return "", result[0], nil
 	case 2:
 		return result[0], result[1], nil
 	}
