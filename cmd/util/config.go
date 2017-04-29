@@ -3,6 +3,7 @@ package util
 import (
 	"os"
 
+	"github.com/alauda/alauda/client"
 	"github.com/spf13/viper"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -29,4 +30,18 @@ func SaveConfig() error {
 	}
 
 	return nil
+}
+
+// InitializeClient initializes the Alauda client from configuration.
+func InitializeClient(client client.AlaudaClient) {
+	server := viper.GetString(SettingServer)
+
+	namespace := viper.GetString(SettingNamespace)
+	if namespace == "" {
+		namespace = viper.GetString(SettingUsername)
+	}
+
+	token := viper.GetString(SettingToken)
+
+	client.Initialize(server, namespace, token)
 }

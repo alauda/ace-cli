@@ -3,6 +3,7 @@ package client
 // Client is the API client for the Alauda platform.
 type Client struct {
 	apiServer string
+	namespace string
 	token     string
 }
 
@@ -16,13 +17,19 @@ func (client *Client) APIServer() string {
 	return client.apiServer
 }
 
+// Namespace field.
+func (client *Client) Namespace() string {
+	return client.namespace
+}
+
 // Token field.
 func (client *Client) Token() string {
 	return client.token
 }
 
 // Initialize should be called before using the client.
-func (client *Client) Initialize(apiServer string, token string) {
+func (client *Client) Initialize(apiServer string, namespace string, token string) {
 	client.apiServer = apiServer
+	client.namespace = namespace
 	client.token = token
 }

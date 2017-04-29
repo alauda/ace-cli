@@ -65,7 +65,7 @@ func doLogin(alauda client.AlaudaClient, opts loginOptions) error {
 
 	fmt.Println("Logging into", server, "with user", account, "/", username)
 
-	alauda.Initialize(server, "")
+	alauda.Initialize(server, "", "")
 
 	data := client.LoginData{
 		Organization: account,
@@ -78,9 +78,13 @@ func doLogin(alauda client.AlaudaClient, opts loginOptions) error {
 		return err
 	}
 
+	fmt.Println("Namespace:", result.Namespace)
+	fmt.Println("Username:", result.Username)
 	fmt.Println("Token:", result.Token)
 
 	// Login successful. Save the credentials back to config.
+	viper.Set(util.SettingNamespace, result.Namespace)
+	viper.Set(util.SettingUsername, result.Username)
 	viper.Set(util.SettingToken, result.Token)
 
 	err = util.SaveConfig()

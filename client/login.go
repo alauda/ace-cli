@@ -15,7 +15,7 @@ type LoginData struct {
 	Password     string `json:"password"`
 }
 
-// LoginResponse defines the response body for the login API.
+// LoginResult defines the response body for the login API.
 type LoginResult struct {
 	Namespace string `json:"namespace"`
 	Username  string `json:"username"`
@@ -25,14 +25,14 @@ type LoginResult struct {
 
 // Login authenticates against the Alauda server.
 func (client *Client) Login(data *LoginData) (*LoginResult, error) {
-	url := buildRequestURL(client.APIServer())
+	url := client.buildLoginURL()
 
-	body, err := buildRequestBody(data)
+	body, err := client.buildLoginBody(data)
 	if err != nil {
 		return nil, err
 	}
 
-	request := rest.NewRequest()
+	request := rest.NewRequest("")
 
 	response, err := request.Post(url, body)
 	if err != nil {
@@ -44,15 +44,15 @@ func (client *Client) Login(data *LoginData) (*LoginResult, error) {
 		return nil, err
 	}
 
-	return buildResult(response)
+	return parseLoginResult(response)
 }
 
-func buildRequestURL(apiServer string) string {
-	server := strings.TrimSuffix(apiServer, "/")
+func (client *Client) buildLoginURL() string {
+	server := strings.TrimSuffix(client.APIServer(), "/")
 	return fmt.Sprintf("%s/%s", server, "generate-api-token")
 }
 
-func buildRequestBody(data *LoginData) ([]byte, error) {
+func (client *Client) buildLoginBody(data *LoginData) ([]byte, error) {
 	marshalled, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func buildRequestBody(data *LoginData) ([]byte, error) {
 	return marshalled, nil
 }
 
-func buildResult(response *rest.Response) (*LoginResult, error) {
+func parseLoginResult(response *rest.Response) (*LoginResult, error) {
 	result := LoginResult{}
 
 	err := json.Unmarshal(response.Body(), &result)
