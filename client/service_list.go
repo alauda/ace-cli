@@ -15,15 +15,27 @@ type ListServicesParams struct {
 
 // ListServicesResult defines the response body for the ListServices API.
 type ListServicesResult struct {
-	Count   int                 `json:"count"`
-	Results []ListServiceResult `json:"results"`
+	Count   int       `json:"count"`
+	Results []Service `json:"results"`
 }
 
-// ListServiceResult defines the response body for one service returned in the ListServices API.
-type ListServiceResult struct {
-	Name   string `json:"service_name"`
-	Image  string `json:"image_name"`
-	Status string `json:"current_status"`
+// Service defines the response body for one service returned in the ListServices API.
+type Service struct {
+	Name             string              `json:"service_name"`
+	ImageName        string              `json:"image_name"`
+	ImageTag         string              `json:"image_tag"`
+	Command          string              `json:"run_command"`
+	Created          string              `json:"created_at"`
+	Size             ServiceInstanceSize `json:"custom_instance_size"`
+	TargetInstances  int                 `json:"target_num_instances"`
+	HealthyInstances int                 `json:"healthy_num_instances"`
+	Status           string              `json:"current_status"`
+}
+
+// ServiceInstanceSize defines the size of the service instances
+type ServiceInstanceSize struct {
+	Memory int `json:"mem"`
+	CPU    int `json:"cpu"`
 }
 
 // ListServices returns all services deployed.
@@ -60,6 +72,8 @@ func (client *Client) buildListServicesRequest(params *ListServicesParams) *rest
 	if params.Cluster != "" {
 		request.SetQueryParam("region_name", params.Cluster)
 	}
+
+	request.SetQueryParam("detail", "true")
 
 	return request
 }

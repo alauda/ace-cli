@@ -42,8 +42,28 @@ func doPs(alauda client.AlaudaClient, opts psOptions) error {
 		return err
 	}
 
-	for i := 0; i < result.Count; i++ {
-		fmt.Println(result.Results[i].Name, result.Results[i].Image, result.Results[i].Status)
-	}
+	header := buildPsTableHeader()
+	content := buildPsTableContent(result)
+
+	util.PrintTable(header, content)
+
 	return nil
+}
+
+func buildPsTableHeader() []string {
+	return []string{"NAME", "IMAGE", "COMMAND", "CREATED", "SIZE", "COUNT", "STATUS"}
+}
+
+func buildPsTableContent(services *client.ListServicesResult) [][]string {
+	var content [][]string
+
+	for i := 0; i < services.Count; i++ {
+		service := services.Results[i]
+		image := fmt.Sprintf("%s:%s", service.ImageName, service.ImageTag)
+		size := fmt.Sprintf("CPU: %d, Memory: %d", service.Size.CPU, service.Size.Memory)
+		count := fmt.Sprintf("%d/%d", service.HealthyInstances, service.TargetInstances)
+		content = append(content, []string{service.Name, image, service.Command, service.Created, size, count, service.Status})
+	}
+
+	return content
 }
