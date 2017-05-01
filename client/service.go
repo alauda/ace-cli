@@ -1,0 +1,20 @@
+package client
+
+// Service defines the response body for one service returned in the ListServices API.
+type Service struct {
+	Name             string              `json:"service_name"`
+	ImageName        string              `json:"image_name"`
+	ImageTag         string              `json:"image_tag"`
+	Command          string              `json:"run_command"`
+	Created          string              `json:"created_at"`
+	Size             ServiceInstanceSize `json:"custom_instance_size"`
+	TargetInstances  int                 `json:"target_num_instances"`
+	HealthyInstances int                 `json:"healthy_num_instances"`
+	Status           string              `json:"current_status"`
+}
+
+// ServiceInstanceSize defines the size of the service instances
+type ServiceInstanceSize struct {
+	Memory int `json:"mem"`
+	CPU    int `json:"cpu"`
+}

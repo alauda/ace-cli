@@ -13,7 +13,7 @@ type psOptions struct {
 }
 
 // NewPsCmd creates a new service ps command.
-func NewPsCmd(alauda client.AlaudaClient) *cobra.Command {
+func NewPsCmd(alauda client.APIClient) *cobra.Command {
 	var opts psOptions
 
 	psCmd := &cobra.Command{
@@ -30,7 +30,7 @@ func NewPsCmd(alauda client.AlaudaClient) *cobra.Command {
 	return psCmd
 }
 
-func doPs(alauda client.AlaudaClient, opts psOptions) error {
+func doPs(alauda client.APIClient, opts psOptions) error {
 	util.InitializeClient(alauda)
 
 	params := client.ListServicesParams{
@@ -42,12 +42,16 @@ func doPs(alauda client.AlaudaClient, opts psOptions) error {
 		return err
 	}
 
-	header := buildPsTableHeader()
-	content := buildPsTableContent(result)
-
-	util.PrintTable(header, content)
+	printPsResult(result)
 
 	return nil
+}
+
+func printPsResult(services *client.ListServicesResult) {
+	header := buildPsTableHeader()
+	content := buildPsTableContent(services)
+
+	util.PrintTable(header, content)
 }
 
 func buildPsTableHeader() []string {

@@ -1,7 +1,7 @@
 package client
 
-// AlaudaClient is the interface implemented by the Alauda API client.
-type AlaudaClient interface {
+// APIClient is the interface implemented by the Alauda API client.
+type APIClient interface {
 	APIServer() string
 	Namespace() string
 	Token() string
@@ -21,4 +21,4 @@ type ServiceClient interface {
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
-var _ AlaudaClient = &Client{}
+var _ APIClient = &Client{}

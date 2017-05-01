@@ -33,7 +33,7 @@ func SaveConfig() error {
 }
 
 // InitializeClient initializes the Alauda client from configuration.
-func InitializeClient(client client.AlaudaClient) {
+func InitializeClient(client client.APIClient) {
 	server := viper.GetString(SettingServer)
 
 	namespace := viper.GetString(SettingNamespace)

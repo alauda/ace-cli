@@ -6,7 +6,7 @@ import (
 )
 
 // NewServiceCmd creates a new service command.
-func NewServiceCmd(alauda client.AlaudaClient) *cobra.Command {
+func NewServiceCmd(alauda client.APIClient) *cobra.Command {
 	serviceCmd := &cobra.Command{
 		Use:   "service",
 		Short: "Manage services",
