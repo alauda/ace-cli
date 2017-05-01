@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -64,7 +65,9 @@ func buildPsTableContent(services *client.ListServicesResult) [][]string {
 	for i := 0; i < services.Count; i++ {
 		service := services.Results[i]
 		image := fmt.Sprintf("%s:%s", service.ImageName, service.ImageTag)
-		size := fmt.Sprintf("CPU: %d, Memory: %d", service.Size.CPU, service.Size.Memory)
+		cpu := strconv.FormatFloat(service.Size.CPU, 'f', -1, 64)
+		mem := strconv.FormatFloat(service.Size.Memory, 'f', -1, 64)
+		size := fmt.Sprintf("CPU: %s, Memory: %s", cpu, mem)
 		count := fmt.Sprintf("%d/%d", service.HealthyInstances, service.TargetInstances)
 		content = append(content, []string{service.Name, image, service.Command, service.Created, size, count, service.Status})
 	}

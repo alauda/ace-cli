@@ -27,14 +27,12 @@ type LoginResult struct {
 func (client *Client) Login(data *LoginData) (*LoginResult, error) {
 	url := client.buildLoginURL()
 
-	body, err := client.buildLoginBody(data)
+	request, err := client.buildLoginRequest(data)
 	if err != nil {
 		return nil, err
 	}
 
-	request := rest.NewRequest("")
-
-	response, err := request.Post(url, body)
+	response, err := request.Post(url)
 	if err != nil {
 		return nil, err
 	}
@@ -52,13 +50,17 @@ func (client *Client) buildLoginURL() string {
 	return fmt.Sprintf("%s/%s", server, "generate-api-token")
 }
 
-func (client *Client) buildLoginBody(data *LoginData) ([]byte, error) {
-	marshalled, err := json.Marshal(data)
+func (client *Client) buildLoginRequest(data *LoginData) (*rest.Request, error) {
+	request := rest.NewRequest("")
+
+	body, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}
 
-	return marshalled, nil
+	request.SetBody(body)
+
+	return request, nil
 }
 
 func parseLoginResult(response *rest.Response) (*LoginResult, error) {

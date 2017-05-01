@@ -18,6 +18,8 @@ type AuthClient interface {
 // ServiceClient is the API client for service related APIs.
 type ServiceClient interface {
 	ListServices(*ListServicesParams) (*ListServicesResult, error)
+	StartService(string) error
+	StopService(string) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

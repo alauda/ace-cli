@@ -13,8 +13,8 @@ type Service struct {
 	Status           string              `json:"current_status"`
 }
 
-// ServiceInstanceSize defines the size of the service instances
+// ServiceInstanceSize defines the size of the service instances.
 type ServiceInstanceSize struct {
-	Memory int `json:"mem"`
-	CPU    int `json:"cpu"`
+	Memory float64 `json:"mem"`
+	CPU    float64 `json:"cpu"`
 }

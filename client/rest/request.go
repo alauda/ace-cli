@@ -22,20 +22,28 @@ func (req *Request) Get(url string) (*Response, error) {
 }
 
 // Put executes a PUT request.
-func (req *Request) Put(url string, body []byte) (*Response, error) {
-	return nil, nil
+func (req *Request) Put(url string) (*Response, error) {
+	response, err := req.request.Put(url)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewResponse(response), nil
 }
 
 // Post executes a POST request.
-func (req *Request) Post(url string, body []byte) (*Response, error) {
-	req.request.SetBody(body)
-
+func (req *Request) Post(url string) (*Response, error) {
 	response, err := req.request.Post(url)
 	if err != nil {
 		return nil, err
 	}
 
 	return NewResponse(response), nil
+}
+
+// SetBody sets the request body.
+func (req *Request) SetBody(body []byte) {
+	req.request.SetBody(body)
 }
 
 // SetQueryParam sets a query parameter on the request.
