@@ -18,4 +18,7 @@ const (
 
 	// SettingUsername is the setting for username.
 	SettingUsername string = "auth.username"
+
+	// SettingCluster is the setting for the current cluster.
+	SettingCluster string = "context.cluster"
 )

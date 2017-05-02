@@ -17,6 +17,7 @@ type AuthClient interface {
 
 // ServiceClient is the API client for service related APIs.
 type ServiceClient interface {
+	CreateService(*CreateServiceData) error
 	ListServices(*ListServicesParams) (*ListServicesResult, error)
 	StartService(string) error
 	StopService(string) error

@@ -11,12 +11,12 @@ import (
 // NewStopCmd creates a new stop service command.
 func NewStopCmd(alauda client.APIClient) *cobra.Command {
 	stopCmd := &cobra.Command{
-		Use:   "stop <service>",
+		Use:   "stop NAME",
 		Short: "Stop service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 {
-				return errors.New("no service name specified")
+			if len(args) != 1 {
+				return errors.New("service stop expects NAME")
 			}
 			return doStop(alauda, args[0])
 		},

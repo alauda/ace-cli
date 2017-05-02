@@ -26,14 +26,14 @@ func NewLoginCmd(alauda client.APIClient) *cobra.Command {
 	var opts loginOptions
 
 	loginCmd := &cobra.Command{
-		Use:   "login [OPTIONS] [SERVER]",
+		Use:   "login [SERVER]",
 		Short: "Log onto the Alauda platform",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) > 0 {
 				opts.server = args[0]
 			}
-			return doLogin(alauda, opts)
+			return doLogin(alauda, &opts)
 		},
 	}
 
@@ -43,7 +43,7 @@ func NewLoginCmd(alauda client.APIClient) *cobra.Command {
 	return loginCmd
 }
 
-func doLogin(alauda client.APIClient, opts loginOptions) error {
+func doLogin(alauda client.APIClient, opts *loginOptions) error {
 	if viper.GetString(util.SettingToken) != "" {
 		return errors.New("already logged in")
 	}
@@ -95,7 +95,7 @@ func doLogin(alauda client.APIClient, opts loginOptions) error {
 	return nil
 }
 
-func configServer(opts loginOptions) (string, error) {
+func configServer(opts *loginOptions) (string, error) {
 	if opts.server != "" {
 		viper.Set(util.SettingServer, opts.server)
 	}
@@ -108,7 +108,7 @@ func configServer(opts loginOptions) (string, error) {
 	return server, nil
 }
 
-func getAccountAndUsername(opts loginOptions) (string, string, error) {
+func getAccountAndUsername(opts *loginOptions) (string, string, error) {
 	username, err := getUsername(opts)
 	if err != nil {
 		return "", "", err
@@ -117,7 +117,7 @@ func getAccountAndUsername(opts loginOptions) (string, string, error) {
 	return parseUsername(username)
 }
 
-func getUsername(opts loginOptions) (string, error) {
+func getUsername(opts *loginOptions) (string, error) {
 	if opts.username != "" {
 		return opts.username, nil
 	}
@@ -144,7 +144,7 @@ func getUsernameFromTerminal() (string, error) {
 	return string(input), err
 }
 
-func getPassword(opts loginOptions) (string, error) {
+func getPassword(opts *loginOptions) (string, error) {
 	if opts.password != "" {
 		return opts.password, nil
 	}

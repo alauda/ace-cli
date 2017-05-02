@@ -11,12 +11,12 @@ import (
 // NewStartCmd creates a new start service command.
 func NewStartCmd(alauda client.APIClient) *cobra.Command {
 	startCmd := &cobra.Command{
-		Use:   "start",
+		Use:   "start NAME",
 		Short: "Start service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 {
-				return errors.New("no service name specified")
+			if len(args) != 1 {
+				return errors.New("service start expects NAME")
 			}
 			return doStart(alauda, args[0])
 		},

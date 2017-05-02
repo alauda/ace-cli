@@ -22,7 +22,7 @@ func NewPsCmd(alauda client.APIClient) *cobra.Command {
 		Short: "List services",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return doPs(alauda, opts)
+			return doPs(alauda, &opts)
 		},
 	}
 
@@ -31,11 +31,16 @@ func NewPsCmd(alauda client.APIClient) *cobra.Command {
 	return psCmd
 }
 
-func doPs(alauda client.APIClient, opts psOptions) error {
+func doPs(alauda client.APIClient, opts *psOptions) error {
 	util.InitializeClient(alauda)
 
+	cluster, err := configCluster(opts.cluster)
+	if err != nil {
+		return err
+	}
+
 	params := client.ListServicesParams{
-		Cluster: opts.cluster,
+		Cluster: cluster,
 	}
 
 	result, err := alauda.ListServices(&params)
