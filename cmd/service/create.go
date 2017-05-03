@@ -16,24 +16,24 @@ type createOptions struct {
 func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	var opts createOptions
 
-	startCmd := &cobra.Command{
+	createCmd := &cobra.Command{
 		Use:   "create NAME IMAGE",
-		Short: "Create new service",
+		Short: "Create a new service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 2 {
 				return errors.New("service create expects NAME and IMAGE")
 			}
-			return doCreate(alauda, args[0], args[1], &opts)
+			return doCreate(alauda, args[0], args[1], &opts, false)
 		},
 	}
 
-	startCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the service in")
+	createCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the service in")
 
-	return startCmd
+	return createCmd
 }
 
-func doCreate(alauda client.APIClient, name string, image string, opts *createOptions) error {
+func doCreate(alauda client.APIClient, name string, image string, opts *createOptions, start bool) error {
 	util.InitializeClient(alauda)
 
 	imageName, imageTag, err := util.ParseImageNameTag(image)
@@ -46,12 +46,18 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
+	targetState := "STOPPED"
+
+	if start {
+		targetState = "STARTED"
+	}
+
 	data := client.CreateServiceData{
 		Name:            name,
 		ImageName:       imageName,
 		ImageTag:        imageTag,
 		Cluster:         cluster,
-		TargetState:     "STOPPED",
+		TargetState:     targetState,
 		InstanceSize:    "CUSTOMIZED",
 		ScalingMode:     "MANUAL",
 		TargetInstances: 1,
