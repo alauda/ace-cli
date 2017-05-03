@@ -41,6 +41,16 @@ func (req *Request) Post(url string) (*Response, error) {
 	return NewResponse(response), nil
 }
 
+// Delete executes a DELETE request.
+func (req *Request) Delete(url string) (*Response, error) {
+	response, err := req.request.Delete(url)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewResponse(response), nil
+}
+
 // SetBody sets the request body.
 func (req *Request) SetBody(body []byte) {
 	req.request.SetBody(body)

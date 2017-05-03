@@ -21,6 +21,7 @@ type ServiceClient interface {
 	ListServices(*ListServicesParams) (*ListServicesResult, error)
 	StartService(string) error
 	StopService(string) error
+	RemoveService(string) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
