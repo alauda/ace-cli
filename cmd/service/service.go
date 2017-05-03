@@ -49,3 +49,21 @@ func configCluster(cluster string) (string, error) {
 
 	return result, nil
 }
+
+func configSpace(space string) (string, error) {
+	if space != "" {
+		viper.Set(util.SettingSpace, space)
+
+		err := util.SaveConfig()
+		if err != nil {
+			return "", err
+		}
+	}
+
+	result := viper.GetString(util.SettingSpace)
+	if result == "" {
+		return "", errors.New("no space specified")
+	}
+
+	return result, nil
+}

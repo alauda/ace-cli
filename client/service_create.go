@@ -12,6 +12,7 @@ import (
 type CreateServiceData struct {
 	Name               string              `json:"service_name"`
 	Cluster            string              `json:"region_name"`
+	Space              string              `json:"space_name"`
 	ImageName          string              `json:"image_name"`
 	ImageTag           string              `json:"image_tag"`
 	TargetState        string              `json:"target_state"`

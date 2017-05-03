@@ -21,4 +21,7 @@ const (
 
 	// SettingCluster is the setting for the current cluster.
 	SettingCluster string = "context.cluster"
+
+	// SettingSpace is the setting for the current space.
+	SettingSpace string = "context.space"
 )

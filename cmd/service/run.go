@@ -24,6 +24,7 @@ func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	runCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to run the service in")
+	runCmd.Flags().StringVarP(&opts.space, "space", "s", "", "Space to run the service in")
 
 	return runCmd
 }

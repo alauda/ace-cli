@@ -28,3 +28,15 @@ Flags:
 
 Use "alauda [command] --help" for more information about a command.
 ```
+
+## Running Tests
+1. Use `alauda login` to log into an Alauda account.
+2. Add the following settings to the config file (default at `$HOME/.alauda.yml`):
+```
+test:
+    cluster: <mycluster>
+    space: <myspace>
+    name: <mytestservicename>
+    image: <mytestimage>
+```
+3. Run `go test`.
