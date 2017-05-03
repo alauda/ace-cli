@@ -12,7 +12,7 @@ import (
 func NewStopCmd(alauda client.APIClient) *cobra.Command {
 	stopCmd := &cobra.Command{
 		Use:   "stop NAME",
-		Short: "Stop service",
+		Short: "Stop a service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {

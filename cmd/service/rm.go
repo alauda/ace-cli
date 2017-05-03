@@ -12,7 +12,7 @@ import (
 func NewRmCmd(alauda client.APIClient) *cobra.Command {
 	startCmd := &cobra.Command{
 		Use:   "rm NAME",
-		Short: "Remove service",
+		Short: "Remove a service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {

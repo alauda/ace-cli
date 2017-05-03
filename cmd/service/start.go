@@ -12,7 +12,7 @@ import (
 func NewStartCmd(alauda client.APIClient) *cobra.Command {
 	startCmd := &cobra.Command{
 		Use:   "start NAME",
-		Short: "Start service",
+		Short: "Start a service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {

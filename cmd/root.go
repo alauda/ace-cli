@@ -38,7 +38,15 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		NewVersionCmd(alauda),
 		NewLoginCmd(alauda),
 		NewLogoutCmd(alauda),
+
+		// Adding service related commands as top level defaults.
 		service.NewServiceCmd(alauda),
+		service.NewPsCmd(alauda),
+		service.NewCreateCmd(alauda),
+		service.NewRunCmd(alauda),
+		service.NewStartCmd(alauda),
+		service.NewStopCmd(alauda),
+		service.NewRmCmd(alauda),
 	)
 }
 
