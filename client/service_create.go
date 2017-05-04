@@ -10,6 +10,7 @@ import (
 
 // CreateServiceData defines the request body for the CreateService API.
 type CreateServiceData struct {
+	Version            string              `json:"version"`
 	Name               string              `json:"service_name"`
 	Cluster            string              `json:"region_name"`
 	Space              string              `json:"space_name"`
@@ -20,6 +21,8 @@ type CreateServiceData struct {
 	InstanceSize       string              `json:"instance_size"`
 	CustomInstanceSize ServiceInstanceSize `json:"custom_instance_size"`
 	ScalingMode        string              `json:"scaling_mode"`
+	Ports              []int               `json:"ports"`
+	NetworkMode        string              `json:"network_mode"`
 }
 
 // CreateService creates and deploys a new service.

@@ -11,6 +11,7 @@ import (
 type createOptions struct {
 	cluster string
 	space   string
+	expose  []int
 }
 
 // NewCreateCmd creates a new create service command.
@@ -31,6 +32,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 
 	createCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the service in")
 	createCmd.Flags().StringVarP(&opts.space, "space", "s", "", "Space to create the service in")
+	createCmd.Flags().IntSliceVarP(&opts.expose, "expose", "", []int{}, "Ports exposed")
 
 	return createCmd
 }
@@ -60,6 +62,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 	}
 
 	data := client.CreateServiceData{
+		Version:         "v2",
 		Name:            name,
 		ImageName:       imageName,
 		ImageTag:        imageTag,
@@ -69,6 +72,8 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		InstanceSize:    "CUSTOMIZED",
 		ScalingMode:     "MANUAL",
 		TargetInstances: 1,
+		Ports:           opts.expose,
+		NetworkMode:     "BRIDGE",
 		CustomInstanceSize: client.ServiceInstanceSize{
 			CPU:    0.125,
 			Memory: 256,

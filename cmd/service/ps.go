@@ -61,7 +61,7 @@ func printPsResult(services *client.ListServicesResult) {
 }
 
 func buildPsTableHeader() []string {
-	return []string{"NAME", "IMAGE", "COMMAND", "CREATED", "SIZE", "COUNT", "STATUS"}
+	return []string{"NAME", "IMAGE", "COMMAND", "CREATED", "SIZE", "PORTS", "COUNT", "STATUS"}
 }
 
 func buildPsTableContent(services *client.ListServicesResult) [][]string {
@@ -73,8 +73,9 @@ func buildPsTableContent(services *client.ListServicesResult) [][]string {
 		cpu := strconv.FormatFloat(service.Size.CPU, 'f', -1, 64)
 		mem := strconv.FormatFloat(service.Size.Memory, 'f', -1, 64)
 		size := fmt.Sprintf("CPU: %s, Memory: %s", cpu, mem)
+		ports := fmt.Sprint(service.Ports)
 		count := fmt.Sprintf("%d/%d", service.HealthyInstances, service.TargetInstances)
-		content = append(content, []string{service.Name, image, service.Command, service.Created, size, count, service.Status})
+		content = append(content, []string{service.Name, image, service.Command, service.Created, size, ports, count, service.Status})
 	}
 
 	return content

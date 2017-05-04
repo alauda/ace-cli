@@ -8,6 +8,7 @@ type Service struct {
 	Command          string              `json:"run_command"`
 	Created          string              `json:"created_at"`
 	Size             ServiceInstanceSize `json:"custom_instance_size"`
+	Ports            []int               `json:"ports"`
 	TargetInstances  int                 `json:"target_num_instances"`
 	HealthyInstances int                 `json:"healthy_num_instances"`
 	Status           string              `json:"current_status"`
