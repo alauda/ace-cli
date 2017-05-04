@@ -15,6 +15,7 @@ type createOptions struct {
 	expose  []int
 	cpu     float64
 	memory  int
+	number  int
 }
 
 // NewCreateCmd creates a new create service command.
@@ -38,6 +39,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	createCmd.Flags().IntSliceVarP(&opts.expose, "expose", "", []int{}, "Ports exposed")
 	createCmd.Flags().Float64VarP(&opts.cpu, "cpu", "", 0.125, "CPU (cores) (default: 0.125)")
 	createCmd.Flags().IntVarP(&opts.memory, "memory", "", 256, "Memory (MB) (default: 256)")
+	createCmd.Flags().IntVarP(&opts.number, "num-instances", "n", 1, "Number of instances (default: 1)")
 
 	return createCmd
 }
@@ -83,7 +85,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		TargetState:     targetState,
 		InstanceSize:    "CUSTOMIZED",
 		ScalingMode:     "MANUAL",
-		TargetInstances: 1,
+		TargetInstances: opts.number,
 		Ports:           opts.expose,
 		NetworkMode:     "BRIDGE",
 		CustomInstanceSize: client.ServiceInstanceSize{

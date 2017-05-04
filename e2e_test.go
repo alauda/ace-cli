@@ -46,7 +46,10 @@ func TestServiceRun(t *testing.T) {
 	space := viper.GetString(settingSpace)
 
 	os.Args = []string{"alauda", "service", "run", name, image,
-		"-c", cluster, "-s", space, "--expose", "80", "--expose", "81", "--cpu", "0.256", "--memory", "256"}
+		"-c", cluster, "-s", space,
+		"--expose", "80", "--expose", "81",
+		"--cpu", "0.256", "--memory", "256",
+		"-n", "2"}
 
 	err = rootCmd.Execute()
 	if err != nil {
