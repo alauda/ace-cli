@@ -57,6 +57,24 @@ func TestServiceRun(t *testing.T) {
 	}
 }
 
+func TestServiceInspect(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	name := viper.GetString(settingName)
+
+	os.Args = []string{"alauda", "service", "inspect", name}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func TestServiceRm(t *testing.T) {
 	alauda, err := client.NewClient()
 	if err != nil {

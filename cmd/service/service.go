@@ -27,6 +27,7 @@ func NewServiceCmd(alauda client.APIClient) *cobra.Command {
 		NewStartCmd(alauda),
 		NewStopCmd(alauda),
 		NewRmCmd(alauda),
+		NewInspectCmd(alauda),
 	)
 
 	return serviceCmd

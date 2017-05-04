@@ -12,6 +12,7 @@ type Service struct {
 	TargetInstances  int                 `json:"target_num_instances"`
 	HealthyInstances int                 `json:"healthy_num_instances"`
 	Status           string              `json:"current_status"`
+	NetworkMode      string              `json:"network_mode"`
 }
 
 // ServiceInstanceSize defines the size of the service instances.

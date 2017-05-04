@@ -47,6 +47,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		service.NewStartCmd(alauda),
 		service.NewStopCmd(alauda),
 		service.NewRmCmd(alauda),
+		service.NewInspectCmd(alauda),
 	)
 }
 
