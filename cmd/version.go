@@ -16,7 +16,7 @@ func NewVersionCmd(alauda client.APIClient) *cobra.Command {
 		Short: "Display version of Alauda CLI",
 		Long:  ``,
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println(version)
+			fmt.Println("[alauda]", version)
 		},
 	}
 

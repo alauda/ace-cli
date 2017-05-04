@@ -63,7 +63,7 @@ func doLogin(alauda client.APIClient, opts *loginOptions) error {
 		return err
 	}
 
-	fmt.Println("Logging into", server, "with user", account, "/", username)
+	fmt.Println("[alauda] Logging into", server, "with user", account, "/", username)
 
 	alauda.Initialize(server, "", "")
 
@@ -78,10 +78,6 @@ func doLogin(alauda client.APIClient, opts *loginOptions) error {
 		return err
 	}
 
-	fmt.Println("Namespace:", result.Namespace)
-	fmt.Println("Username:", result.Username)
-	fmt.Println("Token:", result.Token)
-
 	// Login successful. Save the credentials back to config.
 	viper.Set(util.SettingNamespace, result.Namespace)
 	viper.Set(util.SettingUsername, result.Username)
@@ -91,6 +87,8 @@ func doLogin(alauda client.APIClient, opts *loginOptions) error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("[alauda] OK")
 
 	return nil
 }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -26,12 +27,16 @@ func NewStartCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doStart(alauda client.APIClient, name string) error {
+	fmt.Println("[alauda] Starting", name)
+
 	util.InitializeClient(alauda)
 
 	err := alauda.StartService(name)
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("[alauda] OK")
 
 	return nil
 }

@@ -22,7 +22,7 @@ func NewRootCmd(alauda client.APIClient) *cobra.Command {
 		Long:  ``,
 	}
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.alauda.yml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default: $HOME/.alauda.yml)")
 
 	addCommands(rootCmd, alauda)
 
@@ -64,6 +64,6 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		fmt.Println("[alauda] Using config file:", viper.ConfigFileUsed())
 	}
 }

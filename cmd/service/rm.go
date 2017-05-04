@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -26,12 +27,16 @@ func NewRmCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doRm(alauda client.APIClient, name string) error {
+	fmt.Println("[alauda] Removing", name)
+
 	util.InitializeClient(alauda)
 
 	err := alauda.RemoveService(name)
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("[alauda] OK")
 
 	return nil
 }

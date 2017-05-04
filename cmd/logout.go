@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
@@ -22,12 +24,16 @@ func NewLogoutCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doLogout() error {
+	fmt.Println("[alauda] Logging out")
+
 	viper.Set(util.SettingToken, "")
 
 	err := util.SaveConfig()
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("[alauda] OK")
 
 	return nil
 }

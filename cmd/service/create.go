@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -42,6 +43,8 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doCreate(alauda client.APIClient, name string, image string, opts *createOptions, start bool) error {
+	fmt.Println("[alauda] Creating", name)
+
 	util.InitializeClient(alauda)
 
 	imageName, imageTag, err := util.ParseImageNameTag(image)
@@ -93,6 +96,8 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("[alauda] OK")
 
 	return nil
 }

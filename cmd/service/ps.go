@@ -32,6 +32,8 @@ func NewPsCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doPs(alauda client.APIClient, opts *psOptions) error {
+	fmt.Println("[alauda] Listing services")
+
 	util.InitializeClient(alauda)
 
 	cluster, err := configCluster(opts.cluster)
@@ -49,6 +51,8 @@ func doPs(alauda client.APIClient, opts *psOptions) error {
 	}
 
 	printPsResult(result)
+
+	fmt.Println("[alauda] OK")
 
 	return nil
 }
