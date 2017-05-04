@@ -16,6 +16,6 @@ type Service struct {
 
 // ServiceInstanceSize defines the size of the service instances.
 type ServiceInstanceSize struct {
-	Memory float64 `json:"mem"`
+	Memory int     `json:"mem"`
 	CPU    float64 `json:"cpu"`
 }

@@ -26,6 +26,8 @@ func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	runCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to run the service in")
 	runCmd.Flags().StringVarP(&opts.space, "space", "s", "", "Space to run the service in")
 	runCmd.Flags().IntSliceVarP(&opts.expose, "expose", "", []int{}, "Ports exposed")
+	runCmd.Flags().Float64VarP(&opts.cpu, "cpu", "", 0.125, "CPU (cores) (default: 0.125)")
+	runCmd.Flags().IntVarP(&opts.memory, "memory", "", 256, "Memory (MB) (default: 256)")
 
 	return runCmd
 }

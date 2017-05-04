@@ -12,6 +12,8 @@ type createOptions struct {
 	cluster string
 	space   string
 	expose  []int
+	cpu     float64
+	memory  int
 }
 
 // NewCreateCmd creates a new create service command.
@@ -33,6 +35,8 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	createCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the service in")
 	createCmd.Flags().StringVarP(&opts.space, "space", "s", "", "Space to create the service in")
 	createCmd.Flags().IntSliceVarP(&opts.expose, "expose", "", []int{}, "Ports exposed")
+	createCmd.Flags().Float64VarP(&opts.cpu, "cpu", "", 0.125, "CPU (cores) (default: 0.125)")
+	createCmd.Flags().IntVarP(&opts.memory, "memory", "", 256, "Memory (MB) (default: 256)")
 
 	return createCmd
 }
@@ -61,6 +65,11 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		targetState = "STARTED"
 	}
 
+	err = validateResourceRequirements(opts)
+	if err != nil {
+		return err
+	}
+
 	data := client.CreateServiceData{
 		Version:         "v2",
 		Name:            name,
@@ -75,14 +84,26 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		Ports:           opts.expose,
 		NetworkMode:     "BRIDGE",
 		CustomInstanceSize: client.ServiceInstanceSize{
-			CPU:    0.125,
-			Memory: 256,
+			CPU:    opts.cpu,
+			Memory: opts.memory,
 		},
 	}
 
 	err = alauda.CreateService(&data)
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func validateResourceRequirements(opts *createOptions) error {
+	if opts.cpu < 0.125 || opts.cpu > 8 {
+		return errors.New("supported CPU range (cores): [0.125, 8]")
+	}
+
+	if opts.memory < 64 || opts.memory > 32768 {
+		return errors.New("supported memory range (MB): [64, 32768]")
 	}
 
 	return nil

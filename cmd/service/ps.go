@@ -71,8 +71,7 @@ func buildPsTableContent(services *client.ListServicesResult) [][]string {
 		service := services.Results[i]
 		image := fmt.Sprintf("%s:%s", service.ImageName, service.ImageTag)
 		cpu := strconv.FormatFloat(service.Size.CPU, 'f', -1, 64)
-		mem := strconv.FormatFloat(service.Size.Memory, 'f', -1, 64)
-		size := fmt.Sprintf("CPU: %s, Memory: %s", cpu, mem)
+		size := fmt.Sprintf("CPU: %s, Memory: %d", cpu, service.Size.Memory)
 		ports := fmt.Sprint(service.Ports)
 		count := fmt.Sprintf("%d/%d", service.HealthyInstances, service.TargetInstances)
 		content = append(content, []string{service.Name, image, service.Command, service.Created, size, ports, count, service.Status})
