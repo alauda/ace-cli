@@ -29,6 +29,7 @@ func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	runCmd.Flags().Float64VarP(&opts.cpu, "cpu", "", 0.125, "CPU (cores) (default: 0.125)")
 	runCmd.Flags().IntVarP(&opts.memory, "memory", "", 256, "Memory (MB) (default: 256)")
 	runCmd.Flags().IntVarP(&opts.number, "num-instances", "n", 1, "Number of instances (default: 1)")
+	runCmd.Flags().StringSliceVarP(&opts.env, "env", "e", []string{}, "Environment variables")
 
 	return runCmd
 }

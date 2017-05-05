@@ -49,7 +49,8 @@ func TestServiceRun(t *testing.T) {
 		"-c", cluster, "-s", space,
 		"--expose", "80", "--expose", "81",
 		"--cpu", "0.256", "--memory", "256",
-		"-n", "2"}
+		"-n", "2",
+		"--env", "FOO=foo", "-e", "BAR=bar"}
 
 	err = rootCmd.Execute()
 	if err != nil {

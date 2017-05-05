@@ -23,6 +23,7 @@ type CreateServiceData struct {
 	ScalingMode        string              `json:"scaling_mode"`
 	Ports              []int               `json:"ports"`
 	NetworkMode        string              `json:"network_mode"`
+	Env                map[string]string   `json:"instance_envvars"`
 }
 
 // CreateService creates and deploys a new service.

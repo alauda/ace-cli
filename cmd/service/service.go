@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -67,4 +68,40 @@ func configSpace(space string) (string, error) {
 	}
 
 	return result, nil
+}
+
+func validateResourceRequirements(opts *createOptions) error {
+	if opts.cpu < 0.125 || opts.cpu > 8 {
+		return errors.New("supported CPU range (cores): [0.125, 8]")
+	}
+
+	if opts.memory < 64 || opts.memory > 32768 {
+		return errors.New("supported memory range (MB): [64, 32768]")
+	}
+
+	return nil
+}
+
+func parseEnvVars(opts *createOptions) (map[string]string, error) {
+	envvars := make(map[string]string)
+
+	for _, desc := range opts.env {
+		k, v, err := parseEnvVar(desc)
+		if err != nil {
+			return nil, err
+		}
+		envvars[k] = v
+	}
+
+	return envvars, nil
+}
+
+func parseEnvVar(desc string) (string, string, error) {
+	result := strings.Split(desc, "=")
+
+	if len(result) != 2 {
+		return "", "", errors.New("invalid environment variable descriptor")
+	}
+
+	return result[0], result[1], nil
 }
