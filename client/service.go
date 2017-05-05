@@ -6,6 +6,7 @@ type Service struct {
 	ImageName        string              `json:"image_name"`
 	ImageTag         string              `json:"image_tag"`
 	Command          string              `json:"run_command"`
+	Entrypoint       string              `json:"entrypoint"`
 	Created          string              `json:"created_at"`
 	Size             ServiceInstanceSize `json:"custom_instance_size"`
 	Ports            []int               `json:"ports"`

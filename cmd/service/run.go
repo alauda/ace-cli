@@ -30,6 +30,8 @@ func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	runCmd.Flags().IntVarP(&opts.memory, "memory", "", 256, "Memory (MB) (default: 256)")
 	runCmd.Flags().IntVarP(&opts.number, "num-instances", "n", 1, "Number of instances (default: 1)")
 	runCmd.Flags().StringSliceVarP(&opts.env, "env", "e", []string{}, "Environment variables")
+	runCmd.Flags().StringVarP(&opts.cmd, "run-command", "r", "", "Command to run")
+	runCmd.Flags().StringVarP(&opts.entrypoint, "entrypoint", "", "", "Entrypoint for the container")
 
 	return runCmd
 }

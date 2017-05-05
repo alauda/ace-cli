@@ -16,6 +16,8 @@ type CreateServiceData struct {
 	Space              string              `json:"space_name"`
 	ImageName          string              `json:"image_name"`
 	ImageTag           string              `json:"image_tag"`
+	Command            string              `json:"run_command"`
+	Entrypoint         string              `json:"entrypoint"`
 	TargetState        string              `json:"target_state"`
 	TargetInstances    int                 `json:"target_num_instances"`
 	InstanceSize       string              `json:"instance_size"`

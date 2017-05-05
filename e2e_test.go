@@ -50,7 +50,8 @@ func TestServiceRun(t *testing.T) {
 		"--expose", "80", "--expose", "81",
 		"--cpu", "0.256", "--memory", "256",
 		"-n", "2",
-		"--env", "FOO=foo", "-e", "BAR=bar"}
+		"--env", "FOO=foo", "-e", "BAR=bar",
+		"-r", "do this", "--entrypoint", "and that"}
 
 	err = rootCmd.Execute()
 	if err != nil {
