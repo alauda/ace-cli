@@ -23,6 +23,7 @@ type ServiceClient interface {
 	StopService(string) error
 	RemoveService(string) error
 	InspectService(string) (*Service, error)
+	RestartService(string) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
