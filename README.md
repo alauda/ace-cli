@@ -23,6 +23,7 @@ Available Commands:
   service     Manage services
   start       Start a service
   stop        Stop a service
+  update      Update a new service
   version     Display version of Alauda CLI
 
 Flags:
