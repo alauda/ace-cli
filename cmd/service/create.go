@@ -76,12 +76,12 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		targetState = "STARTED"
 	}
 
-	err = validateResourceRequirements(opts)
+	err = validateResourceRequirements(opts.cpu, opts.memory)
 	if err != nil {
 		return err
 	}
 
-	env, err := parseEnvVars(opts)
+	env, err := parseEnvVars(opts.env)
 	if err != nil {
 		return err
 	}

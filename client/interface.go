@@ -25,6 +25,7 @@ type ServiceClient interface {
 	InspectService(string) (*Service, error)
 	RestartService(string) error
 	ScaleService(string, *ScaleServiceData) error
+	UpdateService(string, *UpdateServiceData) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

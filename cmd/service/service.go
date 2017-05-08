@@ -32,6 +32,7 @@ func NewServiceCmd(alauda client.APIClient) *cobra.Command {
 		NewInspectCmd(alauda),
 		NewRestartCmd(alauda),
 		NewScaleCmd(alauda),
+		NewUpdateCmd(alauda),
 	)
 
 	return serviceCmd
@@ -73,22 +74,22 @@ func configSpace(space string) (string, error) {
 	return result, nil
 }
 
-func validateResourceRequirements(opts *createOptions) error {
-	if opts.cpu < 0.125 || opts.cpu > 8 {
+func validateResourceRequirements(cpu float64, memory int) error {
+	if cpu < 0.125 || cpu > 8 {
 		return errors.New("supported CPU range (cores): [0.125, 8]")
 	}
 
-	if opts.memory < 64 || opts.memory > 32768 {
+	if memory < 64 || memory > 32768 {
 		return errors.New("supported memory range (MB): [64, 32768]")
 	}
 
 	return nil
 }
 
-func parseEnvVars(opts *createOptions) (map[string]string, error) {
+func parseEnvVars(env []string) (map[string]string, error) {
 	envvars := make(map[string]string)
 
-	for _, desc := range opts.env {
+	for _, desc := range env {
 		k, v, err := parseEnvVar(desc)
 		if err != nil {
 			return nil, err
