@@ -21,9 +21,10 @@ Available Commands:
   run         Create and start a new service
   scale       Scale a service to the specified number of instances
   service     Manage services
+  space       Manage spaces
   start       Start a service
   stop        Stop a service
-  update      Update a new service
+  update      Update a service
   version     Display version of Alauda CLI
 
 Flags:

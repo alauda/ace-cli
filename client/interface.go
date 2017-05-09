@@ -8,6 +8,7 @@ type APIClient interface {
 	Initialize(string, string, string)
 	AuthClient
 	ServiceClient
+	SpaceClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -26,6 +27,11 @@ type ServiceClient interface {
 	RestartService(string) error
 	ScaleService(string, *ScaleServiceData) error
 	UpdateService(string, *UpdateServiceData) error
+}
+
+// SpaceClient is the API client for space related APIs.
+type SpaceClient interface {
+	ListSpaces() (*ListSpacesResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

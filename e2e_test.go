@@ -16,6 +16,22 @@ const (
 	settingImage   string = "test.image"
 )
 
+func TestSpaceLs(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	os.Args = []string{"alauda", "space", "ls"}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func TestServicePs(t *testing.T) {
 	alauda, err := client.NewClient()
 	if err != nil {

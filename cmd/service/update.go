@@ -24,7 +24,7 @@ func NewUpdateCmd(alauda client.APIClient) *cobra.Command {
 
 	updateCmd := &cobra.Command{
 		Use:   "update NAME",
-		Short: "Update a new service",
+		Short: "Update a service",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
