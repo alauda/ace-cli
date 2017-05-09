@@ -15,8 +15,8 @@ type ListServicesParams struct {
 
 // ListServicesResult defines the response body for the ListServices API.
 type ListServicesResult struct {
-	Count   int       `json:"count"`
-	Results []Service `json:"results"`
+	Count    int       `json:"count"`
+	Services []Service `json:"results"`
 }
 
 // ListServices returns all services deployed.
