@@ -42,7 +42,7 @@ func (client *Client) UpdateService(name string, data *UpdateServiceData) error 
 
 func (client *Client) buildUpdateServiceURL(name string) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s/%s", server, "services", client.Namespace(), name)
+	return fmt.Sprintf("%s/services/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildUpdateServiceRequest(data *UpdateServiceData) (*rest.Request, error) {

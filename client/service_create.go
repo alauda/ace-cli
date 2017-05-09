@@ -52,7 +52,7 @@ func (client *Client) CreateService(data *CreateServiceData) error {
 
 func (client *Client) buildCreateServiceURL() string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s", server, "services", client.Namespace())
+	return fmt.Sprintf("%s/services/%s", server, client.Namespace())
 }
 
 func (client *Client) buildCreateServiceRequest(data *CreateServiceData) (*rest.Request, error) {

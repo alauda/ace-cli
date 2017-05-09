@@ -45,7 +45,7 @@ func NewUpdateCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doUpdate(alauda client.APIClient, name string, opts *updateOptions) error {
-	fmt.Println("[alauda] Creating", name)
+	fmt.Println("[alauda] Updating", name)
 
 	util.InitializeClient(alauda)
 

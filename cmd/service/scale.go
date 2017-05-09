@@ -32,7 +32,7 @@ func doScale(alauda client.APIClient, desc string) error {
 		return err
 	}
 
-	fmt.Println("[alauda] Starting", name)
+	fmt.Println("[alauda] Scaling", name)
 
 	util.InitializeClient(alauda)
 

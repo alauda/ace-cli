@@ -27,7 +27,7 @@ func (client *Client) StopService(name string) error {
 
 func (client *Client) buildStopServiceURL(name string) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s/%s/stop", server, "services", client.Namespace(), name)
+	return fmt.Sprintf("%s/services/%s/%s/stop", server, client.Namespace(), name)
 }
 
 func (client *Client) buildStopServiceRequest() *rest.Request {

@@ -33,7 +33,7 @@ func (client *Client) InspectService(name string) (*Service, error) {
 
 func (client *Client) buildInspectServiceURL(name string) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s/%s", server, "services", client.Namespace(), name)
+	return fmt.Sprintf("%s/services/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildInspectServiceRequest() *rest.Request {

@@ -37,7 +37,7 @@ func (client *Client) ScaleService(name string, data *ScaleServiceData) error {
 
 func (client *Client) buildScaleServiceURL(name string) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s/%s", server, "services", client.Namespace(), name)
+	return fmt.Sprintf("%s/services/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildScaleServiceRequest(data *ScaleServiceData) (*rest.Request, error) {

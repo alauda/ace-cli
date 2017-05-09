@@ -27,7 +27,7 @@ func (client *Client) RemoveService(name string) error {
 
 func (client *Client) buildRemoveServiceURL(name string) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s/%s", server, "services", client.Namespace(), name)
+	return fmt.Sprintf("%s/services/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildRemoveServiceRequest() *rest.Request {

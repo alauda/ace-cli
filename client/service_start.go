@@ -27,7 +27,7 @@ func (client *Client) StartService(name string) error {
 
 func (client *Client) buildStartServiceURL(name string) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s/%s/start", server, "services", client.Namespace(), name)
+	return fmt.Sprintf("%s/services/%s/%s/start", server, client.Namespace(), name)
 }
 
 func (client *Client) buildStartServiceRequest() *rest.Request {

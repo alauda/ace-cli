@@ -44,7 +44,7 @@ func (client *Client) ListServices(params *ListServicesParams) (*ListServicesRes
 
 func (client *Client) buildListServicesURL() string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s/%s", server, "services", client.Namespace())
+	return fmt.Sprintf("%s/services/%s", server, client.Namespace())
 }
 
 func (client *Client) buildListServicesRequest(params *ListServicesParams) *rest.Request {
