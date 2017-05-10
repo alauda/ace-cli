@@ -1,0 +1,10 @@
+package client
+
+// Cluster defines the response body for one cluster returned by the ListClusters API.
+type Cluster struct {
+	Name        string `json:"name"`
+	DisplayName string `json:"display_name"`
+	Type        string `json:"container_manager"`
+	State       string `json:"state"`
+	CreatedAt   string `json:"created_at"`
+}

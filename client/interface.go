@@ -9,6 +9,7 @@ type APIClient interface {
 	AuthClient
 	ServiceClient
 	SpaceClient
+	ClusterClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -33,6 +34,11 @@ type ServiceClient interface {
 type SpaceClient interface {
 	ListSpaces() (*ListSpacesResult, error)
 	InspectSpace(string) (*Space, error)
+}
+
+// ClusterClient is the API client for cluster related APIs.
+type ClusterClient interface {
+	ListClusters() (*ListClustersResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

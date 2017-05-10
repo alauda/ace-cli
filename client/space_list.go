@@ -10,7 +10,7 @@ import (
 
 // ListSpacesResult defines the response body for the ListSpaces API.
 type ListSpacesResult struct {
-	Spaces []Space `json:"results"`
+	Spaces []Space
 }
 
 // ListSpaces returns all spaces in an account.
