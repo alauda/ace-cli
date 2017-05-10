@@ -46,7 +46,7 @@ func printLsResult(spaces *client.ListClustersResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"NAME", "DISPLAY NAME", "TYPE", "CREATED", "STATE"}
+	return []string{"NAME", "DISPLAY NAME", "TYPE", "CLOUD", "REGION", "CREATED", "STATE"}
 }
 
 func buildLsTableContent(result *client.ListClustersResult) [][]string {
@@ -54,7 +54,8 @@ func buildLsTableContent(result *client.ListClustersResult) [][]string {
 
 	for i := 0; i < len(result.Clusters); i++ {
 		cluster := result.Clusters[i]
-		content = append(content, []string{cluster.Name, cluster.DisplayName, cluster.Type, cluster.CreatedAt, cluster.State})
+		content = append(content, []string{cluster.Name, cluster.DisplayName, cluster.Type,
+			cluster.Attributes.Cloud.Name, cluster.Attributes.Cloud.Region, cluster.CreatedAt, cluster.State})
 	}
 
 	return content
