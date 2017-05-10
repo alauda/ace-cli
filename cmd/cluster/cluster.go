@@ -18,6 +18,7 @@ func NewClusterCmd(alauda client.APIClient) *cobra.Command {
 
 	clusterCmd.AddCommand(
 		NewLsCmd(alauda),
+		NewInspectCmd(alauda),
 	)
 
 	return clusterCmd

@@ -39,6 +39,7 @@ type SpaceClient interface {
 // ClusterClient is the API client for cluster related APIs.
 type ClusterClient interface {
 	ListClusters() (*ListClustersResult, error)
+	InspectCluster(string) (*Cluster, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
