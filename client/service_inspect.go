@@ -8,7 +8,7 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
-// InspectService starts the specified service.
+// InspectService retrieves details about the specified service.
 func (client *Client) InspectService(name string) (*Service, error) {
 	url := client.buildInspectServiceURL(name)
 	request := client.buildInspectServiceRequest()
@@ -23,7 +23,7 @@ func (client *Client) InspectService(name string) (*Service, error) {
 		return nil, err
 	}
 
-	result, err := parseInspectServicesResult(response)
+	result, err := parseInspectServiceResult(response)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func (client *Client) buildInspectServiceRequest() *rest.Request {
 	return rest.NewRequest(client.Token())
 }
 
-func parseInspectServicesResult(response *rest.Response) (*Service, error) {
+func parseInspectServiceResult(response *rest.Response) (*Service, error) {
 	result := Service{}
 
 	err := json.Unmarshal(response.Body(), &result)
