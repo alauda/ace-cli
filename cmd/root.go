@@ -71,8 +71,10 @@ func initConfig() {
 
 	viper.SetDefault(util.SettingServer, util.DefaultAPIServer)
 
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
+	err := viper.ReadInConfig()
+	if err == nil {
 		fmt.Println("[alauda] Using config file:", viper.ConfigFileUsed())
+	} else {
+		fmt.Println("[alauda] WARNING: Unable to read config file:", cfgFile)
 	}
 }

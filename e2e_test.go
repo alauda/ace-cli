@@ -32,6 +32,58 @@ func TestSpaceLs(t *testing.T) {
 	}
 }
 
+func TestSpaceInspect(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	space := viper.GetString(settingSpace)
+
+	os.Args = []string{"alauda", "space", "inspect", space}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestClusterLs(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	os.Args = []string{"alauda", "cluster", "ls"}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestClusterInspect(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	cluster := viper.GetString(settingCluster)
+
+	os.Args = []string{"alauda", "cluster", "inspect", cluster}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func TestServicePs(t *testing.T) {
 	alauda, err := client.NewClient()
 	if err != nil {
