@@ -60,7 +60,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
-	cluster, err := configCluster(opts.cluster)
+	cluster, err := util.ConfigCluster(opts.cluster)
 	if err != nil {
 		return err
 	}

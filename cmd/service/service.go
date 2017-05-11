@@ -38,24 +38,6 @@ func NewServiceCmd(alauda client.APIClient) *cobra.Command {
 	return serviceCmd
 }
 
-func configCluster(cluster string) (string, error) {
-	if cluster != "" {
-		viper.Set(util.SettingCluster, cluster)
-
-		err := util.SaveConfig()
-		if err != nil {
-			return "", err
-		}
-	}
-
-	result := viper.GetString(util.SettingCluster)
-	if result == "" {
-		return "", errors.New("no cluster specified")
-	}
-
-	return result, nil
-}
-
 func configSpace(space string) (string, error) {
 	if space != "" {
 		viper.Set(util.SettingSpace, space)

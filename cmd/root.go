@@ -7,6 +7,7 @@ import (
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/cluster"
+	"github.com/alauda/alauda/cmd/lb"
 	"github.com/alauda/alauda/cmd/service"
 	"github.com/alauda/alauda/cmd/space"
 	"github.com/alauda/alauda/cmd/util"
@@ -56,6 +57,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 
 		space.NewSpaceCmd(alauda),
 		cluster.NewClusterCmd(alauda),
+		lb.NewLBCmd(alauda),
 	)
 }
 

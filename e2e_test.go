@@ -84,6 +84,22 @@ func TestClusterInspect(t *testing.T) {
 	}
 }
 
+func TestLBLs(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	os.Args = []string{"alauda", "lb", "ls"}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func TestServicePs(t *testing.T) {
 	alauda, err := client.NewClient()
 	if err != nil {

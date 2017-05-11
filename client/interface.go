@@ -10,6 +10,7 @@ type APIClient interface {
 	ServiceClient
 	SpaceClient
 	ClusterClient
+	LoadBalancerClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -40,6 +41,11 @@ type SpaceClient interface {
 type ClusterClient interface {
 	ListClusters() (*ListClustersResult, error)
 	InspectCluster(string) (*Cluster, error)
+}
+
+// LoadBalancerClient is the API client for LB related APIs.
+type LoadBalancerClient interface {
+	ListLoadBalancers(*ListLoadBalancersParams) (*ListLoadBalancersResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

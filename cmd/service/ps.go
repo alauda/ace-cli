@@ -36,7 +36,7 @@ func doPs(alauda client.APIClient, opts *psOptions) error {
 
 	util.InitializeClient(alauda)
 
-	cluster, err := configCluster(opts.cluster)
+	cluster, err := util.ConfigCluster(opts.cluster)
 	if err != nil {
 		return err
 	}
