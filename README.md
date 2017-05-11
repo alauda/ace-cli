@@ -10,9 +10,11 @@ Usage:
   alauda [command]
 
 Available Commands:
+  cluster     Manage clusters
   create      Create a new service
   help        Help about any command
   inspect     Inspect a service
+  lb          Manage load balancers
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
   ps          List services

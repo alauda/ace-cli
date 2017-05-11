@@ -8,7 +8,7 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
-// InspectSpace retrieves details about the specified space.
+// InspectSpace retrieves details about a specific space.
 func (client *Client) InspectSpace(name string) (*Space, error) {
 	url := client.buildInspectSpaceURL(name)
 	request := client.buildInspectSpaceRequest()

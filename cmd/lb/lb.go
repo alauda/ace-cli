@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewLBmd creates a new lb command.
+// NewLBCmd creates a new lb command.
 func NewLBCmd(alauda client.APIClient) *cobra.Command {
 	lbCmd := &cobra.Command{
 		Use:   "lb",
@@ -18,6 +18,7 @@ func NewLBCmd(alauda client.APIClient) *cobra.Command {
 
 	lbCmd.AddCommand(
 		NewLsCmd(alauda),
+		NewInspectCmd(alauda),
 	)
 
 	return lbCmd

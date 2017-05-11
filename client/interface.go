@@ -46,6 +46,7 @@ type ClusterClient interface {
 // LoadBalancerClient is the API client for LB related APIs.
 type LoadBalancerClient interface {
 	ListLoadBalancers(*ListLoadBalancersParams) (*ListLoadBalancersResult, error)
+	InspectLoadBalancer(string) (*LoadBalancer, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

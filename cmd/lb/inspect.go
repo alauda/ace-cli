@@ -1,4 +1,4 @@
-package space
+package lb
 
 import (
 	"encoding/json"
@@ -10,15 +10,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewInspectCmd creates a new space inspect command.
+// NewInspectCmd creates a new lb inspect command.
 func NewInspectCmd(alauda client.APIClient) *cobra.Command {
 	inspectCmd := &cobra.Command{
 		Use:   "inspect NAME",
-		Short: "Inspect a space",
+		Short: "Inspect a load balancer",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
-				return errors.New("space inspect expects NAME")
+				return errors.New("lb inspect expects NAME")
 			}
 			return doInspect(alauda, args[0])
 		},
@@ -32,12 +32,12 @@ func doInspect(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	result, err := alauda.InspectSpace(name)
+	result, err := alauda.InspectLoadBalancer(name)
 	if err != nil {
 		return err
 	}
 
-	err = printSpace(result)
+	err = printLoadBalancer(result)
 	if err != nil {
 		return err
 	}
@@ -47,8 +47,8 @@ func doInspect(alauda client.APIClient, name string) error {
 	return nil
 }
 
-func printSpace(space *client.Space) error {
-	marshalled, err := json.MarshalIndent(space, "", "    ")
+func printLoadBalancer(lb *client.LoadBalancer) error {
+	marshalled, err := json.MarshalIndent(lb, "", "    ")
 	if err != nil {
 		return err
 	}

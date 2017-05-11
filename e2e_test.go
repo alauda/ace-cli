@@ -14,6 +14,7 @@ const (
 	settingSpace   string = "test.space"
 	settingName    string = "test.name"
 	settingImage   string = "test.image"
+	settingLB      string = "test.lb"
 )
 
 func TestSpaceLs(t *testing.T) {
@@ -93,6 +94,24 @@ func TestLBLs(t *testing.T) {
 	rootCmd := cmd.NewRootCmd(alauda)
 
 	os.Args = []string{"alauda", "lb", "ls"}
+
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestLBInspect(t *testing.T) {
+	alauda, err := client.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rootCmd := cmd.NewRootCmd(alauda)
+
+	lb := viper.GetString(settingLB)
+
+	os.Args = []string{"alauda", "lb", "inspect", lb}
 
 	err = rootCmd.Execute()
 	if err != nil {
