@@ -17,152 +17,28 @@ const (
 	settingLB      string = "test.lb"
 )
 
-func TestSpaceLs(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	os.Args = []string{"alauda", "space", "ls"}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestSpaceInspect(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	space := viper.GetString(settingSpace)
-
-	os.Args = []string{"alauda", "space", "inspect", space}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestClusterLs(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	os.Args = []string{"alauda", "cluster", "ls"}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestClusterInspect(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	cluster := viper.GetString(settingCluster)
-
-	os.Args = []string{"alauda", "cluster", "inspect", cluster}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestLBLs(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	os.Args = []string{"alauda", "lb", "ls"}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestLBInspect(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	lb := viper.GetString(settingLB)
-
-	os.Args = []string{"alauda", "lb", "inspect", lb}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestServicePs(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	os.Args = []string{"alauda", "service", "ps"}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestServiceRun(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	name := viper.GetString(settingName)
-	image := viper.GetString(settingImage)
-	cluster := viper.GetString(settingCluster)
-	space := viper.GetString(settingSpace)
-
-	os.Args = []string{"alauda", "service", "run", name, image,
-		"-c", cluster, "-s", space,
+var cliTests = []struct {
+	args []string
+}{
+	{[]string{"alauda", "space", "ls"}},
+	{[]string{"alauda", "space", "inspect", "%SPACE%"}},
+	{[]string{"alauda", "cluster", "ls"}},
+	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
+	{[]string{"alauda", "lb", "ls"}},
+	{[]string{"alauda", "lb", "inspect", "%LB%"}},
+	{[]string{"alauda", "service", "ps"}},
+	{[]string{"alauda", "service", "run", "%NAME%", "%IMAGE%",
+		"-c", "%CLUSTER%", "-s", "%SPACE%",
 		"--expose", "80", "--expose", "81",
 		"--cpu", "0.256", "--memory", "256",
 		"-n", "2",
 		"--env", "FOO=foo", "-e", "BAR=bar",
-		"-r", "do this", "--entrypoint", "and that"}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
-	}
+		"-r", "do this", "--entrypoint", "and that"}},
+	{[]string{"alauda", "service", "inspect", "%NAME%"}},
+	{[]string{"alauda", "service", "rm", "%NAME%"}},
 }
 
-func TestServiceInspect(t *testing.T) {
+func TestCli(t *testing.T) {
 	alauda, err := client.NewClient()
 	if err != nil {
 		t.Error(err)
@@ -170,30 +46,30 @@ func TestServiceInspect(t *testing.T) {
 
 	rootCmd := cmd.NewRootCmd(alauda)
 
-	name := viper.GetString(settingName)
+	for _, tt := range cliTests {
+		bind(tt.args)
+		os.Args = tt.args
 
-	os.Args = []string{"alauda", "service", "inspect", name}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
+		err = rootCmd.Execute()
+		if err != nil {
+			t.Error(err)
+		}
 	}
 }
 
-func TestServiceRm(t *testing.T) {
-	alauda, err := client.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
-
-	rootCmd := cmd.NewRootCmd(alauda)
-
-	name := viper.GetString(settingName)
-
-	os.Args = []string{"alauda", "service", "rm", name}
-
-	err = rootCmd.Execute()
-	if err != nil {
-		t.Error(err)
+func bind(args []string) {
+	for i, s := range args {
+		switch s {
+		case "%NAME%":
+			args[i] = viper.GetString(settingName)
+		case "%IMAGE%":
+			args[i] = viper.GetString(settingImage)
+		case "%CLUSTER%":
+			args[i] = viper.GetString(settingCluster)
+		case "%SPACE%":
+			args[i] = viper.GetString(settingSpace)
+		case "%LB%":
+			args[i] = viper.GetString(settingLB)
+		}
 	}
 }
