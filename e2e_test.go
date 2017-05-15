@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/alauda/alauda/client"
@@ -35,6 +37,7 @@ var cliTests = []struct {
 		"--env", "FOO=foo", "-e", "BAR=bar",
 		"-r", "do this", "--entrypoint", "and that"}},
 	{[]string{"alauda", "service", "inspect", "%NAME%"}},
+	{[]string{"alauda", "lb", "bind", "%LB%", "--publish", "%NAME%:80", "-p", "%NAME%:81/http", "-p", "%NAME%:21234:1234"}},
 	{[]string{"alauda", "service", "rm", "%NAME%"}},
 }
 
@@ -49,6 +52,7 @@ func TestCli(t *testing.T) {
 	for _, tt := range cliTests {
 		bind(tt.args)
 		os.Args = tt.args
+		fmt.Println(os.Args)
 
 		err = rootCmd.Execute()
 		if err != nil {
@@ -58,18 +62,11 @@ func TestCli(t *testing.T) {
 }
 
 func bind(args []string) {
-	for i, s := range args {
-		switch s {
-		case "%NAME%":
-			args[i] = viper.GetString(settingName)
-		case "%IMAGE%":
-			args[i] = viper.GetString(settingImage)
-		case "%CLUSTER%":
-			args[i] = viper.GetString(settingCluster)
-		case "%SPACE%":
-			args[i] = viper.GetString(settingSpace)
-		case "%LB%":
-			args[i] = viper.GetString(settingLB)
-		}
+	for i := range args {
+		args[i] = strings.Replace(args[i], "%NAME%", viper.GetString(settingName), -1)
+		args[i] = strings.Replace(args[i], "%IMAGE%", viper.GetString(settingImage), -1)
+		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
+		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)
+		args[i] = strings.Replace(args[i], "%LB%", viper.GetString(settingLB), -1)
 	}
 }
