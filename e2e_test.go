@@ -37,8 +37,8 @@ var cliTests = []struct {
 		"--env", "FOO=foo", "-e", "BAR=bar",
 		"-r", "do this", "--entrypoint", "and that"}},
 	{[]string{"alauda", "service", "inspect", "%NAME%"}},
-	{[]string{"alauda", "lb", "bind", "%LB%", "--publish", "%NAME%:80", "-p", "%NAME%:81/http", "-p", "%NAME%:21234:1234"}},
-	{[]string{"alauda", "lb", "unbind", "%LB%", "--publish", "%NAME%:80:80", "-p", "%NAME%:21234:1234"}},
+	{[]string{"alauda", "lb", "bind", "%LB%", "--listener", "%NAME%:80", "-l", "%NAME%:81/http", "-l", "%NAME%:21234:1234"}},
+	{[]string{"alauda", "lb", "unbind", "%LB%", "--listener", "%NAME%:80:80", "-l", "%NAME%:21234:1234"}},
 	{[]string{"alauda", "service", "rm", "%NAME%"}},
 }
 

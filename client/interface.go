@@ -47,7 +47,7 @@ type ClusterClient interface {
 type LoadBalancerClient interface {
 	ListLoadBalancers(*ListLoadBalancersParams) (*ListLoadBalancersResult, error)
 	InspectLoadBalancer(string) (*LoadBalancer, error)
-	BindLoadBalancer(string, *BindLoadBalancerData) error
+	UpdateLoadBalancer(string, *UpdateLoadBalancerData) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

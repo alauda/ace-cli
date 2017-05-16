@@ -25,7 +25,7 @@ func NewUnbindCmd(alauda client.APIClient) *cobra.Command {
 		},
 	}
 
-	unbindCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Published endpoints to remove the bindings from the load balancer (servicename:listenerPort:containerPort")
+	unbindCmd.Flags().StringSliceVarP(&opts.listeners, "listener", "l", []string{}, "Listeners to remove from the load balancer (servicename:listenerPort:containerPort")
 
 	return unbindCmd
 }
@@ -35,12 +35,12 @@ func doUnbind(alauda client.APIClient, name string, opts *bindOptions) error {
 
 	util.InitializeClient(alauda)
 
-	data, err := parseUnbindPublish(opts.publish)
+	data, err := parseUnbindListeners(opts.listeners)
 	if err != nil {
 		return err
 	}
 
-	err = alauda.BindLoadBalancer(name, data)
+	err = alauda.UpdateLoadBalancer(name, data)
 	if err != nil {
 		return err
 	}
@@ -50,11 +50,11 @@ func doUnbind(alauda client.APIClient, name string, opts *bindOptions) error {
 	return nil
 }
 
-func parseUnbindPublish(publish []string) (*client.BindLoadBalancerData, error) {
-	var listeners = []client.BindListenerData{}
+func parseUnbindListeners(listenersDesc []string) (*client.UpdateLoadBalancerData, error) {
+	var listeners = []client.ListenerData{}
 
-	for _, desc := range publish {
-		serviceName, listenerPort, containerPort, protocol, err := parsePublish(desc)
+	for _, desc := range listenersDesc {
+		serviceName, listenerPort, containerPort, protocol, err := parseListener(desc)
 		if err != nil {
 			return nil, err
 		}
@@ -68,10 +68,10 @@ func parseUnbindPublish(publish []string) (*client.BindLoadBalancerData, error) 
 		}
 
 		if protocol != "" {
-			return nil, errors.New("invalid publish descriptor, expected serviceName:listenerPort:containerPort")
+			return nil, errors.New("invalid listener descriptor, expected serviceName:listenerPort:containerPort")
 		}
 
-		listener := client.BindListenerData{
+		listener := client.ListenerData{
 			ServiceName:   serviceName,
 			ListenerPort:  listenerPort,
 			ContainerPort: containerPort,
@@ -80,7 +80,7 @@ func parseUnbindPublish(publish []string) (*client.BindLoadBalancerData, error) 
 		listeners = append(listeners, listener)
 	}
 
-	data := client.BindLoadBalancerData{
+	data := client.UpdateLoadBalancerData{
 		Action:    "unbind",
 		Listeners: listeners,
 	}

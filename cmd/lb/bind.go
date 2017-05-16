@@ -12,7 +12,7 @@ import (
 )
 
 type bindOptions struct {
-	publish []string
+	listeners []string
 }
 
 // NewBindCmd creates a new lb bind command.
@@ -31,7 +31,7 @@ func NewBindCmd(alauda client.APIClient) *cobra.Command {
 		},
 	}
 
-	bindCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Published endpoints to bind to the load balancer (serviceName:[listenerPort:]containerPort[/protocol]")
+	bindCmd.Flags().StringSliceVarP(&opts.listeners, "listener", "l", []string{}, "Listeners to bind to the load balancer (serviceName:[listenerPort:]containerPort[/protocol]")
 
 	return bindCmd
 }
@@ -41,12 +41,12 @@ func doBind(alauda client.APIClient, name string, opts *bindOptions) error {
 
 	util.InitializeClient(alauda)
 
-	data, err := parseBindPublish(opts.publish)
+	data, err := parseBindListeners(opts.listeners)
 	if err != nil {
 		return err
 	}
 
-	err = alauda.BindLoadBalancer(name, data)
+	err = alauda.UpdateLoadBalancer(name, data)
 	if err != nil {
 		return err
 	}
@@ -56,11 +56,11 @@ func doBind(alauda client.APIClient, name string, opts *bindOptions) error {
 	return nil
 }
 
-func parseBindPublish(publish []string) (*client.BindLoadBalancerData, error) {
-	var listeners = []client.BindListenerData{}
+func parseBindListeners(listenersDesc []string) (*client.UpdateLoadBalancerData, error) {
+	var listeners = []client.ListenerData{}
 
-	for _, desc := range publish {
-		serviceName, listenerPort, containerPort, protocol, err := parsePublish(desc)
+	for _, desc := range listenersDesc {
+		serviceName, listenerPort, containerPort, protocol, err := parseListener(desc)
 		if err != nil {
 			return nil, err
 		}
@@ -77,7 +77,7 @@ func parseBindPublish(publish []string) (*client.BindLoadBalancerData, error) {
 			}
 		}
 
-		listener := client.BindListenerData{
+		listener := client.ListenerData{
 			ServiceName:   serviceName,
 			ListenerPort:  listenerPort,
 			ContainerPort: containerPort,
@@ -86,7 +86,7 @@ func parseBindPublish(publish []string) (*client.BindLoadBalancerData, error) {
 		listeners = append(listeners, listener)
 	}
 
-	data := client.BindLoadBalancerData{
+	data := client.UpdateLoadBalancerData{
 		Action:    "bind",
 		Listeners: listeners,
 	}
@@ -94,7 +94,7 @@ func parseBindPublish(publish []string) (*client.BindLoadBalancerData, error) {
 	return &data, nil
 }
 
-func parsePublish(desc string) (string, int, int, string, error) {
+func parseListener(desc string) (string, int, int, string, error) {
 	var name string
 	var listenerPort int
 	var containerPort int
@@ -104,7 +104,7 @@ func parsePublish(desc string) (string, int, int, string, error) {
 	result := strings.Split(desc, "/")
 
 	if len(result) > 2 {
-		return "", 0, 0, "", errors.New("invalid publish descriptor, expected [name:][listenerPort:]containerPort[/protocol]")
+		return "", 0, 0, "", errors.New("invalid listener descriptor, expected [name:][listenerPort:]containerPort[/protocol]")
 	}
 
 	if len(result) == 2 {
@@ -119,7 +119,7 @@ func parsePublish(desc string) (string, int, int, string, error) {
 	result = strings.Split(desc, ":")
 
 	if len(result) > 3 {
-		return "", 0, 0, "", errors.New("invalid publish descriptor, expected [name:][listenerPort:]containerPort")
+		return "", 0, 0, "", errors.New("invalid listener descriptor, expected [name:][listenerPort:]containerPort")
 	}
 
 	switch len(result) {
@@ -127,13 +127,13 @@ func parsePublish(desc string) (string, int, int, string, error) {
 		// containerPort
 		containerPort, err = strconv.Atoi(result[0])
 		if err != nil {
-			return "", 0, 0, "", errors.New("invalid publish descriptor, containerPort should be int")
+			return "", 0, 0, "", errors.New("invalid listener descriptor, containerPort should be int")
 		}
 	case 2:
 		// name:containerPort or listenerPort:containerPort
 		containerPort, err = strconv.Atoi(result[1])
 		if err != nil {
-			return "", 0, 0, "", errors.New("invalid publish descriptor, expected name:containerPort or listenerPort:containerPort")
+			return "", 0, 0, "", errors.New("invalid listener descriptor, expected name:containerPort or listenerPort:containerPort")
 		}
 
 		listenerPort, err = strconv.Atoi(result[0])
@@ -146,12 +146,12 @@ func parsePublish(desc string) (string, int, int, string, error) {
 
 		listenerPort, err = strconv.Atoi(result[1])
 		if err != nil {
-			return "", 0, 0, "", errors.New("invalid publish descriptor, listenerPort is not int, in name:listenerPort:containerPort")
+			return "", 0, 0, "", errors.New("invalid listener descriptor, listenerPort is not int, in name:listenerPort:containerPort")
 		}
 
 		containerPort, err = strconv.Atoi(result[2])
 		if err != nil {
-			return "", 0, 0, "", errors.New("invalid publish descriptor, containerPort is not int, in name:listenerPort:containerPort")
+			return "", 0, 0, "", errors.New("invalid listener descriptor, containerPort is not int, in name:listenerPort:containerPort")
 		}
 	}
 
