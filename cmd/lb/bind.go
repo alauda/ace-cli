@@ -31,7 +31,7 @@ func NewBindCmd(alauda client.APIClient) *cobra.Command {
 		},
 	}
 
-	bindCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Published endpoints to bind to the load balancer")
+	bindCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Published endpoints to bind to the load balancer (serviceName:[listenerPort:]containerPort[/protocol]")
 
 	return bindCmd
 }
@@ -41,7 +41,7 @@ func doBind(alauda client.APIClient, name string, opts *bindOptions) error {
 
 	util.InitializeClient(alauda)
 
-	data, err := parsePublishList(opts.publish)
+	data, err := parseBindPublish(opts.publish)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func doBind(alauda client.APIClient, name string, opts *bindOptions) error {
 	return nil
 }
 
-func parsePublishList(publish []string) (*client.BindLoadBalancerData, error) {
+func parseBindPublish(publish []string) (*client.BindLoadBalancerData, error) {
 	var listeners = []client.BindListenerData{}
 
 	for _, desc := range publish {
@@ -67,6 +67,14 @@ func parsePublishList(publish []string) (*client.BindLoadBalancerData, error) {
 
 		if serviceName == "" {
 			return nil, errors.New("no service name specified for listener")
+		}
+
+		if protocol == "" {
+			if containerPort == 80 {
+				protocol = "http"
+			} else {
+				protocol = "tcp"
+			}
 		}
 
 		listener := client.BindListenerData{
@@ -144,14 +152,6 @@ func parsePublish(desc string) (string, int, int, string, error) {
 		containerPort, err = strconv.Atoi(result[2])
 		if err != nil {
 			return "", 0, 0, "", errors.New("invalid publish descriptor, containerPort is not int, in name:listenerPort:containerPort")
-		}
-	}
-
-	if protocol == "" {
-		if containerPort == 80 {
-			protocol = "http"
-		} else {
-			protocol = "tcp"
 		}
 	}
 

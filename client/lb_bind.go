@@ -52,8 +52,6 @@ func (client *Client) buildBindLoadBalancerURL(name string) string {
 func (client *Client) buildBindLoadBalancerRequest(data *BindLoadBalancerData) (*rest.Request, error) {
 	request := rest.NewRequest(client.Token())
 
-	data.Action = "bind"
-
 	body, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
