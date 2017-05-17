@@ -54,7 +54,7 @@ func parseUnbindListeners(listenersDesc []string) (*client.UpdateLoadBalancerDat
 	var listeners = []client.ListenerData{}
 
 	for _, desc := range listenersDesc {
-		serviceName, listenerPort, containerPort, protocol, err := parseListener(desc)
+		serviceName, listenerPort, containerPort, protocol, err := util.ParseListener(desc)
 		if err != nil {
 			return nil, err
 		}

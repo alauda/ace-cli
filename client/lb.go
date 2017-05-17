@@ -3,6 +3,7 @@ package client
 // LoadBalancer defines the response body of the InspectLoadBalancer API.
 type LoadBalancer struct {
 	Name        string     `json:"name"`
+	ID          string     `json:"load_balancer_id"`
 	Type        string     `json:"type"`
 	Address     string     `json:"address"`
 	AddressType string     `json:"address_type"`

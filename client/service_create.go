@@ -10,22 +10,23 @@ import (
 
 // CreateServiceData defines the request body for the CreateService API.
 type CreateServiceData struct {
-	Version            string              `json:"version"`
-	Name               string              `json:"service_name"`
-	Cluster            string              `json:"region_name"`
-	Space              string              `json:"space_name"`
-	ImageName          string              `json:"image_name"`
-	ImageTag           string              `json:"image_tag"`
-	Command            string              `json:"run_command"`
-	Entrypoint         string              `json:"entrypoint"`
-	TargetState        string              `json:"target_state"`
-	TargetInstances    int                 `json:"target_num_instances"`
-	InstanceSize       string              `json:"instance_size"`
-	CustomInstanceSize ServiceInstanceSize `json:"custom_instance_size"`
-	ScalingMode        string              `json:"scaling_mode"`
-	Ports              []int               `json:"ports"`
-	NetworkMode        string              `json:"network_mode"`
-	Env                map[string]string   `json:"instance_envvars"`
+	Version            string                `json:"version"`
+	Name               string                `json:"service_name"`
+	Cluster            string                `json:"region_name"`
+	Space              string                `json:"space_name"`
+	ImageName          string                `json:"image_name"`
+	ImageTag           string                `json:"image_tag"`
+	Command            string                `json:"run_command"`
+	Entrypoint         string                `json:"entrypoint"`
+	TargetState        string                `json:"target_state"`
+	TargetInstances    int                   `json:"target_num_instances"`
+	InstanceSize       string                `json:"instance_size"`
+	CustomInstanceSize ServiceInstanceSize   `json:"custom_instance_size"`
+	ScalingMode        string                `json:"scaling_mode"`
+	Ports              []int                 `json:"ports"`
+	NetworkMode        string                `json:"network_mode"`
+	Env                map[string]string     `json:"instance_envvars"`
+	LoadBalancers      []ServiceLoadBalancer `json:"load_balancers"`
 }
 
 // CreateService creates and deploys a new service.

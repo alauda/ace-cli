@@ -19,6 +19,7 @@ type createOptions struct {
 	env        []string
 	cmd        string
 	entrypoint string
+	publish    []string
 }
 
 // NewCreateCmd creates a new create service command.
@@ -46,6 +47,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	createCmd.Flags().StringSliceVarP(&opts.env, "env", "e", []string{}, "Environment variables")
 	createCmd.Flags().StringVarP(&opts.cmd, "run-command", "r", "", "Command to run")
 	createCmd.Flags().StringVarP(&opts.entrypoint, "entrypoint", "", "", "Entrypoint for the container")
+	createCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Ports to publish on the load balancer ([lb:][listenerPort:]containerPort[/protocol]")
 
 	return createCmd
 }
@@ -60,12 +62,12 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
-	cluster, err := util.ConfigCluster(opts.cluster)
+	opts.cluster, err = util.ConfigCluster(opts.cluster)
 	if err != nil {
 		return err
 	}
 
-	space, err := configSpace(opts.space)
+	opts.space, err = configSpace(opts.space)
 	if err != nil {
 		return err
 	}
@@ -86,6 +88,11 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
+	loadBalancers, err := parsePublish(alauda, opts)
+	if err != nil {
+		return err
+	}
+
 	data := client.CreateServiceData{
 		Version:         "v2",
 		Name:            name,
@@ -93,8 +100,8 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		ImageTag:        imageTag,
 		Command:         opts.cmd,
 		Entrypoint:      opts.entrypoint,
-		Cluster:         cluster,
-		Space:           space,
+		Cluster:         opts.cluster,
+		Space:           opts.space,
 		TargetState:     targetState,
 		InstanceSize:    "CUSTOMIZED",
 		ScalingMode:     "MANUAL",
@@ -102,6 +109,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		Ports:           opts.expose,
 		NetworkMode:     "BRIDGE",
 		Env:             env,
+		LoadBalancers:   loadBalancers,
 		CustomInstanceSize: client.ServiceInstanceSize{
 			CPU:    opts.cpu,
 			Memory: opts.memory,
@@ -116,4 +124,88 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 	fmt.Println("[alauda] OK")
 
 	return nil
+}
+
+func parsePublish(alauda client.APIClient, opts *createOptions) ([]client.ServiceLoadBalancer, error) {
+	var loadBalancers = []client.ServiceLoadBalancer{}
+	lbMap := make(map[string]*client.ServiceLoadBalancer)
+
+	for _, desc := range opts.publish {
+		lbName, listenerPort, containerPort, protocol, err := util.ParseListener(desc)
+		if err != nil {
+			return nil, err
+		}
+
+		var lbID string
+		if lbName == "" {
+			lbID, err = getDefaultLoadBalancerID(alauda, opts.cluster)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			lbID, err = getLoadBalancerID(alauda, lbName)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		if protocol == "" {
+			if containerPort == 80 {
+				protocol = "http"
+			} else {
+				protocol = "tcp"
+			}
+		}
+
+		listener := client.ServiceListener{
+			ListenerPort:  listenerPort,
+			ContainerPort: containerPort,
+			Protocol:      protocol,
+		}
+
+		if lbMap[lbName] == nil {
+			lbMap[lbName] = &client.ServiceLoadBalancer{
+				ID:   lbID,
+				Type: "haproxy",
+			}
+		}
+
+		lb := lbMap[lbName]
+		lb.Listeners = append(lb.Listeners, listener)
+	}
+
+	for _, lb := range lbMap {
+		loadBalancers = append(loadBalancers, *lb)
+	}
+
+	return loadBalancers, nil
+}
+
+func getLoadBalancerID(alauda client.APIClient, name string) (string, error) {
+	lb, err := alauda.InspectLoadBalancer(name)
+	if err != nil {
+		return "", err
+	}
+
+	return lb.ID, nil
+}
+
+func getDefaultLoadBalancerID(alauda client.APIClient, cluster string) (string, error) {
+	params := client.ListLoadBalancersParams{
+		Cluster: cluster,
+		Service: "",
+	}
+
+	result, err := alauda.ListLoadBalancers(&params)
+	if err != nil {
+		return "", err
+	}
+
+	for _, lb := range result.LoadBalancers {
+		if lb.Type == "haproxy" && lb.AddressType == "external" {
+			return lb.ID, nil
+		}
+	}
+
+	return "", errors.New("no external haproxy found")
 }

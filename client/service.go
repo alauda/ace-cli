@@ -22,3 +22,17 @@ type ServiceInstanceSize struct {
 	Memory int     `json:"mem"`
 	CPU    float64 `json:"cpu"`
 }
+
+// ServiceLoadBalancer defines the load balancer data in the CreateService request.
+type ServiceLoadBalancer struct {
+	ID        string            `json:"load_balancer_id"`
+	Type      string            `json:"type"`
+	Listeners []ServiceListener `json:"listeners"`
+}
+
+// ServiceListener defines the load balancer listener data in the CreateService request.
+type ServiceListener struct {
+	ListenerPort  int    `json:"listener_port"`
+	ContainerPort int    `json:"container_port"`
+	Protocol      string `json:"protocol"`
+}
