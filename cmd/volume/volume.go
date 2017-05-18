@@ -40,25 +40,50 @@ func getClusterID(alauda client.APIClient, name string) (string, error) {
 func getVolumeID(alauda client.APIClient, name string) (string, error) {
 	cluster := viper.GetString(util.SettingCluster)
 
-	clusterID, err := getClusterID(alauda, cluster)
+	if cluster != "" {
+		clusterID, err := getClusterID(alauda, cluster)
+		if err != nil {
+			return "", err
+		}
+
+		volume, err := getVolumeInCluster(alauda, name, clusterID)
+		if err != nil {
+			return "", err
+		}
+
+		return volume.ID, nil
+	}
+
+	result, err := alauda.ListClusters()
 	if err != nil {
 		return "", err
 	}
 
+	for _, cluster := range result.Clusters {
+		volume, err := getVolumeInCluster(alauda, name, cluster.ID)
+		if err == nil {
+			return volume.ID, nil
+		}
+	}
+
+	return "", fmt.Errorf("volume %s not found", name)
+}
+
+func getVolumeInCluster(alauda client.APIClient, name string, clusterID string) (*client.Volume, error) {
 	params := client.ListVolumesParams{
 		ClusterID: clusterID,
 	}
 
 	result, err := alauda.ListVolumes(&params)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	for _, volume := range result.Volumes {
 		if volume.Name == name {
-			return volume.ID, nil
+			return &volume, nil
 		}
 	}
 
-	return "", fmt.Errorf("volume %s not found", name)
+	return nil, fmt.Errorf("volume %s not found", name)
 }

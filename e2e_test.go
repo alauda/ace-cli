@@ -18,6 +18,7 @@ const (
 	settingImage      string = "test.image"
 	settingLB         string = "test.lb"
 	settingInternalLB string = "test.internal_lb"
+	settingVolume     string = "test.volume"
 )
 
 var cliTests = []struct {
@@ -30,6 +31,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "lb", "ls"}},
 	{[]string{"alauda", "lb", "inspect", "%LB%"}},
 	{[]string{"alauda", "volume", "ls"}},
+	{[]string{"alauda", "volume", "inspect", "%VOLUME%"}},
 	{[]string{"alauda", "service", "ps"}},
 	{[]string{"alauda", "service", "run", "%NAME%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
@@ -73,5 +75,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)
 		args[i] = strings.Replace(args[i], "%LB%", viper.GetString(settingLB), -1)
 		args[i] = strings.Replace(args[i], "%LBI%", viper.GetString(settingInternalLB), -1)
+		args[i] = strings.Replace(args[i], "%VOLUME%", viper.GetString(settingVolume), -1)
 	}
 }
