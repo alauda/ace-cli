@@ -52,8 +52,7 @@ func buildLsTableHeader() []string {
 func buildLsTableContent(result *client.ListSpacesResult) [][]string {
 	var content [][]string
 
-	for i := 0; i < len(result.Spaces); i++ {
-		space := result.Spaces[i]
+	for _, space := range result.Spaces {
 		content = append(content, []string{space.Name, space.CreatedAt, space.Status})
 	}
 

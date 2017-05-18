@@ -52,8 +52,7 @@ func buildLsTableHeader() []string {
 func buildLsTableContent(result *client.ListClustersResult) [][]string {
 	var content [][]string
 
-	for i := 0; i < len(result.Clusters); i++ {
-		cluster := result.Clusters[i]
+	for _, cluster := range result.Clusters {
 		content = append(content, []string{cluster.Name, cluster.DisplayName, cluster.Type,
 			cluster.Attributes.Cloud.Name, cluster.Attributes.Cloud.Region, cluster.CreatedAt, cluster.State})
 	}

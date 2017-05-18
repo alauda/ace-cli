@@ -73,8 +73,7 @@ func buildLsTableHeader() []string {
 func buildLsTableContent(result *client.ListLoadBalancersResult) [][]string {
 	var content [][]string
 
-	for i := 0; i < len(result.LoadBalancers); i++ {
-		lb := result.LoadBalancers[i]
+	for _, lb := range result.LoadBalancers {
 		content = append(content, []string{lb.Name, lb.Type, lb.Address, lb.AddressType, lb.CreatedWith, lb.CreatedAt})
 	}
 

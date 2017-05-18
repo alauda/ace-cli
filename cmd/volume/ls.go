@@ -77,7 +77,8 @@ func buildLsTableContent(result *client.ListVolumesResult) [][]string {
 	var content [][]string
 
 	for _, volume := range result.Volumes {
-		content = append(content, []string{volume.Name, volume.Driver, volume.State, strconv.Itoa(volume.Size), volume.CreatedAt, volume.CreatedBy})
+		content = append(content, []string{volume.Name, volume.Driver, volume.State,
+			strconv.Itoa(volume.Size), volume.CreatedAt, volume.CreatedBy})
 	}
 
 	return content

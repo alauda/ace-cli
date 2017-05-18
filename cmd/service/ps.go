@@ -71,8 +71,7 @@ func buildPsTableHeader() []string {
 func buildPsTableContent(result *client.ListServicesResult) [][]string {
 	var content [][]string
 
-	for i := 0; i < len(result.Services); i++ {
-		service := result.Services[i]
+	for _, service := range result.Services {
 		image := fmt.Sprintf("%s:%s", service.ImageName, service.ImageTag)
 		cpu := strconv.FormatFloat(service.Size.CPU, 'f', -1, 64)
 		size := fmt.Sprintf("CPU: %s, Memory: %d", cpu, service.Size.Memory)
