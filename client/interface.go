@@ -11,6 +11,7 @@ type APIClient interface {
 	SpaceClient
 	ClusterClient
 	LoadBalancerClient
+	VolumeClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -48,6 +49,11 @@ type LoadBalancerClient interface {
 	ListLoadBalancers(*ListLoadBalancersParams) (*ListLoadBalancersResult, error)
 	InspectLoadBalancer(string) (*LoadBalancer, error)
 	UpdateLoadBalancer(string, *UpdateLoadBalancerData) error
+}
+
+// VolumeClient is the API client for volume related APIs.
+type VolumeClient interface {
+	ListVolumes(*ListVolumesParams) (*ListVolumesResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
