@@ -1,8 +1,12 @@
 package volume
 
 import (
+	"fmt"
+
 	"github.com/alauda/alauda/client"
+	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // NewVolumeCmd creates a new volume command.
@@ -18,6 +22,7 @@ func NewVolumeCmd(alauda client.APIClient) *cobra.Command {
 
 	volumeCmd.AddCommand(
 		NewLsCmd(alauda),
+		NewInspectCmd(alauda),
 	)
 
 	return volumeCmd
@@ -30,4 +35,30 @@ func getClusterID(alauda client.APIClient, name string) (string, error) {
 	}
 
 	return cluster.ID, nil
+}
+
+func getVolumeID(alauda client.APIClient, name string) (string, error) {
+	cluster := viper.GetString(util.SettingCluster)
+
+	clusterID, err := getClusterID(alauda, cluster)
+	if err != nil {
+		return "", err
+	}
+
+	params := client.ListVolumesParams{
+		ClusterID: clusterID,
+	}
+
+	result, err := alauda.ListVolumes(&params)
+	if err != nil {
+		return "", err
+	}
+
+	for _, volume := range result.Volumes {
+		if volume.Name == name {
+			return volume.ID, nil
+		}
+	}
+
+	return "", fmt.Errorf("volume %s not found", name)
 }

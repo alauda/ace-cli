@@ -54,6 +54,7 @@ type LoadBalancerClient interface {
 // VolumeClient is the API client for volume related APIs.
 type VolumeClient interface {
 	ListVolumes(*ListVolumesParams) (*ListVolumesResult, error)
+	InspectVolume(string) (*Volume, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
