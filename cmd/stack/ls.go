@@ -1,8 +1,7 @@
-package volume
+package stack
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -13,13 +12,13 @@ type lsOptions struct {
 	cluster string
 }
 
-// NewLsCmd creates a new volume ls command.
+// NewLsCmd creates a new stack ls command.
 func NewLsCmd(alauda client.APIClient) *cobra.Command {
 	var opts lsOptions
 
 	lsCmd := &cobra.Command{
 		Use:   "ls",
-		Short: "List volumes",
+		Short: "List stacks",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return doLs(alauda, &opts)
@@ -32,7 +31,7 @@ func NewLsCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doLs(alauda client.APIClient, opts *lsOptions) error {
-	fmt.Println("[alauda] Listing volumes")
+	fmt.Println("[alauda] Listing stacks")
 
 	util.InitializeClient(alauda)
 
@@ -41,16 +40,11 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 		return err
 	}
 
-	clusterID, err := getClusterID(alauda, cluster)
-	if err != nil {
-		return err
+	params := client.ListStacksParams{
+		Cluster: cluster,
 	}
 
-	params := client.ListVolumesParams{
-		ClusterID: clusterID,
-	}
-
-	result, err := alauda.ListVolumes(&params)
+	result, err := alauda.ListStacks(&params)
 	if err != nil {
 		return err
 	}
@@ -62,23 +56,22 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 	return nil
 }
 
-func printLsResult(lbs *client.ListVolumesResult) {
+func printLsResult(stacks *client.ListStacksResult) {
 	header := buildLsTableHeader()
-	content := buildLsTableContent(lbs)
+	content := buildLsTableContent(stacks)
 
 	util.PrintTable(header, content)
 }
 
 func buildLsTableHeader() []string {
-	return []string{"NAME", "DRIVER", "STATE", "SIZE", "CREATED AT", "CREATED BY"}
+	return []string{"NAME", "ID", "STATE", "CREATED BY"}
 }
 
-func buildLsTableContent(result *client.ListVolumesResult) [][]string {
+func buildLsTableContent(result *client.ListStacksResult) [][]string {
 	var content [][]string
 
-	for _, volume := range result.Volumes {
-		content = append(content, []string{volume.Name, volume.Driver, volume.State,
-			strconv.Itoa(volume.Size), volume.CreatedAt, volume.CreatedBy})
+	for _, stack := range result.Stacks {
+		content = append(content, []string{stack.Name, stack.ID, stack.State, stack.CreatedBy})
 	}
 
 	return content

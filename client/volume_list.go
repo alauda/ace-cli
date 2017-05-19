@@ -18,7 +18,7 @@ type ListVolumesResult struct {
 	Volumes []Volume
 }
 
-// ListVolumes returns all volumes, potentially filtered by a cluster.
+// ListVolumes returns all volumes in a cluster.
 func (client *Client) ListVolumes(params *ListVolumesParams) (*ListVolumesResult, error) {
 	url := client.buildListVolumesURL()
 	request := client.buildListVolumesRequest(params)
