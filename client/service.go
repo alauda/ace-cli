@@ -12,7 +12,7 @@ type Service struct {
 	Ports            []int               `json:"ports"`
 	TargetInstances  int                 `json:"target_num_instances"`
 	HealthyInstances int                 `json:"healthy_num_instances"`
-	Status           string              `json:"current_status"`
+	State            string              `json:"current_status"`
 	NetworkMode      string              `json:"network_mode"`
 	Env              map[string]string   `json:"instance_envvars"`
 }

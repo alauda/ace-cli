@@ -46,14 +46,14 @@ func printLsResult(spaces *client.ListSpacesResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"NAME", "CREATED", "STATUS"}
+	return []string{"NAME", "CREATED", "STATE"}
 }
 
 func buildLsTableContent(result *client.ListSpacesResult) [][]string {
 	var content [][]string
 
 	for _, space := range result.Spaces {
-		content = append(content, []string{space.Name, space.CreatedAt, space.Status})
+		content = append(content, []string{space.Name, space.CreatedAt, space.State})
 	}
 
 	return content
