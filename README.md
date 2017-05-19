@@ -24,10 +24,12 @@ Available Commands:
   scale       Scale a service to the specified number of instances
   service     Manage services
   space       Manage spaces
+  stack       Manage stacks
   start       Start a service
   stop        Stop a service
   update      Update a service
   version     Display version of Alauda CLI
+  volume      Manage volumes
 
 Flags:
       --config string   config file (default: $HOME/.alauda.yml)
