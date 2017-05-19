@@ -1,7 +1,6 @@
 package cluster
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -37,23 +36,12 @@ func doInspect(alauda client.APIClient, name string) error {
 		return err
 	}
 
-	err = printCluster(result)
+	err = util.Print(result)
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("[alauda] OK")
-
-	return nil
-}
-
-func printCluster(cluster *client.Cluster) error {
-	marshalled, err := json.MarshalIndent(cluster, "", "    ")
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(string(marshalled))
 
 	return nil
 }

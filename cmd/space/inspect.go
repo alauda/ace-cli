@@ -1,7 +1,6 @@
 package space
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -37,23 +36,12 @@ func doInspect(alauda client.APIClient, name string) error {
 		return err
 	}
 
-	err = printSpace(result)
+	err = util.Print(result)
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("[alauda] OK")
-
-	return nil
-}
-
-func printSpace(space *client.Space) error {
-	marshalled, err := json.MarshalIndent(space, "", "    ")
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(string(marshalled))
 
 	return nil
 }

@@ -1,6 +1,8 @@
 package util
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/olekukonko/tablewriter"
@@ -16,4 +18,16 @@ func PrintTable(header []string, content [][]string) {
 	table.SetBorder(false)
 
 	table.Render()
+}
+
+// Print marshals the object into an indented JSON and prints it.
+func Print(v interface{}) error {
+	marshalled, err := json.MarshalIndent(v, "", "    ")
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(string(marshalled))
+
+	return nil
 }

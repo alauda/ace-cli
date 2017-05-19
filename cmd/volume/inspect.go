@@ -1,7 +1,6 @@
 package volume
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -42,23 +41,12 @@ func doInspect(alauda client.APIClient, name string) error {
 		return err
 	}
 
-	err = printVolume(result)
+	err = util.Print(result)
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("[alauda] OK")
-
-	return nil
-}
-
-func printVolume(lb *client.Volume) error {
-	marshalled, err := json.MarshalIndent(lb, "", "    ")
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(string(marshalled))
 
 	return nil
 }
