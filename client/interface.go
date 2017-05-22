@@ -56,6 +56,7 @@ type LoadBalancerClient interface {
 type VolumeClient interface {
 	ListVolumes(*ListVolumesParams) (*ListVolumesResult, error)
 	InspectVolume(string) (*Volume, error)
+	CreateVolume(*CreateVolumeData) error
 }
 
 // StackClient is the API client for the stack related APIs.
