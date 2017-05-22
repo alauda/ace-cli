@@ -7,7 +7,7 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
-// RemoveService starts the specified service.
+// RemoveService deletes the specified service.
 func (client *Client) RemoveService(name string) error {
 	url := client.buildRemoveServiceURL(name)
 	request := client.buildRemoveServiceRequest()

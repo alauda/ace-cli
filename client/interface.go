@@ -57,6 +57,7 @@ type VolumeClient interface {
 	ListVolumes(*ListVolumesParams) (*ListVolumesResult, error)
 	InspectVolume(string) (*Volume, error)
 	CreateVolume(*CreateVolumeData) error
+	RemoveVolume(string) error
 }
 
 // StackClient is the API client for the stack related APIs.
