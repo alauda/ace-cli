@@ -7,10 +7,10 @@ import (
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/cluster"
+	"github.com/alauda/alauda/cmd/compose"
 	"github.com/alauda/alauda/cmd/lb"
 	"github.com/alauda/alauda/cmd/service"
 	"github.com/alauda/alauda/cmd/space"
-	"github.com/alauda/alauda/cmd/stack"
 	"github.com/alauda/alauda/cmd/util"
 	"github.com/alauda/alauda/cmd/volume"
 	"github.com/spf13/cobra"
@@ -61,7 +61,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		cluster.NewClusterCmd(alauda),
 		lb.NewLBCmd(alauda),
 		volume.NewVolumeCmd(alauda),
-		stack.NewStackCmd(alauda),
+		compose.NewComposeCmd(alauda),
 	)
 }
 

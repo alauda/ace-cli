@@ -1,4 +1,4 @@
-package stack
+package compose
 
 import (
 	"fmt"
@@ -12,13 +12,13 @@ type lsOptions struct {
 	cluster string
 }
 
-// NewLsCmd creates a new stack ls command.
+// NewLsCmd creates a new compose ls command.
 func NewLsCmd(alauda client.APIClient) *cobra.Command {
 	var opts lsOptions
 
 	lsCmd := &cobra.Command{
 		Use:   "ls",
-		Short: "List stacks",
+		Short: "List apps",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return doLs(alauda, &opts)
@@ -31,7 +31,7 @@ func NewLsCmd(alauda client.APIClient) *cobra.Command {
 }
 
 func doLs(alauda client.APIClient, opts *lsOptions) error {
-	fmt.Println("[alauda] Listing stacks")
+	fmt.Println("[alauda] Listing apps")
 
 	util.InitializeClient(alauda)
 
@@ -40,11 +40,11 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 		return err
 	}
 
-	params := client.ListStacksParams{
+	params := client.ListAppsParams{
 		Cluster: cluster,
 	}
 
-	result, err := alauda.ListStacks(&params)
+	result, err := alauda.ListApps(&params)
 	if err != nil {
 		return err
 	}
@@ -56,9 +56,9 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 	return nil
 }
 
-func printLsResult(stacks *client.ListStacksResult) {
+func printLsResult(apps *client.ListAppsResult) {
 	header := buildLsTableHeader()
-	content := buildLsTableContent(stacks)
+	content := buildLsTableContent(apps)
 
 	util.PrintTable(header, content)
 }
@@ -67,11 +67,11 @@ func buildLsTableHeader() []string {
 	return []string{"NAME", "ID", "STATE", "CREATED BY"}
 }
 
-func buildLsTableContent(result *client.ListStacksResult) [][]string {
+func buildLsTableContent(result *client.ListAppsResult) [][]string {
 	var content [][]string
 
-	for _, stack := range result.Stacks {
-		content = append(content, []string{stack.Name, stack.ID, stack.State, stack.CreatedBy})
+	for _, app := range result.Apps {
+		content = append(content, []string{app.Name, app.ID, app.State, app.CreatedBy})
 	}
 
 	return content

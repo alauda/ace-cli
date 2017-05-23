@@ -12,7 +12,7 @@ type APIClient interface {
 	ClusterClient
 	LoadBalancerClient
 	VolumeClient
-	StackClient
+	AppClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -60,9 +60,9 @@ type VolumeClient interface {
 	RemoveVolume(string) error
 }
 
-// StackClient is the API client for the stack related APIs.
-type StackClient interface {
-	ListStacks(*ListStacksParams) (*ListStacksResult, error)
+// AppClient is the API client for the app related APIs.
+type AppClient interface {
+	ListApps(*ListAppsParams) (*ListAppsResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
