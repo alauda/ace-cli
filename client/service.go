@@ -15,6 +15,7 @@ type Service struct {
 	State            string              `json:"current_status"`
 	NetworkMode      string              `json:"network_mode"`
 	Env              map[string]string   `json:"instance_envvars"`
+	Volumes          []ServiceVolume     `json:"volumes"`
 }
 
 // ServiceInstanceSize defines the size of the service instances.
@@ -35,4 +36,11 @@ type ServiceListener struct {
 	ListenerPort  int    `json:"listener_port"`
 	ContainerPort int    `json:"container_port"`
 	Protocol      string `json:"protocol"`
+}
+
+// ServiceVolume defines the volume data in the CreateService request.
+type ServiceVolume struct {
+	Path       string `json:"app_volume_dir"`
+	VolumeName string `json:"volume_name"`
+	VolumeID   string `json:"volume_id"`
 }

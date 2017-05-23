@@ -3,9 +3,11 @@ package service
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
+	"github.com/alauda/alauda/cmd/volume"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +22,7 @@ type createOptions struct {
 	cmd        string
 	entrypoint string
 	publish    []string
+	volumes    []string
 }
 
 // NewCreateCmd creates a new create service command.
@@ -48,6 +51,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	createCmd.Flags().StringVarP(&opts.cmd, "run-command", "r", "", "Command to run")
 	createCmd.Flags().StringVarP(&opts.entrypoint, "entrypoint", "", "", "Entrypoint for the container")
 	createCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Ports to publish on the load balancer ([lb:][listenerPort:]containerPort[/protocol]")
+	createCmd.Flags().StringSliceVarP(&opts.volumes, "volume", "v", []string{}, "Volumes to mount to the container (volumeName:containerPath)")
 
 	return createCmd
 }
@@ -93,6 +97,11 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
+	volumes, err := parseVolumes(alauda, opts)
+	if err != nil {
+		return err
+	}
+
 	data := client.CreateServiceData{
 		Version:         "v2",
 		Name:            name,
@@ -110,6 +119,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		NetworkMode:     "BRIDGE",
 		Env:             env,
 		LoadBalancers:   loadBalancers,
+		Volumes:         volumes,
 		CustomInstanceSize: client.ServiceInstanceSize{
 			CPU:    opts.cpu,
 			Memory: opts.memory,
@@ -208,4 +218,37 @@ func getDefaultLoadBalancerID(alauda client.APIClient, cluster string) (string, 
 	}
 
 	return "", errors.New("no external haproxy found")
+}
+
+func parseVolumes(alauda client.APIClient, opts *createOptions) ([]client.ServiceVolume, error) {
+	var volumes = []client.ServiceVolume{}
+
+	for _, desc := range opts.volumes {
+		volumeName, containerPath, err := parseVolume(desc)
+		if err != nil {
+			return nil, err
+		}
+
+		volumeID, err := volume.GetVolumeID(alauda, volumeName)
+
+		volume := client.ServiceVolume{
+			Path:       containerPath,
+			VolumeName: volumeName,
+			VolumeID:   volumeID,
+		}
+
+		volumes = append(volumes, volume)
+	}
+
+	return volumes, nil
+}
+
+func parseVolume(desc string) (string, string, error) {
+	result := strings.Split(desc, ":")
+
+	if len(result) != 2 {
+		return "", "", errors.New("invalid volume descriptor, expecting volumeName:containerPath")
+	}
+
+	return result[0], result[1], nil
 }

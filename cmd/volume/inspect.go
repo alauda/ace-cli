@@ -31,7 +31,7 @@ func doInspect(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	id, err := getVolumeID(alauda, name)
+	id, err := GetVolumeID(alauda, name)
 	if err != nil {
 		return err
 	}

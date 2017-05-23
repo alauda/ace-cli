@@ -33,13 +33,13 @@ var cliTests = []struct {
 	{[]string{"alauda", "volume", "ls"}},
 	{[]string{"alauda", "volume", "create", "%VOLUME%"}},
 	{[]string{"alauda", "volume", "inspect", "%VOLUME%"}},
-	{[]string{"alauda", "volume", "rm", "%VOLUME%"}},
 	{[]string{"alauda", "stack", "ls"}},
 	{[]string{"alauda", "service", "ps"}},
 	{[]string{"alauda", "service", "run", "%NAME%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
 		"--expose", "80", "--expose", "81",
 		"--publish", "10080", "-p", "%LB%:10081:10081", "-p", "%LB%:10082:10082/http", "-p", "%LBI%:10083:10083/tcp",
+		"-v", "%VOLUME%:/tempdata",
 		"--cpu", "0.256", "--memory", "256",
 		"-n", "2",
 		"--env", "FOO=foo", "-e", "BAR=bar",
@@ -48,6 +48,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "lb", "bind", "%LB%", "--listener", "%NAME%:80", "-l", "%NAME%:81/http", "-l", "%NAME%:21234:1234"}},
 	{[]string{"alauda", "lb", "unbind", "%LB%", "--listener", "%NAME%:80:80", "-l", "%NAME%:21234:1234"}},
 	{[]string{"alauda", "service", "rm", "%NAME%"}},
+	{[]string{"alauda", "volume", "rm", "%VOLUME%"}},
 }
 
 func TestCli(t *testing.T) {

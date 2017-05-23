@@ -51,7 +51,7 @@ func ParseListener(desc string) (string, int, int, string, error) {
 	result := strings.Split(desc, "/")
 
 	if len(result) > 2 {
-		return "", 0, 0, "", errors.New("invalid listener descriptor, expected [name:][listenerPort:]containerPort[/protocol]")
+		return "", 0, 0, "", errors.New("invalid listener descriptor, expecting [name:][listenerPort:]containerPort[/protocol]")
 	}
 
 	if len(result) == 2 {
@@ -66,7 +66,7 @@ func ParseListener(desc string) (string, int, int, string, error) {
 	result = strings.Split(desc, ":")
 
 	if len(result) > 3 {
-		return "", 0, 0, "", errors.New("invalid listener descriptor, expected [name:][listenerPort:]containerPort")
+		return "", 0, 0, "", errors.New("invalid listener descriptor, expecting [name:][listenerPort:]containerPort")
 	}
 
 	switch len(result) {
@@ -80,7 +80,7 @@ func ParseListener(desc string) (string, int, int, string, error) {
 		// name:containerPort or listenerPort:containerPort
 		containerPort, err = strconv.Atoi(result[1])
 		if err != nil {
-			return "", 0, 0, "", errors.New("invalid listener descriptor, expected name:containerPort or listenerPort:containerPort")
+			return "", 0, 0, "", errors.New("invalid listener descriptor, expecting name:containerPort or listenerPort:containerPort")
 		}
 
 		listenerPort, err = strconv.Atoi(result[0])

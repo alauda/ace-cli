@@ -39,7 +39,8 @@ func getClusterID(alauda client.APIClient, name string) (string, error) {
 	return cluster.ID, nil
 }
 
-func getVolumeID(alauda client.APIClient, name string) (string, error) {
+// GetVolumeID retrieves the ID of a volume given its name.
+func GetVolumeID(alauda client.APIClient, name string) (string, error) {
 	cluster := viper.GetString(util.SettingCluster)
 
 	if cluster != "" {
