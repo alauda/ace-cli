@@ -11,6 +11,7 @@ Usage:
 
 Available Commands:
   cluster     Manage clusters
+  compose     Manage application compose
   create      Create a new service
   help        Help about any command
   inspect     Inspect a service
@@ -24,7 +25,6 @@ Available Commands:
   scale       Scale a service to the specified number of instances
   service     Manage services
   space       Manage spaces
-  stack       Manage stacks
   start       Start a service
   stop        Stop a service
   update      Update a service
