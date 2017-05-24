@@ -50,14 +50,15 @@ func doPs(alauda client.APIClient, opts *psOptions) error {
 		return err
 	}
 
-	printPsResult(result)
+	PrintServices(result.Services)
 
 	fmt.Println("[alauda] OK")
 
 	return nil
 }
 
-func printPsResult(services *client.ListServicesResult) {
+// PrintServices prints the service list in a table.
+func PrintServices(services []client.Service) {
 	header := buildPsTableHeader()
 	content := buildPsTableContent(services)
 
@@ -68,10 +69,10 @@ func buildPsTableHeader() []string {
 	return []string{"NAME", "IMAGE", "COMMAND", "CREATED", "SIZE", "PORTS", "COUNT", "STATE"}
 }
 
-func buildPsTableContent(result *client.ListServicesResult) [][]string {
+func buildPsTableContent(services []client.Service) [][]string {
 	var content [][]string
 
-	for _, service := range result.Services {
+	for _, service := range services {
 		image := fmt.Sprintf("%s:%s", service.ImageName, service.ImageTag)
 		cpu := strconv.FormatFloat(service.Size.CPU, 'f', -1, 64)
 		size := fmt.Sprintf("CPU: %s, Memory: %d", cpu, service.Size.Memory)
