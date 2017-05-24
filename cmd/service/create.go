@@ -51,7 +51,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	createCmd.Flags().StringVarP(&opts.cmd, "run-command", "r", "", "Command to run")
 	createCmd.Flags().StringVarP(&opts.entrypoint, "entrypoint", "", "", "Entrypoint for the container")
 	createCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Ports to publish on the load balancer ([lb:][listenerPort:]containerPort[/protocol]")
-	createCmd.Flags().StringSliceVarP(&opts.volumes, "volume", "v", []string{}, "Volumes to mount to the container (volumeName:containerPath)")
+	createCmd.Flags().StringSliceVarP(&opts.volumes, "volume", "v", []string{}, "Volumes to mount to the container (volumeName:containerPath or hostPath:containerPath)")
 
 	return createCmd
 }
@@ -229,7 +229,14 @@ func parseVolumes(alauda client.APIClient, opts *createOptions) ([]client.Servic
 			return nil, err
 		}
 
-		volumeID, err := volume.GetVolumeID(alauda, volumeName)
+		volumeID := "host_path"
+
+		if !strings.HasPrefix(volumeName, "/") {
+			volumeID, err = volume.GetVolumeID(alauda, volumeName)
+			if err != nil {
+				return nil, err
+			}
+		}
 
 		volume := client.ServiceVolume{
 			Path:       containerPath,
@@ -247,7 +254,7 @@ func parseVolume(desc string) (string, string, error) {
 	result := strings.Split(desc, ":")
 
 	if len(result) != 2 {
-		return "", "", errors.New("invalid volume descriptor, expecting volumeName:containerPath")
+		return "", "", errors.New("invalid volume descriptor, expecting volumeName:containerPath or hostPath:containerPath")
 	}
 
 	return result[0], result[1], nil

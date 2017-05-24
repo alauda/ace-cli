@@ -39,7 +39,7 @@ var cliTests = []struct {
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
 		"--expose", "80", "--expose", "81",
 		"--publish", "10080", "-p", "%LB%:10081:10081", "-p", "%LB%:10082:10082/http", "-p", "%LBI%:10083:10083/tcp",
-		"-v", "%VOLUME%:/tempdata",
+		"-v", "%VOLUME%:/tempdata", "--volume", "/var:/tempdata2",
 		"--cpu", "0.256", "--memory", "256",
 		"-n", "2",
 		"--env", "FOO=foo", "-e", "BAR=bar",
