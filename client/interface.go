@@ -63,6 +63,7 @@ type VolumeClient interface {
 // AppClient is the API client for the app related APIs.
 type AppClient interface {
 	ListApps(*ListAppsParams) (*ListAppsResult, error)
+	InspectApp(string) (*App, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
