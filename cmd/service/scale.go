@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewScaleCmd creates a new scale service command.
+// NewScaleCmd creates a new service scale command.
 func NewScaleCmd(alauda client.APIClient) *cobra.Command {
 	scaleCmd := &cobra.Command{
 		Use:   "scale NAME=NUMBER",

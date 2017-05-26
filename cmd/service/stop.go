@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewStopCmd creates a new stop service command.
+// NewStopCmd creates a new service stop command.
 func NewStopCmd(alauda client.APIClient) *cobra.Command {
 	stopCmd := &cobra.Command{
 		Use:   "stop NAME",

@@ -18,7 +18,7 @@ type updateOptions struct {
 	entrypoint string
 }
 
-// NewUpdateCmd creates a new create service command.
+// NewUpdateCmd creates a new service update command.
 func NewUpdateCmd(alauda client.APIClient) *cobra.Command {
 	var opts updateOptions
 

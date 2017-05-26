@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewInspectCmd creates a new start service command.
+// NewInspectCmd creates a new service inspect command.
 func NewInspectCmd(alauda client.APIClient) *cobra.Command {
 	inspectCmd := &cobra.Command{
 		Use:   "inspect NAME",

@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRmCmd creates a new remove service command.
+// NewRmCmd creates a new service rm command.
 func NewRmCmd(alauda client.APIClient) *cobra.Command {
 	startCmd := &cobra.Command{
 		Use:   "rm NAME",

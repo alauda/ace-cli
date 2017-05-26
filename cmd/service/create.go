@@ -25,7 +25,7 @@ type createOptions struct {
 	volumes    []string
 }
 
-// NewCreateCmd creates a new create service command.
+// NewCreateCmd creates a new service create command.
 func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	var opts createOptions
 

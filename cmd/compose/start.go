@@ -1,4 +1,4 @@
-package service
+package compose
 
 import (
 	"errors"
@@ -9,15 +9,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewStartCmd creates a new service start command.
+// NewStartCmd creates a new compose start command.
 func NewStartCmd(alauda client.APIClient) *cobra.Command {
 	startCmd := &cobra.Command{
 		Use:   "start NAME",
-		Short: "Start a service",
+		Short: "Start an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
-				return errors.New("service start expects NAME")
+				return errors.New("compose start expects NAME")
 			}
 			return doStart(alauda, args[0])
 		},
@@ -31,7 +31,7 @@ func doStart(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	err := alauda.StartService(name)
+	err := alauda.StartApp(name)
 	if err != nil {
 		return err
 	}

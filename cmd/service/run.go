@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRunCmd creates a new run service command.
+// NewRunCmd creates a new service run command.
 func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	var opts createOptions
 
