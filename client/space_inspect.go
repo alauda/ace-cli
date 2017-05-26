@@ -2,15 +2,13 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
 
 // InspectSpace retrieves details about a specific space.
 func (client *Client) InspectSpace(name string) (*Space, error) {
-	url := client.buildInspectSpaceURL(name)
+	url := client.buildURL("spaces", "space/%s", name)
 	request := client.buildInspectSpaceRequest()
 
 	response, err := request.Get(url)
@@ -29,11 +27,6 @@ func (client *Client) InspectSpace(name string) (*Space, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildInspectSpaceURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/spaces/%s/space/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildInspectSpaceRequest() *rest.Request {

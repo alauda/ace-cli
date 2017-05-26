@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -15,7 +13,7 @@ type ListSpacesResult struct {
 
 // ListSpaces returns all spaces in an account.
 func (client *Client) ListSpaces() (*ListSpacesResult, error) {
-	url := client.buildListSpacesURL()
+	url := client.buildURL("spaces", "")
 	request := client.buildListSpacesRequest()
 
 	response, err := request.Get(url)
@@ -34,11 +32,6 @@ func (client *Client) ListSpaces() (*ListSpacesResult, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildListSpacesURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/spaces/%s", server, client.Namespace())
 }
 
 func (client *Client) buildListSpacesRequest() *rest.Request {

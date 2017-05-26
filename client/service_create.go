@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -32,7 +30,7 @@ type CreateServiceData struct {
 
 // CreateService creates and deploys a new service.
 func (client *Client) CreateService(data *CreateServiceData) error {
-	url := client.buildCreateServiceURL()
+	url := client.buildURL("services", "")
 
 	request, err := client.buildCreateServiceRequest(data)
 	if err != nil {
@@ -50,11 +48,6 @@ func (client *Client) CreateService(data *CreateServiceData) error {
 	}
 
 	return nil
-}
-
-func (client *Client) buildCreateServiceURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/services/%s", server, client.Namespace())
 }
 
 func (client *Client) buildCreateServiceRequest(data *CreateServiceData) (*rest.Request, error) {

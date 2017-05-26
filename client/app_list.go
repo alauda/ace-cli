@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -20,7 +18,7 @@ type ListAppsResult struct {
 
 // ListApps returns all apps in a cluster.
 func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) {
-	url := client.buildListAppsURL()
+	url := client.buildURL("applications", "")
 	request := client.buildListAppsRequest(params)
 
 	response, err := request.Get(url)
@@ -39,11 +37,6 @@ func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) 
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildListAppsURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/applications/%s", server, client.Namespace())
 }
 
 func (client *Client) buildListAppsRequest(params *ListAppsParams) *rest.Request {

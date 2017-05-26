@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -20,7 +18,7 @@ type UpdateServiceData struct {
 
 // UpdateService scales the service to the specified number of instances
 func (client *Client) UpdateService(name string, data *UpdateServiceData) error {
-	url := client.buildUpdateServiceURL(name)
+	url := client.buildURL("services", name)
 
 	request, err := client.buildUpdateServiceRequest(data)
 	if err != nil {
@@ -38,11 +36,6 @@ func (client *Client) UpdateService(name string, data *UpdateServiceData) error 
 	}
 
 	return nil
-}
-
-func (client *Client) buildUpdateServiceURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/services/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildUpdateServiceRequest(data *UpdateServiceData) (*rest.Request, error) {

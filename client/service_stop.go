@@ -1,15 +1,12 @@
 package client
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/alauda/alauda/client/rest"
 )
 
 // StopService stops the specified service.
 func (client *Client) StopService(name string) error {
-	url := client.buildStopServiceURL(name)
+	url := client.buildURL("services", "%s/stop", name)
 	request := client.buildStopServiceRequest()
 
 	response, err := request.Put(url)
@@ -23,11 +20,6 @@ func (client *Client) StopService(name string) error {
 	}
 
 	return nil
-}
-
-func (client *Client) buildStopServiceURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/services/%s/%s/stop", server, client.Namespace(), name)
 }
 
 func (client *Client) buildStopServiceRequest() *rest.Request {

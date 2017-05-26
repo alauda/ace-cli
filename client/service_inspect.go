@@ -2,15 +2,13 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
 
 // InspectService retrieves details about the specified service.
 func (client *Client) InspectService(name string) (*Service, error) {
-	url := client.buildInspectServiceURL(name)
+	url := client.buildURL("services", name)
 	request := client.buildInspectServiceRequest()
 
 	response, err := request.Get(url)
@@ -29,11 +27,6 @@ func (client *Client) InspectService(name string) (*Service, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildInspectServiceURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/services/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildInspectServiceRequest() *rest.Request {

@@ -1,15 +1,12 @@
 package client
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/alauda/alauda/client/rest"
 )
 
 // RemoveVolume deletes the specified volume.
 func (client *Client) RemoveVolume(id string) error {
-	url := client.buildRemoveVolumeURL(id)
+	url := client.buildURL("storage", "volumes/%s", id)
 	request := client.buildRemoveVolumeRequest()
 
 	response, err := request.Delete(url)
@@ -23,11 +20,6 @@ func (client *Client) RemoveVolume(id string) error {
 	}
 
 	return nil
-}
-
-func (client *Client) buildRemoveVolumeURL(id string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/storage/%s/volumes/%s", server, client.Namespace(), id)
 }
 
 func (client *Client) buildRemoveVolumeRequest() *rest.Request {

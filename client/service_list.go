@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -21,7 +19,7 @@ type ListServicesResult struct {
 
 // ListServices returns all services deployed.
 func (client *Client) ListServices(params *ListServicesParams) (*ListServicesResult, error) {
-	url := client.buildListServicesURL()
+	url := client.buildURL("services", "")
 	request := client.buildListServicesRequest(params)
 
 	response, err := request.Get(url)
@@ -40,11 +38,6 @@ func (client *Client) ListServices(params *ListServicesParams) (*ListServicesRes
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildListServicesURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/services/%s", server, client.Namespace())
 }
 
 func (client *Client) buildListServicesRequest(params *ListServicesParams) *rest.Request {

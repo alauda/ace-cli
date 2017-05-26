@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -20,7 +18,7 @@ type CreateVolumeData struct {
 
 // CreateVolume creates a new volume.
 func (client *Client) CreateVolume(data *CreateVolumeData) error {
-	url := client.buildCreateVolumeURL()
+	url := client.buildURL("storage", "volumes")
 
 	request, err := client.buildCreateVolumeRequest(data)
 	if err != nil {
@@ -38,11 +36,6 @@ func (client *Client) CreateVolume(data *CreateVolumeData) error {
 	}
 
 	return nil
-}
-
-func (client *Client) buildCreateVolumeURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/storage/%s/volumes", server, client.Namespace())
 }
 
 func (client *Client) buildCreateVolumeRequest(data *CreateVolumeData) (*rest.Request, error) {

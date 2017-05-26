@@ -1,5 +1,10 @@
 package client
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Client is the API client for the Alauda platform.
 type Client struct {
 	apiServer string
@@ -32,4 +37,16 @@ func (client *Client) Initialize(apiServer string, namespace string, token strin
 	client.apiServer = apiServer
 	client.namespace = namespace
 	client.token = token
+}
+
+func (client *Client) buildURL(route string, format string, a ...interface{}) string {
+	server := strings.TrimSuffix(client.APIServer(), "/")
+	path := fmt.Sprintf(format, a...)
+
+	if route != "" {
+		namespacedRoute := fmt.Sprintf("%s/%s", route, client.Namespace())
+		return fmt.Sprintf("%s/%s/%s", server, namespacedRoute, path)
+	}
+
+	return fmt.Sprintf("%s/%s", server, path)
 }

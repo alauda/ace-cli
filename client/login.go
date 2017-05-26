@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -25,7 +23,7 @@ type LoginResult struct {
 
 // Login authenticates against the Alauda server.
 func (client *Client) Login(data *LoginData) (*LoginResult, error) {
-	url := client.buildLoginURL()
+	url := client.buildURL("", "generate-api-token")
 
 	request, err := client.buildLoginRequest(data)
 	if err != nil {
@@ -43,11 +41,6 @@ func (client *Client) Login(data *LoginData) (*LoginResult, error) {
 	}
 
 	return parseLoginResult(response)
-}
-
-func (client *Client) buildLoginURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/%s", server, "generate-api-token")
 }
 
 func (client *Client) buildLoginRequest(data *LoginData) (*rest.Request, error) {

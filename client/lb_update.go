@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -24,7 +22,7 @@ type ListenerData struct {
 
 // UpdateLoadBalancer creates or removes listeners for the service endpoints on the load balancer.
 func (client *Client) UpdateLoadBalancer(name string, data *UpdateLoadBalancerData) error {
-	url := client.buildUpdateLoadBalancerURL(name)
+	url := client.buildURL("load_balancers", name)
 
 	request, err := client.buildUpdateLoadBalancerRequest(data)
 	if err != nil {
@@ -42,11 +40,6 @@ func (client *Client) UpdateLoadBalancer(name string, data *UpdateLoadBalancerDa
 	}
 
 	return nil
-}
-
-func (client *Client) buildUpdateLoadBalancerURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/load_balancers/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildUpdateLoadBalancerRequest(data *UpdateLoadBalancerData) (*rest.Request, error) {

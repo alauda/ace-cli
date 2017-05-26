@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -21,7 +19,7 @@ type ListLoadBalancersResult struct {
 
 // ListLoadBalancers returns all LBs in a cluster, potentially filtered by a specific service.
 func (client *Client) ListLoadBalancers(params *ListLoadBalancersParams) (*ListLoadBalancersResult, error) {
-	url := client.buildListLoadBalancersURL()
+	url := client.buildURL("load_balancers", "")
 	request := client.buildListLoadBalancersRequest(params)
 
 	response, err := request.Get(url)
@@ -40,11 +38,6 @@ func (client *Client) ListLoadBalancers(params *ListLoadBalancersParams) (*ListL
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildListLoadBalancersURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/load_balancers/%s", server, client.Namespace())
 }
 
 func (client *Client) buildListLoadBalancersRequest(params *ListLoadBalancersParams) *rest.Request {

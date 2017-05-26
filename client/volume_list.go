@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -20,7 +18,7 @@ type ListVolumesResult struct {
 
 // ListVolumes returns all volumes in a cluster.
 func (client *Client) ListVolumes(params *ListVolumesParams) (*ListVolumesResult, error) {
-	url := client.buildListVolumesURL()
+	url := client.buildURL("storage", "volumes")
 	request := client.buildListVolumesRequest(params)
 
 	response, err := request.Get(url)
@@ -39,11 +37,6 @@ func (client *Client) ListVolumes(params *ListVolumesParams) (*ListVolumesResult
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildListVolumesURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/storage/%s/volumes", server, client.Namespace())
 }
 
 func (client *Client) buildListVolumesRequest(params *ListVolumesParams) *rest.Request {

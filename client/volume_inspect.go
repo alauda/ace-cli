@@ -2,15 +2,13 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
 
 // InspectVolume retrieves details about a specific volume.
 func (client *Client) InspectVolume(id string) (*Volume, error) {
-	url := client.buildInspectVolumeURL(id)
+	url := client.buildURL("storage", "volumes/%s", id)
 	request := client.buildInspectVolumeRequest()
 
 	response, err := request.Get(url)
@@ -29,11 +27,6 @@ func (client *Client) InspectVolume(id string) (*Volume, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildInspectVolumeURL(id string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/storage/%s/volumes/%s", server, client.Namespace(), id)
 }
 
 func (client *Client) buildInspectVolumeRequest() *rest.Request {

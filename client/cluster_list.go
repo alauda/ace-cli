@@ -2,8 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
@@ -15,7 +13,7 @@ type ListClustersResult struct {
 
 // ListClusters returns all clusters in an account.
 func (client *Client) ListClusters() (*ListClustersResult, error) {
-	url := client.buildListClustersURL()
+	url := client.buildURL("regions", "")
 	request := client.buildListClustersRequest()
 
 	response, err := request.Get(url)
@@ -34,11 +32,6 @@ func (client *Client) ListClusters() (*ListClustersResult, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildListClustersURL() string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/regions/%s", server, client.Namespace())
 }
 
 func (client *Client) buildListClustersRequest() *rest.Request {

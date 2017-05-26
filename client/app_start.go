@@ -1,15 +1,12 @@
 package client
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/alauda/alauda/client/rest"
 )
 
 // StartApp starts the specified application.
 func (client *Client) StartApp(name string) error {
-	url := client.buildStartAppURL(name)
+	url := client.buildURL("applications", "%s/start", name)
 	request := client.buildStartAppRequest()
 
 	response, err := request.Put(url)
@@ -23,11 +20,6 @@ func (client *Client) StartApp(name string) error {
 	}
 
 	return nil
-}
-
-func (client *Client) buildStartAppURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/applications/%s/%s/start", server, client.Namespace(), name)
 }
 
 func (client *Client) buildStartAppRequest() *rest.Request {

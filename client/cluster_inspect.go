@@ -2,15 +2,13 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
 
 // InspectCluster retrieves details about the specified cluster.
 func (client *Client) InspectCluster(name string) (*Cluster, error) {
-	url := client.buildInspectClusterURL(name)
+	url := client.buildURL("regions", name)
 	request := client.buildInspectClusterRequest()
 
 	response, err := request.Get(url)
@@ -29,11 +27,6 @@ func (client *Client) InspectCluster(name string) (*Cluster, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildInspectClusterURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/regions/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildInspectClusterRequest() *rest.Request {

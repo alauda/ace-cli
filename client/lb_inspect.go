@@ -2,15 +2,13 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client/rest"
 )
 
 // InspectLoadBalancer retrieves details about a specific LB.
 func (client *Client) InspectLoadBalancer(name string) (*LoadBalancer, error) {
-	url := client.buildInspectLoadBalancerURL(name)
+	url := client.buildURL("load_balancers", name)
 	request := client.buildInspectLoadBalancerRequest()
 
 	response, err := request.Get(url)
@@ -29,11 +27,6 @@ func (client *Client) InspectLoadBalancer(name string) (*LoadBalancer, error) {
 	}
 
 	return result, nil
-}
-
-func (client *Client) buildInspectLoadBalancerURL(name string) string {
-	server := strings.TrimSuffix(client.APIServer(), "/")
-	return fmt.Sprintf("%s/load_balancers/%s/%s", server, client.Namespace(), name)
 }
 
 func (client *Client) buildInspectLoadBalancerRequest() *rest.Request {
