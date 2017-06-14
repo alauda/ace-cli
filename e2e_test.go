@@ -12,13 +12,12 @@ import (
 )
 
 const (
-	settingCluster    string = "test.cluster"
-	settingSpace      string = "test.space"
-	settingName       string = "test.name"
-	settingImage      string = "test.image"
-	settingLB         string = "test.lb"
-	settingInternalLB string = "test.internal_lb"
-	settingVolume     string = "test.volume"
+	settingCluster string = "test.cluster"
+	settingSpace   string = "test.space"
+	settingName    string = "test.name"
+	settingImage   string = "test.image"
+	settingLB      string = "test.lb"
+	settingVolume  string = "test.volume"
 )
 
 var cliTests = []struct {
@@ -38,7 +37,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "service", "run", "%NAME%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
 		"--expose", "80", "--expose", "81",
-		"--publish", "10080", "-p", "%LB%:10081:10081", "-p", "%LB%:10082:10082/http", "-p", "%LBI%:10083:10083/tcp",
+		"--publish", "10080", "-p", "%LB%:10081:10081", "-p", "%LB%:10082:10082/http",
 		"-v", "%VOLUME%:/tempdata", "--volume", "/var:/tempdata2",
 		"--cpu", "0.256", "--memory", "256",
 		"-n", "2",
@@ -78,7 +77,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
 		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)
 		args[i] = strings.Replace(args[i], "%LB%", viper.GetString(settingLB), -1)
-		args[i] = strings.Replace(args[i], "%LBI%", viper.GetString(settingInternalLB), -1)
 		args[i] = strings.Replace(args[i], "%VOLUME%", viper.GetString(settingVolume), -1)
 	}
 }
