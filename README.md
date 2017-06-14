@@ -44,8 +44,10 @@ Use "alauda [command] --help" for more information about a command.
 ```
 test:
     cluster: <mycluster>
+    image: <myimage>
+    lb: <myloadbalancer>
+    name: <myservice>
     space: <myspace>
-    name: <mytestservicename>
-    image: <mytestimage>
+    volume: <myvolume>
 ```
 3. Run `go test`.
