@@ -11,6 +11,7 @@ import (
 
 type psOptions struct {
 	cluster string
+	all     bool
 }
 
 // NewPsCmd creates a new service ps command.
@@ -27,6 +28,7 @@ func NewPsCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	psCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster")
+	psCmd.Flags().BoolVarP(&opts.all, "all", "a", false, "List services that belong to applications as well")
 
 	return psCmd
 }
@@ -50,11 +52,39 @@ func doPs(alauda client.APIClient, opts *psOptions) error {
 		return err
 	}
 
-	PrintServices(result.Services)
+	var appResult *client.ListAppsResult
+
+	if opts.all {
+		appParams := client.ListAppsParams{
+			Cluster: cluster,
+		}
+
+		appResult, err = alauda.ListApps(&appParams)
+		if err != nil {
+			return err
+		}
+	}
+
+	printPsResult(result, appResult)
 
 	fmt.Println("[alauda] OK")
 
 	return nil
+}
+
+func printPsResult(result *client.ListServicesResult, appResult *client.ListAppsResult) {
+	services := result.Services
+
+	if appResult != nil {
+		for _, app := range appResult.Apps {
+			for _, service := range app.Services {
+				service.Name = fmt.Sprintf("%s.%s", app.Name, service.Name)
+				services = append(services, service)
+			}
+		}
+	}
+
+	PrintServices(services)
 }
 
 // PrintServices prints the service list in a table.
