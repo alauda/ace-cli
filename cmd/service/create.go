@@ -92,10 +92,12 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
-	loadBalancers, err := parsePublish(alauda, opts)
+	loadBalancers, published, err := parsePublish(alauda, opts)
 	if err != nil {
 		return err
 	}
+
+	ports := append(opts.expose, published...)
 
 	volumes, err := parseVolumes(alauda, opts)
 	if err != nil {
@@ -115,7 +117,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		InstanceSize:    "CUSTOMIZED",
 		ScalingMode:     "MANUAL",
 		TargetInstances: opts.number,
-		Ports:           opts.expose,
+		Ports:           ports,
 		NetworkMode:     "BRIDGE",
 		Env:             env,
 		LoadBalancers:   loadBalancers,
@@ -136,26 +138,29 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 	return nil
 }
 
-func parsePublish(alauda client.APIClient, opts *createOptions) ([]client.ServiceLoadBalancer, error) {
+func parsePublish(alauda client.APIClient, opts *createOptions) ([]client.ServiceLoadBalancer, []int, error) {
+	var ports = []int{}
 	var loadBalancers = []client.ServiceLoadBalancer{}
 	lbMap := make(map[string]*client.ServiceLoadBalancer)
 
 	for _, desc := range opts.publish {
 		lbName, listenerPort, containerPort, protocol, err := util.ParseListener(desc)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
+
+		ports = append(ports, containerPort)
 
 		var lbID string
 		if lbName == "" {
 			lbID, err = getDefaultLoadBalancerID(alauda, opts.cluster)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 		} else {
 			lbID, err = getLoadBalancerID(alauda, lbName)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 		}
 
@@ -173,14 +178,14 @@ func parsePublish(alauda client.APIClient, opts *createOptions) ([]client.Servic
 			Protocol:      protocol,
 		}
 
-		if lbMap[lbName] == nil {
-			lbMap[lbName] = &client.ServiceLoadBalancer{
+		if lbMap[lbID] == nil {
+			lbMap[lbID] = &client.ServiceLoadBalancer{
 				ID:   lbID,
 				Type: "haproxy",
 			}
 		}
 
-		lb := lbMap[lbName]
+		lb := lbMap[lbID]
 		lb.Listeners = append(lb.Listeners, listener)
 	}
 
@@ -188,7 +193,7 @@ func parsePublish(alauda client.APIClient, opts *createOptions) ([]client.Servic
 		loadBalancers = append(loadBalancers, *lb)
 	}
 
-	return loadBalancers, nil
+	return loadBalancers, ports, nil
 }
 
 func getLoadBalancerID(alauda client.APIClient, name string) (string, error) {
