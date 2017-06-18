@@ -38,9 +38,9 @@ func doLs(alauda client.APIClient) error {
 	return nil
 }
 
-func printLsResult(spaces *client.ListSpacesResult) {
+func printLsResult(result *client.ListSpacesResult) {
 	header := buildLsTableHeader()
-	content := buildLsTableContent(spaces)
+	content := buildLsTableContent(result)
 
 	util.PrintTable(header, content)
 }

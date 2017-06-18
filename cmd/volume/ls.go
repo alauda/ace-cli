@@ -62,9 +62,9 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 	return nil
 }
 
-func printLsResult(lbs *client.ListVolumesResult) {
+func printLsResult(result *client.ListVolumesResult) {
 	header := buildLsTableHeader()
-	content := buildLsTableContent(lbs)
+	content := buildLsTableContent(result)
 
 	util.PrintTable(header, content)
 }
