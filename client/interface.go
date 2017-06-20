@@ -62,6 +62,7 @@ type VolumeClient interface {
 
 // AppClient is the API client for the app related APIs.
 type AppClient interface {
+	CreateApp(*CreateAppData, string) error
 	ListApps(*ListAppsParams) (*ListAppsResult, error)
 	InspectApp(string) (*App, error)
 	StartApp(string) error

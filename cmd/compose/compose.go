@@ -17,6 +17,7 @@ func NewComposeCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	composeCmd.AddCommand(
+		NewUpCmd(alauda),
 		NewLsCmd(alauda),
 		NewInspectCmd(alauda),
 		NewPsCmd(alauda),

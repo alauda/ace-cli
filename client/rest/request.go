@@ -61,6 +61,16 @@ func (req *Request) SetQueryParam(param string, value string) {
 	req.request.SetQueryParam(param, value)
 }
 
+// SetFile sets a single file field name and its path for multipart upload.
+func (req *Request) SetFile(param string, filePath string) {
+	req.request.SetFile(param, filePath)
+}
+
+// SetFormData sets form data in the request.
+func (req *Request) SetFormData(data map[string]string) {
+	req.request.SetFormData(data)
+}
+
 // NewRequest creates a base Request object.
 func NewRequest(token string) *Request {
 	restyReq := resty.R()
