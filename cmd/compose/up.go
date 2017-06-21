@@ -13,6 +13,8 @@ import (
 type upOptions struct {
 	cluster  string
 	filePath string
+	strict   bool
+	timeout  int
 }
 
 // NewUpCmd creates a new compose up command.
@@ -33,6 +35,8 @@ func NewUpCmd(alauda client.APIClient) *cobra.Command {
 
 	upCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the application in")
 	upCmd.Flags().StringVarP(&opts.filePath, "file", "f", "./alauda-compose.yml", "Compose yaml file")
+	upCmd.Flags().BoolVarP(&opts.strict, "strict", "s", false, "Start services in strict dependency order")
+	upCmd.Flags().IntVarP(&opts.timeout, "timeout", "", 150, "Timeout")
 
 	return upCmd
 }
@@ -51,6 +55,8 @@ func doUp(alauda client.APIClient, name string, opts *upOptions) error {
 		Name:      name,
 		Cluster:   cluster,
 		Namespace: alauda.Namespace(),
+		Strict:    opts.strict,
+		Timeout:   opts.timeout,
 	}
 
 	absPath, err := filepath.Abs(opts.filePath)

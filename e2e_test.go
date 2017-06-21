@@ -34,7 +34,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "volume", "create", "%VOLUME%"}},
 	{[]string{"alauda", "volume", "inspect", "%VOLUME%"}},
 	{[]string{"alauda", "compose", "ls"}},
-	{[]string{"alauda", "compose", "up", "%APP%", "-f", "examples/alauda-compose.yml"}},
+	{[]string{"alauda", "compose", "up", "%APP%", "-f", "examples/alauda-compose.yml", "-s", "--timeout", "120"}},
 	{[]string{"alauda", "compose", "inspect", "%APP%"}},
 	{[]string{"alauda", "compose", "ps", "%APP%"}},
 	{[]string{"alauda", "compose", "rm", "%APP%"}},

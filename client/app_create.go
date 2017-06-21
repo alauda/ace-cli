@@ -1,6 +1,8 @@
 package client
 
 import (
+	"strconv"
+
 	"github.com/alauda/alauda/client/rest"
 )
 
@@ -9,6 +11,8 @@ type CreateAppData struct {
 	Name      string `json:"app_name"`
 	Cluster   string `json:"region"`
 	Namespace string `json:"namespace"`
+	Strict    bool   `json:"strict_mode"`
+	Timeout   int    `json:"timeout"`
 }
 
 // CreateApp creates and starts the specified application.
@@ -37,9 +41,11 @@ func (client *Client) buildCreateAppRequest(data *CreateAppData, configFile stri
 	request := rest.NewRequest(client.Token())
 
 	request.SetFormData(map[string]string{
-		"app_name":  data.Name,
-		"region":    data.Cluster,
-		"namespace": data.Namespace,
+		"app_name":    data.Name,
+		"region":      data.Cluster,
+		"namespace":   data.Namespace,
+		"strict_mode": strconv.FormatBool(data.Strict),
+		"timeout":     strconv.Itoa(data.Timeout),
 	})
 
 	request.SetFile("services", configFile)
