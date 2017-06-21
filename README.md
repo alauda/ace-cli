@@ -46,7 +46,8 @@ test:
     cluster: <mycluster>
     image: <myimage>
     lb: <myloadbalancer>
-    name: <myservice>
+    service: <myservice>
+    app: <myapp>
     space: <myspace>
     volume: <myvolume>
 ```

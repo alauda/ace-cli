@@ -14,7 +14,7 @@ import (
 const (
 	settingCluster string = "test.cluster"
 	settingSpace   string = "test.space"
-	settingName    string = "test.name"
+	settingService string = "test.service"
 	settingApp     string = "test.app"
 	settingImage   string = "test.image"
 	settingLB      string = "test.lb"
@@ -37,7 +37,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "compose", "up", "%APP%", "-f", "examples/alauda-compose.yml"}},
 	{[]string{"alauda", "compose", "rm", "%APP%"}},
 	{[]string{"alauda", "service", "ps"}},
-	{[]string{"alauda", "service", "run", "%NAME%", "%IMAGE%",
+	{[]string{"alauda", "service", "run", "%SERVICE%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
 		"--expose", "80", "--expose", "81",
 		"--publish", "10080", "-p", "%LB%:10081:10081", "-p", "%LB%:10082:10082/http",
@@ -46,10 +46,10 @@ var cliTests = []struct {
 		"-n", "2",
 		"--env", "FOO=foo", "-e", "BAR=bar",
 		"-r", "do this", "--entrypoint", "and that"}},
-	{[]string{"alauda", "service", "inspect", "%NAME%"}},
-	{[]string{"alauda", "lb", "bind", "%LB%", "--listener", "%NAME%:80", "-l", "%NAME%:81/http", "-l", "%NAME%:21234:1234"}},
-	{[]string{"alauda", "lb", "unbind", "%LB%", "--listener", "%NAME%:80:80", "-l", "%NAME%:21234:1234"}},
-	{[]string{"alauda", "service", "rm", "%NAME%"}},
+	{[]string{"alauda", "service", "inspect", "%SERVICE%"}},
+	{[]string{"alauda", "lb", "bind", "%LB%", "--listener", "%SERVICE%:80", "-l", "%SERVICE%:81/http", "-l", "%SERVICE%:21234:1234"}},
+	{[]string{"alauda", "lb", "unbind", "%LB%", "--listener", "%SERVICE%:80:80", "-l", "%SERVICE%:21234:1234"}},
+	{[]string{"alauda", "service", "rm", "%SERVICE%"}},
 	{[]string{"alauda", "volume", "rm", "%VOLUME%"}},
 }
 
@@ -75,7 +75,7 @@ func TestCli(t *testing.T) {
 
 func bind(args []string) {
 	for i := range args {
-		args[i] = strings.Replace(args[i], "%NAME%", viper.GetString(settingName), -1)
+		args[i] = strings.Replace(args[i], "%SERVICE%", viper.GetString(settingService), -1)
 		args[i] = strings.Replace(args[i], "%APP%", viper.GetString(settingApp), -1)
 		args[i] = strings.Replace(args[i], "%IMAGE%", viper.GetString(settingImage), -1)
 		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
