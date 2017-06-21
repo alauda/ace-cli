@@ -66,6 +66,7 @@ type AppClient interface {
 	ListApps(*ListAppsParams) (*ListAppsResult, error)
 	InspectApp(string) (*App, error)
 	StartApp(string) error
+	StopApp(string) error
 	RemoveApp(string) error
 }
 
