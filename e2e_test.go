@@ -15,6 +15,7 @@ const (
 	settingCluster string = "test.cluster"
 	settingSpace   string = "test.space"
 	settingName    string = "test.name"
+	settingApp     string = "test.app"
 	settingImage   string = "test.image"
 	settingLB      string = "test.lb"
 	settingVolume  string = "test.volume"
@@ -33,6 +34,8 @@ var cliTests = []struct {
 	{[]string{"alauda", "volume", "create", "%VOLUME%"}},
 	{[]string{"alauda", "volume", "inspect", "%VOLUME%"}},
 	{[]string{"alauda", "compose", "ls"}},
+	{[]string{"alauda", "compose", "up", "%APP%", "-f", "examples/alauda-compose.yml"}},
+	{[]string{"alauda", "compose", "rm", "%APP%"}},
 	{[]string{"alauda", "service", "ps"}},
 	{[]string{"alauda", "service", "run", "%NAME%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
@@ -73,6 +76,7 @@ func TestCli(t *testing.T) {
 func bind(args []string) {
 	for i := range args {
 		args[i] = strings.Replace(args[i], "%NAME%", viper.GetString(settingName), -1)
+		args[i] = strings.Replace(args[i], "%APP%", viper.GetString(settingApp), -1)
 		args[i] = strings.Replace(args[i], "%IMAGE%", viper.GetString(settingImage), -1)
 		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
 		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)

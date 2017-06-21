@@ -9,3 +9,4 @@ web:
   - redis:redis
   ports:
   - '80/http'
+  
