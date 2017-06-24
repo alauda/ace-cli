@@ -3,7 +3,6 @@ package service
 import (
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -58,16 +57,4 @@ func doInspect(alauda client.APIClient, name string) error {
 	fmt.Println("[alauda] OK")
 
 	return nil
-}
-
-func parseName(name string) (string, string, error) {
-	result := strings.Split(name, ".")
-
-	if len(result) == 1 {
-		return "", result[0], nil
-	} else if len(result) == 2 {
-		return result[0], result[1], nil
-	} else {
-		return "", "", errors.New("invalid service name, expecting \"service\" or \"app.service\"")
-	}
 }

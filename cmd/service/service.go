@@ -107,3 +107,15 @@ func parseScale(desc string) (string, int, error) {
 
 	return name, number, nil
 }
+
+func parseName(name string) (string, string, error) {
+	result := strings.Split(name, ".")
+
+	if len(result) == 1 {
+		return "", result[0], nil
+	} else if len(result) == 2 {
+		return result[0], result[1], nil
+	} else {
+		return "", "", errors.New("invalid service name, expecting \"service\" or \"app.service\"")
+	}
+}
