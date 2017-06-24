@@ -27,7 +27,7 @@ type ServiceClient interface {
 	StartService(string) error
 	StopService(string) error
 	RemoveService(string) error
-	InspectService(string) (*Service, error)
+	InspectService(string, *InspectServiceParams) (*Service, error)
 	RestartService(string) error
 	ScaleService(string, *ScaleServiceData) error
 	UpdateService(string, *UpdateServiceData) error
