@@ -31,7 +31,20 @@ func doRestart(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	err := alauda.RestartService(name)
+	appName, serviceName, err := parseName(name)
+	if err != nil {
+		return err
+	}
+
+	params := client.RestartServiceParams{
+		App: "",
+	}
+
+	if appName != "" {
+		params.App = appName
+	}
+
+	err = alauda.RestartService(serviceName, &params)
 	if err != nil {
 		return err
 	}
