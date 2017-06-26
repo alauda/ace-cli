@@ -4,13 +4,8 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
-// RestartServiceParams defines the query parameters for the RestartService API.
-type RestartServiceParams struct {
-	App string
-}
-
 // RestartService restarts the specified service.
-func (client *Client) RestartService(name string, params *RestartServiceParams) error {
+func (client *Client) RestartService(name string, params *ServiceParams) error {
 	url := client.buildURL("services", name)
 	request := client.buildRestartServiceRequest(params)
 
@@ -27,7 +22,7 @@ func (client *Client) RestartService(name string, params *RestartServiceParams) 
 	return nil
 }
 
-func (client *Client) buildRestartServiceRequest(params *RestartServiceParams) *rest.Request {
+func (client *Client) buildRestartServiceRequest(params *ServiceParams) *rest.Request {
 	request := rest.NewRequest(client.Token())
 
 	if params.App != "" {

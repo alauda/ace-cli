@@ -36,7 +36,7 @@ func doRestart(alauda client.APIClient, name string) error {
 		return err
 	}
 
-	params := client.RestartServiceParams{
+	params := client.ServiceParams{
 		App: "",
 	}
 

@@ -18,6 +18,11 @@ type Service struct {
 	Volumes          []ServiceVolume     `json:"volumes"`
 }
 
+// ServiceParams defines the base query parameters for various service APIs.
+type ServiceParams struct {
+	App string
+}
+
 // ServiceInstanceSize defines the size of the service instances.
 type ServiceInstanceSize struct {
 	Memory int     `json:"mem"`

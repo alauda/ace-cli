@@ -6,13 +6,8 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
-// InspectServiceParams defines the query parameters for the InspectService API.
-type InspectServiceParams struct {
-	App string
-}
-
 // InspectService retrieves details about the specified service.
-func (client *Client) InspectService(name string, params *InspectServiceParams) (*Service, error) {
+func (client *Client) InspectService(name string, params *ServiceParams) (*Service, error) {
 	url := client.buildURL("services", name)
 	request := client.buildInspectServiceRequest(params)
 
@@ -34,7 +29,7 @@ func (client *Client) InspectService(name string, params *InspectServiceParams) 
 	return result, nil
 }
 
-func (client *Client) buildInspectServiceRequest(params *InspectServiceParams) *rest.Request {
+func (client *Client) buildInspectServiceRequest(params *ServiceParams) *rest.Request {
 	request := rest.NewRequest(client.Token())
 
 	if params.App != "" {

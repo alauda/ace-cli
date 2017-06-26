@@ -36,7 +36,7 @@ func doInspect(alauda client.APIClient, name string) error {
 		return err
 	}
 
-	params := client.InspectServiceParams{
+	params := client.ServiceParams{
 		App: "",
 	}
 
