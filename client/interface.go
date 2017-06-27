@@ -25,7 +25,7 @@ type ServiceClient interface {
 	CreateService(*CreateServiceData) error
 	ListServices(*ListServicesParams) (*ListServicesResult, error)
 	StartService(string) error
-	StopService(string) error
+	StopService(string, *ServiceParams) error
 	RemoveService(string) error
 	InspectService(string, *ServiceParams) (*Service, error)
 	RestartService(string, *ServiceParams) error

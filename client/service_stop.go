@@ -5,9 +5,9 @@ import (
 )
 
 // StopService stops the specified service.
-func (client *Client) StopService(name string) error {
+func (client *Client) StopService(name string, params *ServiceParams) error {
 	url := client.buildURL("services", "%s/stop", name)
-	request := client.buildStopServiceRequest()
+	request := client.buildStopServiceRequest(params)
 
 	response, err := request.Put(url)
 	if err != nil {
@@ -22,6 +22,12 @@ func (client *Client) StopService(name string) error {
 	return nil
 }
 
-func (client *Client) buildStopServiceRequest() *rest.Request {
-	return rest.NewRequest(client.Token())
+func (client *Client) buildStopServiceRequest(params *ServiceParams) *rest.Request {
+	request := rest.NewRequest(client.Token())
+
+	if params.App != "" {
+		request.SetQueryParam("application", params.App)
+	}
+
+	return request
 }

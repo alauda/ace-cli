@@ -31,7 +31,20 @@ func doStop(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	err := alauda.StopService(name)
+	appName, serviceName, err := parseName(name)
+	if err != nil {
+		return err
+	}
+
+	params := client.ServiceParams{
+		App: "",
+	}
+
+	if appName != "" {
+		params.App = appName
+	}
+
+	err = alauda.StopService(serviceName, &params)
 	if err != nil {
 		return err
 	}
