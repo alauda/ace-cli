@@ -31,7 +31,20 @@ func doStart(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	err := alauda.StartService(name)
+	appName, serviceName, err := parseName(name)
+	if err != nil {
+		return err
+	}
+
+	params := client.ServiceParams{
+		App: "",
+	}
+
+	if appName != "" {
+		params.App = appName
+	}
+
+	err = alauda.StartService(serviceName, &params)
 	if err != nil {
 		return err
 	}

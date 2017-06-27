@@ -24,7 +24,7 @@ type AuthClient interface {
 type ServiceClient interface {
 	CreateService(*CreateServiceData) error
 	ListServices(*ListServicesParams) (*ListServicesResult, error)
-	StartService(string) error
+	StartService(string, *ServiceParams) error
 	StopService(string, *ServiceParams) error
 	RemoveService(string) error
 	InspectService(string, *ServiceParams) (*Service, error)

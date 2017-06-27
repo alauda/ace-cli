@@ -5,9 +5,9 @@ import (
 )
 
 // StartService starts the specified service.
-func (client *Client) StartService(name string) error {
+func (client *Client) StartService(name string, params *ServiceParams) error {
 	url := client.buildURL("services", "%s/start", name)
-	request := client.buildStartServiceRequest()
+	request := client.buildStartServiceRequest(params)
 
 	response, err := request.Put(url)
 	if err != nil {
@@ -22,6 +22,12 @@ func (client *Client) StartService(name string) error {
 	return nil
 }
 
-func (client *Client) buildStartServiceRequest() *rest.Request {
-	return rest.NewRequest(client.Token())
+func (client *Client) buildStartServiceRequest(params *ServiceParams) *rest.Request {
+	request := rest.NewRequest(client.Token())
+
+	if params.App != "" {
+		request.SetQueryParam("application", params.App)
+	}
+
+	return request
 }
