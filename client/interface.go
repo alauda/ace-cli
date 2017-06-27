@@ -29,7 +29,7 @@ type ServiceClient interface {
 	RemoveService(string) error
 	InspectService(string, *ServiceParams) (*Service, error)
 	RestartService(string, *ServiceParams) error
-	ScaleService(string, *ScaleServiceData) error
+	ScaleService(string, *ScaleServiceData, *ServiceParams) error
 	UpdateService(string, *UpdateServiceData) error
 }
 

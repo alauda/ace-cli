@@ -36,11 +36,24 @@ func doScale(alauda client.APIClient, desc string) error {
 
 	util.InitializeClient(alauda)
 
+	appName, serviceName, err := parseName(name)
+	if err != nil {
+		return err
+	}
+
+	params := client.ServiceParams{
+		App: "",
+	}
+
+	if appName != "" {
+		params.App = appName
+	}
+
 	data := client.ScaleServiceData{
 		TargetInstances: number,
 	}
 
-	err = alauda.ScaleService(name, &data)
+	err = alauda.ScaleService(serviceName, &data, &params)
 	if err != nil {
 		return err
 	}
