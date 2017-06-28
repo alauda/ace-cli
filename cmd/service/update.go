@@ -49,7 +49,20 @@ func doUpdate(alauda client.APIClient, name string, opts *updateOptions) error {
 
 	util.InitializeClient(alauda)
 
-	err := validateResourceRequirements(opts.cpu, opts.memory)
+	appName, serviceName, err := parseName(name)
+	if err != nil {
+		return err
+	}
+
+	params := client.ServiceParams{
+		App: "",
+	}
+
+	if appName != "" {
+		params.App = appName
+	}
+
+	err = validateResourceRequirements(opts.cpu, opts.memory)
 	if err != nil {
 		return err
 	}
@@ -71,7 +84,7 @@ func doUpdate(alauda client.APIClient, name string, opts *updateOptions) error {
 		},
 	}
 
-	err = alauda.UpdateService(name, &data)
+	err = alauda.UpdateService(serviceName, &data, &params)
 	if err != nil {
 		return err
 	}

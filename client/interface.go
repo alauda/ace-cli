@@ -30,7 +30,7 @@ type ServiceClient interface {
 	InspectService(string, *ServiceParams) (*Service, error)
 	RestartService(string, *ServiceParams) error
 	ScaleService(string, *ScaleServiceData, *ServiceParams) error
-	UpdateService(string, *UpdateServiceData) error
+	UpdateService(string, *UpdateServiceData, *ServiceParams) error
 }
 
 // SpaceClient is the API client for space related APIs.

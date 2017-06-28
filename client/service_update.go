@@ -17,10 +17,10 @@ type UpdateServiceData struct {
 }
 
 // UpdateService scales the service to the specified number of instances
-func (client *Client) UpdateService(name string, data *UpdateServiceData) error {
+func (client *Client) UpdateService(name string, data *UpdateServiceData, params *ServiceParams) error {
 	url := client.buildURL("services", name)
 
-	request, err := client.buildUpdateServiceRequest(data)
+	request, err := client.buildUpdateServiceRequest(data, params)
 	if err != nil {
 		return err
 	}
@@ -38,8 +38,12 @@ func (client *Client) UpdateService(name string, data *UpdateServiceData) error 
 	return nil
 }
 
-func (client *Client) buildUpdateServiceRequest(data *UpdateServiceData) (*rest.Request, error) {
+func (client *Client) buildUpdateServiceRequest(data *UpdateServiceData, params *ServiceParams) (*rest.Request, error) {
 	request := rest.NewRequest(client.Token())
+
+	if params.App != "" {
+		request.SetQueryParam("application", params.App)
+	}
 
 	updated := make(map[string]interface{})
 
