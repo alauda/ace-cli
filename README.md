@@ -27,6 +27,7 @@ Available Commands:
   space       Manage spaces
   start       Start a service
   stop        Stop a service
+  template    Manage application templates
   update      Update a service
   version     Display version of Alauda CLI
   volume      Manage volumes
