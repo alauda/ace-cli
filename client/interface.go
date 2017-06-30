@@ -13,6 +13,7 @@ type APIClient interface {
 	LoadBalancerClient
 	VolumeClient
 	AppClient
+	AppTemplateClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -68,6 +69,11 @@ type AppClient interface {
 	StartApp(string) error
 	StopApp(string) error
 	RemoveApp(string) error
+}
+
+// AppTemplateClient is the API client for the app template related APIs.
+type AppTemplateClient interface {
+	ListAppTemplates() (*ListAppTemplatesResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
