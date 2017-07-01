@@ -2,7 +2,7 @@ package client
 
 // AppTemplate defines the response body of the InspectAppTemplate API.
 type AppTemplate struct {
-	Name        string    `json:"app_name"`
+	Name        string    `json:"name"`
 	ID          string    `json:"uuid"`
 	Description string    `json:"description"`
 	Template    string    `json:"template"`

@@ -74,6 +74,7 @@ type AppClient interface {
 // AppTemplateClient is the API client for the app template related APIs.
 type AppTemplateClient interface {
 	ListAppTemplates() (*ListAppTemplatesResult, error)
+	InspectAppTemplate(string) (*AppTemplate, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
