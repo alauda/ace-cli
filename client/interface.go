@@ -73,6 +73,7 @@ type AppClient interface {
 
 // AppTemplateClient is the API client for the app template related APIs.
 type AppTemplateClient interface {
+	CreateAppTemplate(*CreateAppTemplateData, string) error
 	ListAppTemplates() (*ListAppTemplatesResult, error)
 	InspectAppTemplate(string) (*AppTemplate, error)
 	DownloadAppTemplate(string, string) error
