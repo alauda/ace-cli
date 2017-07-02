@@ -1,4 +1,4 @@
-package compose
+package template
 
 import (
 	"errors"
@@ -9,15 +9,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRmCmd creates a new compose rm command.
+// NewRmCmd creates a new template rm command.
 func NewRmCmd(alauda client.APIClient) *cobra.Command {
 	rmCmd := &cobra.Command{
 		Use:   "rm NAME",
-		Short: "Remove an application",
+		Short: "Remove an app template",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
-				return errors.New("compose rm expects NAME")
+				return errors.New("template rm expects NAME")
 			}
 			return doRm(alauda, args[0])
 		},
@@ -31,7 +31,7 @@ func doRm(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	err := alauda.RemoveApp(name)
+	err := alauda.RemoveAppTemplate(name)
 	if err != nil {
 		return err
 	}

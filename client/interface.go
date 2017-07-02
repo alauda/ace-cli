@@ -77,6 +77,7 @@ type AppTemplateClient interface {
 	ListAppTemplates() (*ListAppTemplatesResult, error)
 	InspectAppTemplate(string) (*AppTemplate, error)
 	DownloadAppTemplate(string, string) error
+	RemoveAppTemplate(string) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
