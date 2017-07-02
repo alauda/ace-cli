@@ -16,10 +16,10 @@ type CreateAppData struct {
 }
 
 // CreateApp creates and starts the specified application.
-func (client *Client) CreateApp(data *CreateAppData, configFile string) error {
+func (client *Client) CreateApp(data *CreateAppData, filePath string) error {
 	url := client.buildURL("applications", "")
 
-	request, err := client.buildCreateAppRequest(data, configFile)
+	request, err := client.buildCreateAppRequest(data, filePath)
 	if err != nil {
 		return err
 	}

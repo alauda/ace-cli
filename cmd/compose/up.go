@@ -3,6 +3,7 @@ package compose
 import (
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 
 	"github.com/alauda/alauda/client"
@@ -13,6 +14,7 @@ import (
 type upOptions struct {
 	cluster  string
 	filePath string
+	template string
 	strict   bool
 	timeout  int
 }
@@ -35,6 +37,7 @@ func NewUpCmd(alauda client.APIClient) *cobra.Command {
 
 	upCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the application in")
 	upCmd.Flags().StringVarP(&opts.filePath, "file", "f", "./alauda-compose.yml", "Compose yaml file")
+	upCmd.Flags().StringVarP(&opts.template, "template", "t", "", "App template")
 	upCmd.Flags().BoolVarP(&opts.strict, "strict", "s", false, "Start services in strict dependency order")
 	upCmd.Flags().IntVarP(&opts.timeout, "timeout", "", 150, "Timeout")
 
@@ -64,12 +67,17 @@ func doUp(alauda client.APIClient, name string, opts *upOptions) error {
 		return err
 	}
 
+	// If a template is specified, use the template instead of the template.
+	if opts.template != "" {
+		err = alauda.DownloadAppTemplate(opts.template, "./temp.yml")
+		absPath, err = filepath.Abs("./temp.yml")
+		defer os.Remove(absPath)
+	}
+
 	err = alauda.CreateApp(&data, absPath)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("[alauda] OK")
 
 	return nil
 }
