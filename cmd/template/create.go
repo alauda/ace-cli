@@ -24,7 +24,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
-				return errors.New("compose up expects NAME")
+				return errors.New("template create expects NAME")
 			}
 			return doCreate(alauda, args[0], &opts)
 		},

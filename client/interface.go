@@ -77,6 +77,7 @@ type AppTemplateClient interface {
 	ListAppTemplates() (*ListAppTemplatesResult, error)
 	InspectAppTemplate(string) (*AppTemplate, error)
 	DownloadAppTemplate(string, string) error
+	UpdateAppTemplate(string, *UpdateAppTemplateData, string) error
 	RemoveAppTemplate(string) error
 }
 

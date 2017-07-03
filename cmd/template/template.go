@@ -21,6 +21,7 @@ func NewTemplateCmd(alauda client.APIClient) *cobra.Command {
 		NewLsCmd(alauda),
 		NewInspectCmd(alauda),
 		NewDownloadCmd(alauda),
+		NewUpdateCmd(alauda),
 		NewRmCmd(alauda),
 	)
 
