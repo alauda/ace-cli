@@ -12,13 +12,14 @@ import (
 )
 
 const (
-	settingCluster string = "test.cluster"
-	settingSpace   string = "test.space"
-	settingService string = "test.service"
-	settingApp     string = "test.app"
-	settingImage   string = "test.image"
-	settingLB      string = "test.lb"
-	settingVolume  string = "test.volume"
+	settingCluster  string = "test.cluster"
+	settingSpace    string = "test.space"
+	settingService  string = "test.service"
+	settingApp      string = "test.app"
+	settingImage    string = "test.image"
+	settingLB       string = "test.lb"
+	settingVolume   string = "test.volume"
+	settingTemplate string = "test.template"
 )
 
 var cliTests = []struct {
@@ -34,11 +35,15 @@ var cliTests = []struct {
 	{[]string{"alauda", "volume", "create", "%VOLUME%"}},
 	{[]string{"alauda", "volume", "inspect", "%VOLUME%"}},
 	{[]string{"alauda", "template", "ls"}},
+	{[]string{"alauda", "template", "create", "%TEMPLATE%", "-f", "examples/alauda-compose.yml"}},
+	{[]string{"alauda", "template", "inspect", "%TEMPLATE%"}},
+	{[]string{"alauda", "template", "update", "%TEMPLATE%", "-f", "examples/alauda-compose.yml"}},
 	{[]string{"alauda", "compose", "ls"}},
-	{[]string{"alauda", "compose", "up", "%APP%", "-f", "examples/alauda-compose.yml", "-s", "--timeout", "120"}},
+	{[]string{"alauda", "compose", "up", "%APP%", "-t", "%TEMPLATE%", "-s", "--timeout", "120"}},
 	{[]string{"alauda", "compose", "inspect", "%APP%"}},
 	{[]string{"alauda", "compose", "ps", "%APP%"}},
 	{[]string{"alauda", "compose", "rm", "%APP%"}},
+	{[]string{"alauda", "template", "rm", "%TEMPLATE%"}},
 	{[]string{"alauda", "service", "ps"}},
 	{[]string{"alauda", "service", "run", "%SERVICE%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
@@ -85,5 +90,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)
 		args[i] = strings.Replace(args[i], "%LB%", viper.GetString(settingLB), -1)
 		args[i] = strings.Replace(args[i], "%VOLUME%", viper.GetString(settingVolume), -1)
+		args[i] = strings.Replace(args[i], "%TEMPLATE%", viper.GetString(settingTemplate), -1)
 	}
 }
