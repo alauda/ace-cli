@@ -12,6 +12,7 @@ Usage:
 Available Commands:
   cluster     Manage clusters
   compose     Manage application compose
+  config      Manage configurations
   create      Create a new service
   help        Help about any command
   inspect     Inspect a service

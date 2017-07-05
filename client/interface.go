@@ -14,6 +14,7 @@ type APIClient interface {
 	VolumeClient
 	AppClient
 	AppTemplateClient
+	ConfigClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -79,6 +80,11 @@ type AppTemplateClient interface {
 	DownloadAppTemplate(string, string) error
 	UpdateAppTemplate(string, *UpdateAppTemplateData, string) error
 	RemoveAppTemplate(string) error
+}
+
+// ConfigClient is the API client for the config related APIs.
+type ConfigClient interface {
+	ListConfigs() (*ListConfigsResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

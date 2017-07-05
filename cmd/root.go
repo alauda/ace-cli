@@ -8,6 +8,7 @@ import (
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/cluster"
 	"github.com/alauda/alauda/cmd/compose"
+	"github.com/alauda/alauda/cmd/config"
 	"github.com/alauda/alauda/cmd/lb"
 	"github.com/alauda/alauda/cmd/service"
 	"github.com/alauda/alauda/cmd/space"
@@ -64,6 +65,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		volume.NewVolumeCmd(alauda),
 		compose.NewComposeCmd(alauda),
 		template.NewTemplateCmd(alauda),
+		config.NewConfigCmd(alauda),
 	)
 }
 
