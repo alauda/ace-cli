@@ -1,4 +1,4 @@
-package cluster
+package config
 
 import (
 	"errors"
@@ -9,15 +9,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewInspectCmd creates a new cluster inspect command.
+// NewInspectCmd creates a new config inspect command.
 func NewInspectCmd(alauda client.APIClient) *cobra.Command {
 	inspectCmd := &cobra.Command{
 		Use:   "inspect NAME",
-		Short: "Inspect a cluster",
+		Short: "Inspect a configuration",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
-				return errors.New("cluster inspect expects NAME")
+				return errors.New("config inspect expects NAME")
 			}
 			return doInspect(alauda, args[0])
 		},
@@ -31,7 +31,7 @@ func doInspect(alauda client.APIClient, name string) error {
 
 	util.InitializeClient(alauda)
 
-	result, err := alauda.InspectCluster(name)
+	result, err := alauda.InspectConfig(name)
 	if err != nil {
 		return err
 	}

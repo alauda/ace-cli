@@ -85,6 +85,7 @@ type AppTemplateClient interface {
 // ConfigClient is the API client for the config related APIs.
 type ConfigClient interface {
 	ListConfigs() (*ListConfigsResult, error)
+	InspectConfig(string) (*Config, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
