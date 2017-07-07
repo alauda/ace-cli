@@ -14,5 +14,4 @@ type Config struct {
 type ConfigItem struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
-	Type  string `json:"type"`
 }

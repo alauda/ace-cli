@@ -104,3 +104,28 @@ func ParseListener(desc string) (string, int, int, string, error) {
 
 	return name, listenerPort, containerPort, protocol, nil
 }
+
+// ParseKeyValues parses KEY=VALUE into a map of key value pairs.
+func ParseKeyValues(descs []string) (map[string]string, error) {
+	keyValues := make(map[string]string)
+
+	for _, desc := range descs {
+		k, v, err := parseKeyValue(desc)
+		if err != nil {
+			return nil, err
+		}
+		keyValues[k] = v
+	}
+
+	return keyValues, nil
+}
+
+func parseKeyValue(desc string) (string, string, error) {
+	result := strings.Split(desc, "=")
+
+	if len(result) != 2 {
+		return "", "", errors.New("invalid key-value descriptor")
+	}
+
+	return result[0], result[1], nil
+}

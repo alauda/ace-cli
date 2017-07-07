@@ -84,6 +84,7 @@ type AppTemplateClient interface {
 
 // ConfigClient is the API client for the config related APIs.
 type ConfigClient interface {
+	CreateConfig(*CreateConfigData) error
 	ListConfigs() (*ListConfigsResult, error)
 	InspectConfig(string) (*Config, error)
 }

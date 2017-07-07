@@ -51,14 +51,14 @@ func printItems(config *client.Config) {
 }
 
 func buildItemsTableHeader() []string {
-	return []string{"KEY", "VALUE", "TYPE"}
+	return []string{"KEY", "VALUE"}
 }
 
 func buildItemsTableContent(config *client.Config) [][]string {
 	var content [][]string
 
 	for _, item := range config.Content {
-		content = append(content, []string{item.Key, item.Value, item.Type})
+		content = append(content, []string{item.Key, item.Value})
 	}
 
 	return content
