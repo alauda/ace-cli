@@ -67,7 +67,7 @@ func doUpdate(alauda client.APIClient, name string, opts *updateOptions) error {
 		return err
 	}
 
-	env, err := parseEnvVars(opts.env)
+	env, err := util.ParseKeyValues(opts.env)
 	if err != nil {
 		return err
 	}

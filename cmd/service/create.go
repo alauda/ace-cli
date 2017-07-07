@@ -87,7 +87,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
-	env, err := parseEnvVars(opts.env)
+	env, err := util.ParseKeyValues(opts.env)
 	if err != nil {
 		return err
 	}

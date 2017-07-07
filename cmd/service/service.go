@@ -68,30 +68,6 @@ func validateResourceRequirements(cpu float64, memory int) error {
 	return nil
 }
 
-func parseEnvVars(env []string) (map[string]string, error) {
-	envvars := make(map[string]string)
-
-	for _, desc := range env {
-		k, v, err := parseEnvVar(desc)
-		if err != nil {
-			return nil, err
-		}
-		envvars[k] = v
-	}
-
-	return envvars, nil
-}
-
-func parseEnvVar(desc string) (string, string, error) {
-	result := strings.Split(desc, "=")
-
-	if len(result) != 2 {
-		return "", "", errors.New("invalid environment variable descriptor")
-	}
-
-	return result[0], result[1], nil
-}
-
 func parseScale(desc string) (string, int, error) {
 	result := strings.Split(desc, "=")
 
