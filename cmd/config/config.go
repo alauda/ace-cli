@@ -21,6 +21,7 @@ func NewConfigCmd(alauda client.APIClient) *cobra.Command {
 		NewLsCmd(alauda),
 		NewInspectCmd(alauda),
 		NewItemsCmd(alauda),
+		NewRmCmd(alauda),
 	)
 
 	return configCmd

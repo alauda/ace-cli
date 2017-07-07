@@ -87,6 +87,7 @@ type ConfigClient interface {
 	CreateConfig(*CreateConfigData) error
 	ListConfigs() (*ListConfigsResult, error)
 	InspectConfig(string) (*Config, error)
+	RemoveConfig(string) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
