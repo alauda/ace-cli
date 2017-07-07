@@ -20,6 +20,7 @@ const (
 	settingLB       string = "test.lb"
 	settingVolume   string = "test.volume"
 	settingTemplate string = "test.template"
+	settingConfig   string = "test.config"
 )
 
 var cliTests = []struct {
@@ -45,6 +46,10 @@ var cliTests = []struct {
 	{[]string{"alauda", "compose", "rm", "%APP%"}},
 	{[]string{"alauda", "template", "rm", "%TEMPLATE%"}},
 	{[]string{"alauda", "config", "ls"}},
+	{[]string{"alauda", "config", "create", "%CONFIG%", "-d", "test config", "--item", "k1=v1", "-i", "k2=v2"}},
+	{[]string{"alauda", "config", "inspect", "%CONFIG%"}},
+	{[]string{"alauda", "config", "items", "%CONFIG%"}},
+	{[]string{"alauda", "config", "rm", "%CONFIG%"}},
 	{[]string{"alauda", "service", "ps"}},
 	{[]string{"alauda", "service", "run", "%SERVICE%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
@@ -92,5 +97,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%LB%", viper.GetString(settingLB), -1)
 		args[i] = strings.Replace(args[i], "%VOLUME%", viper.GetString(settingVolume), -1)
 		args[i] = strings.Replace(args[i], "%TEMPLATE%", viper.GetString(settingTemplate), -1)
+		args[i] = strings.Replace(args[i], "%CONFIG%", viper.GetString(settingConfig), -1)
 	}
 }
