@@ -35,7 +35,7 @@ func doUnbind(alauda client.APIClient, name string, opts *bindOptions) error {
 
 	util.InitializeClient(alauda)
 
-	data, err := parseUnbindListeners(opts.listeners)
+	data, err := parseUnbindListeners(alauda, opts.listeners)
 	if err != nil {
 		return err
 	}
@@ -50,7 +50,7 @@ func doUnbind(alauda client.APIClient, name string, opts *bindOptions) error {
 	return nil
 }
 
-func parseUnbindListeners(listenersDesc []string) (*client.UpdateLoadBalancerData, error) {
+func parseUnbindListeners(alauda client.APIClient, listenersDesc []string) (*client.UpdateLoadBalancerData, error) {
 	var listeners = []client.ListenerData{}
 
 	for _, desc := range listenersDesc {
@@ -71,8 +71,17 @@ func parseUnbindListeners(listenersDesc []string) (*client.UpdateLoadBalancerDat
 			return nil, errors.New("invalid listener descriptor, expected serviceName:listenerPort:containerPort")
 		}
 
+		params := client.ServiceParams{
+			App: "",
+		}
+
+		service, err := alauda.InspectService(serviceName, &params)
+		if err != nil {
+			return nil, err
+		}
+
 		listener := client.ListenerData{
-			ServiceName:   serviceName,
+			ServiceID:     service.ID,
 			ListenerPort:  listenerPort,
 			ContainerPort: containerPort,
 			Protocol:      protocol,

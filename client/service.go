@@ -3,6 +3,7 @@ package client
 // Service defines the response body for one service returned in the ListServices API.
 type Service struct {
 	Name             string              `json:"service_name"`
+	ID               string              `json:"uuid"`
 	ImageName        string              `json:"image_name"`
 	ImageTag         string              `json:"image_tag"`
 	Command          string              `json:"run_command"`

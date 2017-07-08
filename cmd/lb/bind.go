@@ -39,7 +39,7 @@ func doBind(alauda client.APIClient, name string, opts *bindOptions) error {
 
 	util.InitializeClient(alauda)
 
-	data, err := parseBindListeners(opts.listeners)
+	data, err := parseBindListeners(alauda, opts.listeners)
 	if err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func doBind(alauda client.APIClient, name string, opts *bindOptions) error {
 	return nil
 }
 
-func parseBindListeners(listenersDesc []string) (*client.UpdateLoadBalancerData, error) {
+func parseBindListeners(alauda client.APIClient, listenersDesc []string) (*client.UpdateLoadBalancerData, error) {
 	var listeners = []client.ListenerData{}
 
 	for _, desc := range listenersDesc {
@@ -75,8 +75,17 @@ func parseBindListeners(listenersDesc []string) (*client.UpdateLoadBalancerData,
 			}
 		}
 
+		params := client.ServiceParams{
+			App: "",
+		}
+
+		service, err := alauda.InspectService(serviceName, &params)
+		if err != nil {
+			return nil, err
+		}
+
 		listener := client.ListenerData{
-			ServiceName:   serviceName,
+			ServiceID:     service.ID,
 			ListenerPort:  listenerPort,
 			ContainerPort: containerPort,
 			Protocol:      protocol,

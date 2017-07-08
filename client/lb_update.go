@@ -14,7 +14,7 @@ type UpdateLoadBalancerData struct {
 
 // ListenerData defines one listener in the request body for the UpdateLoadBalancer API.
 type ListenerData struct {
-	ServiceName   string `json:"service_name"`
+	ServiceID     string `json:"service_id"`
 	Protocol      string `json:"protocol"`
 	ListenerPort  int    `json:"listener_port"`
 	ContainerPort int    `json:"container_port"`
