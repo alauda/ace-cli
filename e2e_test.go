@@ -49,7 +49,6 @@ var cliTests = []struct {
 	{[]string{"alauda", "config", "create", "%CONFIG%", "-d", "test config", "--item", "k1=v1", "-i", "k2=v2"}},
 	{[]string{"alauda", "config", "inspect", "%CONFIG%"}},
 	{[]string{"alauda", "config", "items", "%CONFIG%"}},
-	{[]string{"alauda", "config", "rm", "%CONFIG%"}},
 	{[]string{"alauda", "service", "ps"}},
 	{[]string{"alauda", "service", "run", "%SERVICE%", "%IMAGE%",
 		"-c", "%CLUSTER%", "-s", "%SPACE%",
@@ -59,12 +58,14 @@ var cliTests = []struct {
 		"--cpu", "0.256", "--memory", "256",
 		"-n", "2",
 		"--env", "FOO=foo", "-e", "BAR=bar",
-		"-r", "do this", "--entrypoint", "and that"}},
+		"-r", "do this", "--entrypoint", "and that",
+		"--config", "%CONFIG%:k1:/config.txt"}},
 	{[]string{"alauda", "service", "inspect", "%SERVICE%"}},
 	{[]string{"alauda", "lb", "bind", "%LB%", "--listener", "%SERVICE%:80", "-l", "%SERVICE%:81/http", "-l", "%SERVICE%:21234:1234"}},
 	{[]string{"alauda", "lb", "unbind", "%LB%", "--listener", "%SERVICE%:80:80", "-l", "%SERVICE%:21234:1234"}},
 	{[]string{"alauda", "service", "rm", "%SERVICE%"}},
 	{[]string{"alauda", "volume", "rm", "%VOLUME%"}},
+	{[]string{"alauda", "config", "rm", "%CONFIG%"}},
 }
 
 func TestCli(t *testing.T) {
