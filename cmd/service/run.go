@@ -34,6 +34,7 @@ func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	runCmd.Flags().StringVarP(&opts.entrypoint, "entrypoint", "", "", "Entrypoint for the container")
 	runCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Ports to publish on the load balancer ([lb:][listenerPort:]containerPort[/protocol]")
 	runCmd.Flags().StringSliceVarP(&opts.volumes, "volume", "v", []string{}, "Volumes to mount to the container (volumeName:containerPath)")
+	runCmd.Flags().StringSliceVarP(&opts.configs, "config", "", []string{}, "Configuration to inject into the container (name:key:path)")
 
 	return runCmd
 }

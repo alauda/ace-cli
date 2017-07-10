@@ -26,6 +26,7 @@ type CreateServiceData struct {
 	Env                map[string]string     `json:"instance_envvars"`
 	LoadBalancers      []ServiceLoadBalancer `json:"load_balancers"`
 	Volumes            []ServiceVolume       `json:"volumes"`
+	Configs            []ServiceConfig       `json:"mount_points"`
 }
 
 // CreateService creates and deploys a new service.

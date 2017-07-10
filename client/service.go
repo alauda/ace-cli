@@ -50,3 +50,16 @@ type ServiceVolume struct {
 	VolumeName string `json:"volume_name"`
 	VolumeID   string `json:"volume_id"`
 }
+
+// ServiceConfig defines the configuration data in the CreateService request.
+type ServiceConfig struct {
+	Type  string             `json:"type"`
+	Path  string             `json:"path"`
+	Value ServiceConfigValue `json:"value"`
+}
+
+// ServiceConfigValue defines the configuration value to be injected into the service.
+type ServiceConfigValue struct {
+	Name string `json:"name"`
+	Key  string `json:"key"`
+}

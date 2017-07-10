@@ -23,6 +23,7 @@ type createOptions struct {
 	entrypoint string
 	publish    []string
 	volumes    []string
+	configs    []string
 }
 
 // NewCreateCmd creates a new service create command.
@@ -52,6 +53,7 @@ func NewCreateCmd(alauda client.APIClient) *cobra.Command {
 	createCmd.Flags().StringVarP(&opts.entrypoint, "entrypoint", "", "", "Entrypoint for the container")
 	createCmd.Flags().StringSliceVarP(&opts.publish, "publish", "p", []string{}, "Ports to publish on the load balancer ([lb:][listenerPort:]containerPort[/protocol]")
 	createCmd.Flags().StringSliceVarP(&opts.volumes, "volume", "v", []string{}, "Volumes to mount to the container (volumeName:containerPath or hostPath:containerPath)")
+	createCmd.Flags().StringSliceVarP(&opts.configs, "config", "", []string{}, "Configuration to inject into the container (name:key:path)")
 
 	return createCmd
 }
@@ -104,6 +106,11 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
+	configs, err := parseConfigs(alauda, opts)
+	if err != nil {
+		return err
+	}
+
 	data := client.CreateServiceData{
 		Version:         "v2",
 		Name:            name,
@@ -122,6 +129,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		Env:             env,
 		LoadBalancers:   loadBalancers,
 		Volumes:         volumes,
+		Configs:         configs,
 		CustomInstanceSize: client.ServiceInstanceSize{
 			CPU:    opts.cpu,
 			Memory: opts.memory,
@@ -263,4 +271,38 @@ func parseVolume(desc string) (string, string, error) {
 	}
 
 	return result[0], result[1], nil
+}
+
+func parseConfigs(alauda client.APIClient, opts *createOptions) ([]client.ServiceConfig, error) {
+	var configs = []client.ServiceConfig{}
+
+	for _, desc := range opts.configs {
+		name, key, path, err := parseConfig(desc)
+		if err != nil {
+			return nil, err
+		}
+
+		config := client.ServiceConfig{
+			Type: "config",
+			Path: path,
+			Value: client.ServiceConfigValue{
+				Name: name,
+				Key:  key,
+			},
+		}
+
+		configs = append(configs, config)
+	}
+
+	return configs, nil
+}
+
+func parseConfig(desc string) (string, string, string, error) {
+	result := strings.Split(desc, ":")
+
+	if len(result) != 3 {
+		return "", "", "", errors.New("invalid config descriptor, expecting name:key:path")
+	}
+
+	return result[0], result[1], result[2], nil
 }
