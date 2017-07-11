@@ -20,6 +20,7 @@ Available Commands:
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
   ps          List services
+  registry    Manage registries
   restart     Restart a service
   rm          Remove a service
   run         Create and start a new service
