@@ -10,6 +10,7 @@ import (
 	"github.com/alauda/alauda/cmd/compose"
 	"github.com/alauda/alauda/cmd/config"
 	"github.com/alauda/alauda/cmd/lb"
+	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/service"
 	"github.com/alauda/alauda/cmd/space"
 	"github.com/alauda/alauda/cmd/template"
@@ -66,6 +67,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		compose.NewComposeCmd(alauda),
 		template.NewTemplateCmd(alauda),
 		config.NewConfigCmd(alauda),
+		registry.NewRegistryCmd(alauda),
 	)
 }
 
