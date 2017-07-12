@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewUnbindCmd creates a new lb unbind command.
-func NewUnbindCmd(alauda client.APIClient) *cobra.Command {
+func newUnbindCmd(alauda client.APIClient) *cobra.Command {
 	var opts bindOptions
 
 	unbindCmd := &cobra.Command{

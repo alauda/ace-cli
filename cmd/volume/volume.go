@@ -21,10 +21,10 @@ func NewVolumeCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	volumeCmd.AddCommand(
-		NewLsCmd(alauda),
-		NewInspectCmd(alauda),
-		NewCreateCmd(alauda),
-		NewRmCmd(alauda),
+		newLsCmd(alauda),
+		newInspectCmd(alauda),
+		newCreateCmd(alauda),
+		newRmCmd(alauda),
 	)
 
 	return volumeCmd

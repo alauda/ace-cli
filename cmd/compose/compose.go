@@ -17,13 +17,13 @@ func NewComposeCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	composeCmd.AddCommand(
-		NewUpCmd(alauda),
-		NewLsCmd(alauda),
-		NewInspectCmd(alauda),
-		NewPsCmd(alauda),
-		NewStartCmd(alauda),
-		NewStopCmd(alauda),
-		NewRmCmd(alauda),
+		newUpCmd(alauda),
+		newLsCmd(alauda),
+		newInspectCmd(alauda),
+		newPsCmd(alauda),
+		newStartCmd(alauda),
+		newStopCmd(alauda),
+		newRmCmd(alauda),
 	)
 
 	return composeCmd

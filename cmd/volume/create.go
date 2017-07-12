@@ -14,8 +14,7 @@ type createOptions struct {
 	size    int
 }
 
-// NewCreateCmd creates a new create volume command.
-func NewCreateCmd(alauda client.APIClient) *cobra.Command {
+func newCreateCmd(alauda client.APIClient) *cobra.Command {
 	var opts createOptions
 
 	createCmd := &cobra.Command{

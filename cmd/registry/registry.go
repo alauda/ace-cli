@@ -17,7 +17,7 @@ func NewRegistryCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	registryCmd.AddCommand(
-		NewLsCmd(alauda),
+		newLsCmd(alauda),
 	)
 
 	return registryCmd

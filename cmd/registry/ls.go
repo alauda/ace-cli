@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewLsCmd creates a new registry ls command.
-func NewLsCmd(alauda client.APIClient) *cobra.Command {
+func newLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd := &cobra.Command{
 		Use:   "ls",
 		Short: "List registries",

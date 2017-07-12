@@ -17,8 +17,8 @@ func NewSpaceCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	spaceCmd.AddCommand(
-		NewLsCmd(alauda),
-		NewInspectCmd(alauda),
+		newLsCmd(alauda),
+		newInspectCmd(alauda),
 	)
 
 	return spaceCmd

@@ -9,8 +9,7 @@ import (
 
 var version = "1.0.1"
 
-// NewVersionCmd creates a new version command.
-func NewVersionCmd(alauda client.APIClient) *cobra.Command {
+func newVersionCmd(alauda client.APIClient) *cobra.Command {
 	versionCmd := &cobra.Command{
 		Use:   "version",
 		Short: "Display version of Alauda CLI",

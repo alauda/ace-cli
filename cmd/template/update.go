@@ -14,8 +14,7 @@ type updateOptions struct {
 	filePath string
 }
 
-// NewUpdateCmd creates a new template update command.
-func NewUpdateCmd(alauda client.APIClient) *cobra.Command {
+func newUpdateCmd(alauda client.APIClient) *cobra.Command {
 	var opts updateOptions
 
 	updateCmd := &cobra.Command{

@@ -13,8 +13,7 @@ type downloadOptions struct {
 	filePath string
 }
 
-// NewDownloadCmd creates a new template download command.
-func NewDownloadCmd(alauda client.APIClient) *cobra.Command {
+func newDownloadCmd(alauda client.APIClient) *cobra.Command {
 	var opts downloadOptions
 
 	downloadCmd := &cobra.Command{

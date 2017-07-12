@@ -14,8 +14,7 @@ type createOptions struct {
 	filePath string
 }
 
-// NewCreateCmd creates a new template create command.
-func NewCreateCmd(alauda client.APIClient) *cobra.Command {
+func newCreateCmd(alauda client.APIClient) *cobra.Command {
 	var opts createOptions
 
 	createCmd := &cobra.Command{

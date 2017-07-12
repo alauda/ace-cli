@@ -10,8 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewPsCmd creates a new compose ps command.
-func NewPsCmd(alauda client.APIClient) *cobra.Command {
+func newPsCmd(alauda client.APIClient) *cobra.Command {
 	psCmd := &cobra.Command{
 		Use:   "ps NAME",
 		Short: "List services of the application",

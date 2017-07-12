@@ -13,8 +13,7 @@ type bindOptions struct {
 	listeners []string
 }
 
-// NewBindCmd creates a new lb bind command.
-func NewBindCmd(alauda client.APIClient) *cobra.Command {
+func newBindCmd(alauda client.APIClient) *cobra.Command {
 	var opts bindOptions
 
 	bindCmd := &cobra.Command{

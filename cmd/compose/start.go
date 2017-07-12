@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewStartCmd creates a new compose start command.
-func NewStartCmd(alauda client.APIClient) *cobra.Command {
+func newStartCmd(alauda client.APIClient) *cobra.Command {
 	startCmd := &cobra.Command{
 		Use:   "start NAME",
 		Short: "Start an application",

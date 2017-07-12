@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewInspectCmd creates a new cluster inspect command.
-func NewInspectCmd(alauda client.APIClient) *cobra.Command {
+func newInspectCmd(alauda client.APIClient) *cobra.Command {
 	inspectCmd := &cobra.Command{
 		Use:   "inspect NAME",
 		Short: "Inspect a cluster",

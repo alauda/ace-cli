@@ -19,8 +19,7 @@ type upOptions struct {
 	timeout  int
 }
 
-// NewUpCmd creates a new compose up command.
-func NewUpCmd(alauda client.APIClient) *cobra.Command {
+func newUpCmd(alauda client.APIClient) *cobra.Command {
 	var opts upOptions
 
 	upCmd := &cobra.Command{

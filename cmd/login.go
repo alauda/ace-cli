@@ -21,8 +21,7 @@ type loginOptions struct {
 	password string
 }
 
-// NewLoginCmd creates a new login command.
-func NewLoginCmd(alauda client.APIClient) *cobra.Command {
+func newLoginCmd(alauda client.APIClient) *cobra.Command {
 	var opts loginOptions
 
 	loginCmd := &cobra.Command{

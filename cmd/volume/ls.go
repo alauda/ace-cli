@@ -13,8 +13,7 @@ type lsOptions struct {
 	cluster string
 }
 
-// NewLsCmd creates a new volume ls command.
-func NewLsCmd(alauda client.APIClient) *cobra.Command {
+func newLsCmd(alauda client.APIClient) *cobra.Command {
 	var opts lsOptions
 
 	lsCmd := &cobra.Command{

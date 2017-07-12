@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// NewLogoutCmd creates a new logout command.
-func NewLogoutCmd(alauda client.APIClient) *cobra.Command {
+func newLogoutCmd(alauda client.APIClient) *cobra.Command {
 	logoutCmd := &cobra.Command{
 		Use:   "logout",
 		Short: "Log out of the Alauda platform",

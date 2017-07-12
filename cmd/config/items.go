@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewItemsCmd creates a new config items command.
-func NewItemsCmd(alauda client.APIClient) *cobra.Command {
+func newItemsCmd(alauda client.APIClient) *cobra.Command {
 	itemsCmd := &cobra.Command{
 		Use:   "items NAME",
 		Short: "List config items of a configuration",

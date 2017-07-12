@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRmCmd creates a new config rm command.
-func NewRmCmd(alauda client.APIClient) *cobra.Command {
+func newRmCmd(alauda client.APIClient) *cobra.Command {
 	rmCmd := &cobra.Command{
 		Use:   "rm NAME",
 		Short: "Remove a configuration",
