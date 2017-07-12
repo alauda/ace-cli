@@ -1,6 +1,6 @@
 package client
 
-// Registry defines the response body for the InspectRegistry API.
+// Registry defines the response body for one registry from the ListRegistries API.
 type Registry struct {
 	Name        string `json:"name"`
 	DisplayName string `json:"display_name"`
