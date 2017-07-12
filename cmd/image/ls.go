@@ -13,12 +13,11 @@ type lsOptions struct {
 	registry string
 }
 
-// NewLsCmd creates a new image ls command.
-func NewLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	var opts lsOptions
 
 	lsCmd := &cobra.Command{
-		Use:   "ls",
+		// Use: this will be specified in the wrapper commands.
 		Short: "List images",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -29,6 +28,19 @@ func NewLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd.Flags().StringVarP(&opts.registry, "registry", "r", "alauda_public_registry", "Registry")
 
 	return lsCmd
+}
+
+// NewImagesCmd creates a new alauda images command, which is a shortcut to the image ls command.
+func NewImagesCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "images"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient, opts *lsOptions) error {
