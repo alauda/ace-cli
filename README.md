@@ -15,6 +15,8 @@ Available Commands:
   config      Manage configurations
   create      Create a new service
   help        Help about any command
+  image       Manage images
+  images      List images
   inspect     Inspect a service
   lb          Manage load balancers
   login       Log onto the Alauda platform
