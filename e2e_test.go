@@ -12,16 +12,17 @@ import (
 )
 
 const (
-	settingCluster  string = "test.cluster"
-	settingSpace    string = "test.space"
-	settingService  string = "test.service"
-	settingApp      string = "test.app"
-	settingImage    string = "test.image"
-	settingLB       string = "test.lb"
-	settingVolume   string = "test.volume"
-	settingTemplate string = "test.template"
-	settingConfig   string = "test.config"
-	settingRegistry string = "test.registry"
+	settingCluster         string = "test.cluster"
+	settingSpace           string = "test.space"
+	settingService         string = "test.service"
+	settingApp             string = "test.app"
+	settingImage           string = "test.image"
+	settingLB              string = "test.lb"
+	settingVolume          string = "test.volume"
+	settingTemplate        string = "test.template"
+	settingConfig          string = "test.config"
+	settingRegistry        string = "test.registry"
+	settingRegistryProject string = "test.registryProject"
 )
 
 var cliTests = []struct {
@@ -33,7 +34,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
 	{[]string{"alauda", "registry", "ls"}},
 	{[]string{"alauda", "registry", "projects", "%REGISTRY%"}},
-	{[]string{"alauda", "image", "ls"}},
+	{[]string{"alauda", "image", "ls", "-r", "%REGISTRY%", "-p", "%REGISTRYPROJECT%"}},
 	{[]string{"alauda", "images"}},
 	{[]string{"alauda", "lb", "ls"}},
 	{[]string{"alauda", "lb", "inspect", "%LB%"}},
@@ -105,5 +106,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%TEMPLATE%", viper.GetString(settingTemplate), -1)
 		args[i] = strings.Replace(args[i], "%CONFIG%", viper.GetString(settingConfig), -1)
 		args[i] = strings.Replace(args[i], "%REGISTRY%", viper.GetString(settingRegistry), -1)
+		args[i] = strings.Replace(args[i], "%REGISTRYPROJECT%", viper.GetString(settingRegistryProject), -1)
 	}
 }

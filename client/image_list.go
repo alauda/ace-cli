@@ -12,8 +12,14 @@ type ListImagesResult struct {
 }
 
 // ListImages returns the list of all images, scoped by the parent registry.
-func (client *Client) ListImages(registryName string) (*ListImagesResult, error) {
-	url := client.buildURL("registries", "%s/repositories", registryName)
+func (client *Client) ListImages(registryName string, projectName string) (*ListImagesResult, error) {
+	var url string
+	if projectName != "" {
+		url = client.buildURL("registries", "%s/projects/%s/repositories", registryName, projectName)
+	} else {
+		url = client.buildURL("registries", "%s/repositories", registryName)
+	}
+
 	request := client.buildListImagesRequest()
 
 	response, err := request.Get(url)

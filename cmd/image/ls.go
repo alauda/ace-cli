@@ -11,6 +11,7 @@ import (
 
 type lsOptions struct {
 	registry string
+	project  string
 }
 
 func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
@@ -26,6 +27,7 @@ func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	lsCmd.Flags().StringVarP(&opts.registry, "registry", "r", "alauda_public_registry", "Registry")
+	lsCmd.Flags().StringVarP(&opts.project, "project", "p", "", "Registry project")
 
 	return lsCmd
 }
@@ -48,7 +50,7 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 
 	util.InitializeClient(alauda)
 
-	result, err := alauda.ListImages(opts.registry)
+	result, err := alauda.ListImages(opts.registry, opts.project)
 	if err != nil {
 		return err
 	}
