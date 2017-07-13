@@ -21,6 +21,7 @@ const (
 	settingVolume   string = "test.volume"
 	settingTemplate string = "test.template"
 	settingConfig   string = "test.config"
+	settingRegistry string = "test.registry"
 )
 
 var cliTests = []struct {
@@ -31,6 +32,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "cluster", "ls"}},
 	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
 	{[]string{"alauda", "registry", "ls"}},
+	{[]string{"alauda", "registry", "projects", "%REGISTRY%"}},
 	{[]string{"alauda", "image", "ls"}},
 	{[]string{"alauda", "images"}},
 	{[]string{"alauda", "lb", "ls"}},
@@ -102,5 +104,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%VOLUME%", viper.GetString(settingVolume), -1)
 		args[i] = strings.Replace(args[i], "%TEMPLATE%", viper.GetString(settingTemplate), -1)
 		args[i] = strings.Replace(args[i], "%CONFIG%", viper.GetString(settingConfig), -1)
+		args[i] = strings.Replace(args[i], "%REGISTRY%", viper.GetString(settingRegistry), -1)
 	}
 }

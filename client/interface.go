@@ -95,6 +95,7 @@ type ConfigClient interface {
 // RegistryClient is the API client for the registry related APIs.
 type RegistryClient interface {
 	ListRegistries() (*ListRegistriesResult, error)
+	ListRegistryProjects(string) (*ListRegistryProjectsResult, error)
 }
 
 // ImageClient is the API client for the image related APIs.
