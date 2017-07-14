@@ -18,6 +18,7 @@ func NewImageCmd(alauda client.APIClient) *cobra.Command {
 
 	imageCmd.AddCommand(
 		newLsCmd(alauda),
+		newTagsCmd(alauda),
 	)
 
 	return imageCmd

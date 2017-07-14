@@ -101,6 +101,7 @@ type RegistryClient interface {
 // ImageClient is the API client for the image related APIs.
 type ImageClient interface {
 	ListImages(string, string) (*ListImagesResult, error)
+	ListImageTags(string, string, string) (*ListImageTagsResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
