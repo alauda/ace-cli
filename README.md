@@ -48,12 +48,17 @@ Use "alauda [command] --help" for more information about a command.
 2. Add the following settings to the config file (default at `$HOME/.alauda.yml`):
 ```
 test:
-    cluster: <mycluster>
-    image: <myimage>
-    lb: <myloadbalancer>
-    service: <myservice>
-    app: <myapp>
-    space: <myspace>
-    volume: <myvolume>
+  app: <app name>
+  cluster: <cluster name>
+  config: <config name>
+  image: <image name>
+  lb: <loadbalancer name>
+  registry: <registry name>
+  registryproject: <registry project name>
+  repo: <registry repository name>
+  service: <service name>
+  space: <space name>
+  template: <template name>
+  volume: <volume name>
 ```
 3. Run `go test`.
