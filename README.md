@@ -21,6 +21,8 @@ Available Commands:
   lb          Manage load balancers
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
+  node        Manage nodes
+  nodes       List nodes
   ps          List services
   registry    Manage registries
   restart     Restart a service
