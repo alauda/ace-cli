@@ -11,6 +11,7 @@ import (
 	"github.com/alauda/alauda/cmd/config"
 	"github.com/alauda/alauda/cmd/image"
 	"github.com/alauda/alauda/cmd/lb"
+	"github.com/alauda/alauda/cmd/node"
 	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/service"
 	"github.com/alauda/alauda/cmd/space"
@@ -73,6 +74,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		config.NewConfigCmd(alauda),
 		registry.NewRegistryCmd(alauda),
 		image.NewImageCmd(alauda),
+		node.NewNodeCmd(alauda),
 	)
 }
 

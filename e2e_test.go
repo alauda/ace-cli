@@ -33,6 +33,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "space", "inspect", "%SPACE%"}},
 	{[]string{"alauda", "cluster", "ls"}},
 	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
+	{[]string{"alauda", "node", "ls"}},
 	{[]string{"alauda", "registry", "ls"}},
 	{[]string{"alauda", "registry", "projects", "%REGISTRY%"}},
 	{[]string{"alauda", "image", "ls", "-r", "%REGISTRY%", "-p", "%REGISTRYPROJECT%"}},

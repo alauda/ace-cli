@@ -17,6 +17,7 @@ type APIClient interface {
 	ConfigClient
 	RegistryClient
 	ImageClient
+	NodeClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -102,6 +103,11 @@ type RegistryClient interface {
 type ImageClient interface {
 	ListImages(string, string) (*ListImagesResult, error)
 	ListImageTags(string, string, string) (*ListImageTagsResult, error)
+}
+
+// NodeClient is the API client for node related APIs.
+type NodeClient interface {
+	ListNodes(string) (*ListNodesResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
