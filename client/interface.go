@@ -108,6 +108,7 @@ type ImageClient interface {
 // NodeClient is the API client for node related APIs.
 type NodeClient interface {
 	ListNodes(string) (*ListNodesResult, error)
+	InspectNode(string, string) (*Node, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

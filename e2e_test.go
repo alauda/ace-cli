@@ -24,6 +24,7 @@ const (
 	settingRegistry        string = "test.registry"
 	settingRegistryProject string = "test.registryProject"
 	settingRepo            string = "test.repo"
+	settingNode            string = "test.node"
 )
 
 var cliTests = []struct {
@@ -35,6 +36,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
 	{[]string{"alauda", "node", "ls"}},
 	{[]string{"alauda", "nodes"}},
+	{[]string{"alauda", "node", "inspect", "%NODE%"}},
 	{[]string{"alauda", "registry", "ls"}},
 	{[]string{"alauda", "registry", "projects", "%REGISTRY%"}},
 	{[]string{"alauda", "image", "ls", "-r", "%REGISTRY%", "-p", "%REGISTRYPROJECT%"}},
@@ -112,5 +114,6 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%REGISTRY%", viper.GetString(settingRegistry), -1)
 		args[i] = strings.Replace(args[i], "%REGISTRYPROJECT%", viper.GetString(settingRegistryProject), -1)
 		args[i] = strings.Replace(args[i], "%REPO%", viper.GetString(settingRepo), -1)
+		args[i] = strings.Replace(args[i], "%NODE%", viper.GetString(settingNode), -1)
 	}
 }
