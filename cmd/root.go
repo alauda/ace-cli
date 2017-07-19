@@ -65,6 +65,9 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding image related shortcuts.
 		image.NewImagesCmd(alauda),
 
+		// Adding cluster related shortcuts
+		cluster.NewClustersCmd(alauda),
+
 		// Adding node related shortcuts
 		node.NewNodesCmd(alauda),
 
