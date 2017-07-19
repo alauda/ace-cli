@@ -11,6 +11,7 @@ Usage:
 
 Available Commands:
   cluster     Manage clusters
+  clusters    List clusters
   compose     Manage application compose
   config      Manage configurations
   create      Create a new service
