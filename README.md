@@ -10,6 +10,7 @@ Usage:
   alauda [command]
 
 Available Commands:
+  apps        List apps
   cluster     Manage clusters
   clusters    List clusters
   compose     Manage application compose
