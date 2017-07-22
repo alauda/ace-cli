@@ -52,6 +52,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "template", "create", "%TEMPLATE%", "-f", "examples/alauda-compose.yml"}},
 	{[]string{"alauda", "template", "inspect", "%TEMPLATE%"}},
 	{[]string{"alauda", "template", "update", "%TEMPLATE%", "-f", "examples/alauda-compose.yml"}},
+	{[]string{"alauda", "apps"}},
 	{[]string{"alauda", "compose", "ls"}},
 	{[]string{"alauda", "compose", "up", "%APP%", "-t", "%TEMPLATE%", "-s", "--timeout", "120"}},
 	{[]string{"alauda", "compose", "inspect", "%APP%"}},

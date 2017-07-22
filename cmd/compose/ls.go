@@ -12,11 +12,10 @@ type lsOptions struct {
 	cluster string
 }
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	var opts lsOptions
 
 	lsCmd := &cobra.Command{
-		Use:   "ls",
 		Short: "List apps",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -27,6 +26,19 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster")
 
 	return lsCmd
+}
+
+// NewAppsCmd creates a new alauda apps command, which is a shortcut to the compose ls command.
+func NewAppsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "apps"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient, opts *lsOptions) error {

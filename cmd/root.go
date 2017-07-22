@@ -71,6 +71,9 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding node related shortcuts
 		node.NewNodesCmd(alauda),
 
+		// Adding app related shortcuts
+		compose.NewAppsCmd(alauda),
+
 		space.NewSpaceCmd(alauda),
 		cluster.NewClusterCmd(alauda),
 		lb.NewLBCmd(alauda),
