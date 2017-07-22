@@ -111,6 +111,16 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
+	cluster, err := alauda.InspectCluster(opts.cluster)
+	if err != nil {
+		return err
+	}
+
+	networkMode := "BRIDGE"
+	if cluster.Type == "KUBERNETES" {
+		networkMode = "FLANNEL"
+	}
+
 	data := client.CreateServiceData{
 		Version:         "v2",
 		Name:            name,
@@ -125,7 +135,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		ScalingMode:     "MANUAL",
 		TargetInstances: opts.number,
 		Ports:           ports,
-		NetworkMode:     "BRIDGE",
+		NetworkMode:     networkMode,
 		Env:             env,
 		LoadBalancers:   loadBalancers,
 		Volumes:         volumes,
