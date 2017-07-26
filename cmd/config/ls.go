@@ -8,9 +8,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd := &cobra.Command{
-		Use:   "ls",
 		Short: "List configurations",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -19,6 +18,19 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	return lsCmd
+}
+
+// NewConfigsCmd creates a new alauda configs command, which is a shortcut to the config ls command.
+func NewConfigsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "configs"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient) error {

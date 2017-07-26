@@ -59,6 +59,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "compose", "ps", "%APP%"}},
 	{[]string{"alauda", "compose", "rm", "%APP%"}},
 	{[]string{"alauda", "template", "rm", "%TEMPLATE%"}},
+	{[]string{"alauda", "configs"}},
 	{[]string{"alauda", "config", "ls"}},
 	{[]string{"alauda", "config", "create", "%CONFIG%", "-d", "test config", "--item", "k1=v1", "-i", "k2=v2"}},
 	{[]string{"alauda", "config", "inspect", "%CONFIG%"}},
