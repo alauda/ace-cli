@@ -15,6 +15,7 @@ Available Commands:
   clusters    List clusters
   compose     Manage application compose
   config      Manage configurations
+  configs     List configurations
   create      Create a new service
   help        Help about any command
   image       Manage images
