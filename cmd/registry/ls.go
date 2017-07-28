@@ -9,9 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd := &cobra.Command{
-		Use:   "ls",
 		Short: "List registries",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -20,6 +19,19 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	return lsCmd
+}
+
+// NewRegistriesCmd creates a new alauda registries command, which is a shortcut to the registry ls command.
+func NewRegistriesCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "registries"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient) error {
