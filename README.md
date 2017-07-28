@@ -22,11 +22,13 @@ Available Commands:
   images      List images
   inspect     Inspect a service
   lb          Manage load balancers
+  lbs         List load balancers
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
   node        Manage nodes
   nodes       List nodes
   ps          List services
+  registries  List registries
   registry    Manage registries
   restart     Restart a service
   rm          Remove a service
