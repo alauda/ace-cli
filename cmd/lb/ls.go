@@ -13,11 +13,10 @@ type lsOptions struct {
 	service string
 }
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	var opts lsOptions
 
 	lsCmd := &cobra.Command{
-		Use:   "ls",
 		Short: "List load balancers",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -29,6 +28,19 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd.Flags().StringVarP(&opts.service, "service", "s", "", "Service")
 
 	return lsCmd
+}
+
+// NewLbsCmd creates a new alauda lbs command, which is a shortcut to the lb ls command.
+func NewLbsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "lbs"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient, opts *lsOptions) error {
