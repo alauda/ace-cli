@@ -8,9 +8,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd := &cobra.Command{
-		Use:   "ls",
 		Short: "List spaces",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -18,6 +17,19 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 		},
 	}
 	return lsCmd
+}
+
+// NewSpacesCmd creates a new alauda spaces command, which is a shortcut to the space ls command.
+func NewSpacesCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "spaces"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient) error {

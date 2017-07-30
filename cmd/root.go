@@ -83,6 +83,9 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding registry related shortcuts
 		registry.NewRegistriesCmd(alauda),
 
+		// Adding space related shortcuts
+		space.NewSpacesCmd(alauda),
+
 		space.NewSpaceCmd(alauda),
 		cluster.NewClusterCmd(alauda),
 		lb.NewLBCmd(alauda),
