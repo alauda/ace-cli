@@ -36,6 +36,7 @@ Available Commands:
   scale       Scale a service to the specified number of instances
   service     Manage services
   space       Manage spaces
+  spaces      List spaces
   start       Start a service
   stop        Stop a service
   template    Manage application templates
