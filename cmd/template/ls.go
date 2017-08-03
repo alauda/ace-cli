@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	lsCmd := &cobra.Command{
 		Use:   "ls",
 		Short: "List app templates",
@@ -19,6 +19,19 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	return lsCmd
+}
+
+// NewTemplatesCmd creates a new alauda templates command, which is a shortcut to the template ls command.
+func NewTemplatesCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "templates"
+	return cmd
+}
+
+func newLsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "ls"
+	return cmd
 }
 
 func doLs(alauda client.APIClient) error {
