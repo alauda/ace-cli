@@ -40,6 +40,7 @@ Available Commands:
   start       Start a service
   stop        Stop a service
   template    Manage application templates
+  templates   List app templates
   update      Update a service
   version     Display version of Alauda CLI
   volume      Manage volumes
