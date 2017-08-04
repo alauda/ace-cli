@@ -44,6 +44,7 @@ Available Commands:
   update      Update a service
   version     Display version of Alauda CLI
   volume      Manage volumes
+  volumes     List volumes
 
 Flags:
       --config string   config file (default: $HOME/.alauda.yml)
