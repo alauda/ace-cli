@@ -83,9 +83,9 @@ var cliTests = []struct {
 	{[]string{"alauda", "service", "inspect", "%SERVICE%"}},
 	{[]string{"alauda", "lb", "bind", "%LB%", "--listener", "%SERVICE%:80", "-l", "%SERVICE%:81/http", "-l", "%SERVICE%:21234:1234"}},
 	{[]string{"alauda", "lb", "unbind", "%LB%", "--listener", "%SERVICE%:80:80", "-l", "%SERVICE%:21234:1234"}},
-	{[]string{"alauda", "service", "rm", "%SERVICE%"}},
 	{[]string{"alauda", "volume", "rm", "%VOLUME%"}},
 	{[]string{"alauda", "config", "rm", "%CONFIG%"}},
+	{[]string{"alauda", "service", "rm", "%SERVICE%"}},
 }
 
 func TestCli(t *testing.T) {

@@ -3,6 +3,7 @@ redis:
   ports:
   - '6379'
   net: flannel
+  alauda_lb: ALB
 web:
   command: python app.py
   image: index.alauda.cn/alauda/flask-redis:latest
@@ -11,4 +12,5 @@ web:
   ports:
   - '80/http'
   net: flannel
+  alauda_lb: ALB
   
