@@ -12,7 +12,7 @@ import (
 func newGetCmd(alauda client.APIClient) *cobra.Command {
 	getCmd := &cobra.Command{
 		Use:   "get",
-		Short: "Get the current  cluster",
+		Short: "Get the current cluster",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return doGet(alauda)
