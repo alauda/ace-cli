@@ -109,6 +109,7 @@ type ImageClient interface {
 type NodeClient interface {
 	ListNodes(string) (*ListNodesResult, error)
 	InspectNode(string, string) (*Node, error)
+	CordonNode(string, string, *CordonNodeData) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
