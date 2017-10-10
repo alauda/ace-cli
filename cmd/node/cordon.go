@@ -43,11 +43,7 @@ func doCordon(alauda client.APIClient, name string, opts *cordonOptions) error {
 		return err
 	}
 
-	data := client.CordonNodeData{
-		Action: "cordon",
-	}
-
-	err = alauda.CordonNode(name, cluster, &data)
+	err = alauda.CordonNode(name, cluster)
 	if err != nil {
 		return err
 	}
