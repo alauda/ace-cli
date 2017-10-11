@@ -9,22 +9,22 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type cordonOptions struct {
+type uncordonOptions struct {
 	cluster string
 }
 
-func newCordonCmd(alauda client.APIClient) *cobra.Command {
-	var opts cordonOptions
+func newUncordonCmd(alauda client.APIClient) *cobra.Command {
+	var opts uncordonOptions
 
 	cordonCmd := &cobra.Command{
-		Use:   "cordon IP",
-		Short: "Make a node unschedulable",
+		Use:   "uncordon IP",
+		Short: "Make a node schedulable again",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
-				return errors.New("node cordon expects IP")
+				return errors.New("node uncordon expects IP")
 			}
-			return doCordon(alauda, args[0], &opts)
+			return doUncordon(alauda, args[0], &opts)
 		},
 	}
 
@@ -33,8 +33,8 @@ func newCordonCmd(alauda client.APIClient) *cobra.Command {
 	return cordonCmd
 }
 
-func doCordon(alauda client.APIClient, name string, opts *cordonOptions) error {
-	fmt.Println("[alauda] Cordoning", name)
+func doUncordon(alauda client.APIClient, name string, opts *uncordonOptions) error {
+	fmt.Println("[alauda] Uncordoning", name)
 
 	util.InitializeClient(alauda)
 
@@ -43,7 +43,7 @@ func doCordon(alauda client.APIClient, name string, opts *cordonOptions) error {
 		return err
 	}
 
-	err = alauda.CordonNode(name, cluster)
+	err = alauda.UncordonNode(name, cluster)
 	if err != nil {
 		return err
 	}
