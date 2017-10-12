@@ -2,6 +2,7 @@ package node
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -71,17 +72,18 @@ func printLsResult(result *client.ListNodesResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"IP", "STATE", "TYPE", "RESOURCES"}
+	return []string{"IP", "STATE", "TYPE", "SCHEDULABLE", "RESOURCES"}
 }
 
 func buildLsTableContent(result *client.ListNodesResult) [][]string {
 	var content [][]string
 
 	for _, node := range result.Nodes {
+		schedulable := strconv.FormatBool(node.Attributes.Schedulable)
 		resources := fmt.Sprintf("CPUs: %s/%s, Memory: %s/%s",
 			node.Resources.AvailableCPUs, node.Resources.TotalCPUs,
 			node.Resources.AvailableMemory, node.Resources.TotalMemory)
-		content = append(content, []string{node.IP, node.State, node.Type, resources})
+		content = append(content, []string{node.IP, node.State, node.Type, schedulable, resources})
 	}
 
 	return content
