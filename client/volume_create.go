@@ -12,6 +12,7 @@ type CreateVolumeData struct {
 	Driver     string `json:"driver_name"`
 	Size       int    `json:"size"`
 	ClusterID  string `json:"region_id"`
+	Space      string `json:"space_name"`
 	VolumeType string `json:"volume_type"`
 	Namespace  string `json:"namespace"`
 }

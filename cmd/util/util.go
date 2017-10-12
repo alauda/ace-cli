@@ -40,6 +40,25 @@ func ConfigCluster(cluster string) (string, error) {
 	return result, nil
 }
 
+// ConfigSpace uses the space specified by the cmd, or the one in the config, as appropriate.
+func ConfigSpace(space string) (string, error) {
+	if space != "" {
+		viper.Set(SettingSpace, space)
+
+		err := SaveConfig()
+		if err != nil {
+			return "", err
+		}
+	}
+
+	result := viper.GetString(SettingSpace)
+	if result == "" {
+		return "", errors.New("no space specified")
+	}
+
+	return result, nil
+}
+
 // ParseListener parses the listener information specified in the form name:listenerPort:containerPort/protocol
 func ParseListener(desc string) (string, int, int, string, error) {
 	var name string

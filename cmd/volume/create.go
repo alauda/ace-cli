@@ -11,6 +11,7 @@ import (
 
 type createOptions struct {
 	cluster string
+	space   string
 	size    int
 }
 
@@ -30,6 +31,7 @@ func newCreateCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	createCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster to create the volume in")
+	createCmd.Flags().StringVarP(&opts.space, "space", "", "", "Space to create the volume in")
 	createCmd.Flags().IntVarP(&opts.size, "size", "s", 10, "Volume size (GB)")
 
 	return createCmd
@@ -50,6 +52,11 @@ func doCreate(alauda client.APIClient, name string, opts *createOptions) error {
 		return err
 	}
 
+	space, err := util.ConfigSpace(opts.space)
+	if err != nil {
+		return err
+	}
+
 	err = validateSize(opts.size)
 	if err != nil {
 		return err
@@ -59,6 +66,7 @@ func doCreate(alauda client.APIClient, name string, opts *createOptions) error {
 		Name:      name,
 		Driver:    "glusterfs",
 		ClusterID: clusterID,
+		Space:     space,
 		Size:      opts.size,
 		Namespace: alauda.Namespace(),
 	}
