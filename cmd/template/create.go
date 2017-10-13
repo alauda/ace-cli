@@ -12,6 +12,7 @@ import (
 
 type createOptions struct {
 	filePath string
+	space    string
 }
 
 func newCreateCmd(alauda client.APIClient) *cobra.Command {
@@ -30,6 +31,7 @@ func newCreateCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	createCmd.Flags().StringVarP(&opts.filePath, "file", "f", "./alauda-compose.yml", "Compose yaml file template")
+	createCmd.Flags().StringVarP(&opts.space, "space", "s", "", "Space to create the template in")
 
 	return createCmd
 }
@@ -39,9 +41,15 @@ func doCreate(alauda client.APIClient, name string, opts *createOptions) error {
 
 	util.InitializeClient(alauda)
 
+	space, err := util.ConfigSpace(opts.space)
+	if err != nil {
+		return err
+	}
+
 	data := client.CreateAppTemplateData{
 		Name:        name,
 		Description: "",
+		Space:       space,
 	}
 
 	absPath, err := filepath.Abs(opts.filePath)

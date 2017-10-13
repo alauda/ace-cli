@@ -8,6 +8,7 @@ import (
 type CreateAppTemplateData struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
+	Space       string `json:"space_name"`
 }
 
 // CreateAppTemplate creates a new app template.
@@ -38,6 +39,7 @@ func (client *Client) buildCreateAppTemplateRequest(data *CreateAppTemplateData,
 	request.SetFormData(map[string]string{
 		"name":        data.Name,
 		"description": data.Description,
+		"space_name":  data.Space,
 	})
 
 	request.SetFile("template", configFile)
