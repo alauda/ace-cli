@@ -10,6 +10,7 @@ import (
 type CreateConfigData struct {
 	Name        string       `json:"name"`
 	Description string       `json:"description"`
+	Space       string       `json:"space_name"`
 	Content     []ConfigItem `json:"content"`
 }
 

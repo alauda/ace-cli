@@ -10,6 +10,7 @@ import (
 )
 
 type createOptions struct {
+	space       string
 	description string
 	items       []string
 }
@@ -29,6 +30,7 @@ func newCreateCmd(alauda client.APIClient) *cobra.Command {
 		},
 	}
 
+	createCmd.Flags().StringVarP(&opts.space, "space", "s", "", "Space to create the config in")
 	createCmd.Flags().StringVarP(&opts.description, "description", "d", "", "Description")
 	createCmd.Flags().StringSliceVarP(&opts.items, "item", "i", []string{}, "Configuration items")
 
@@ -40,6 +42,11 @@ func doCreate(alauda client.APIClient, name string, opts *createOptions) error {
 
 	util.InitializeClient(alauda)
 
+	space, err := util.ConfigSpace(opts.space)
+	if err != nil {
+		return err
+	}
+
 	items, err := util.ParseKeyValues(opts.items)
 	if err != nil {
 		return err
@@ -48,6 +55,7 @@ func doCreate(alauda client.APIClient, name string, opts *createOptions) error {
 	data := client.CreateConfigData{
 		Name:        name,
 		Description: opts.description,
+		Space:       space,
 	}
 
 	data.Content = make([]client.ConfigItem, len(items))
