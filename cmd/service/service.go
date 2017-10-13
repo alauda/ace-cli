@@ -6,9 +6,7 @@ import (
 	"strings"
 
 	"github.com/alauda/alauda/client"
-	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // NewServiceCmd creates a new service command.
@@ -36,24 +34,6 @@ func NewServiceCmd(alauda client.APIClient) *cobra.Command {
 	)
 
 	return serviceCmd
-}
-
-func configSpace(space string) (string, error) {
-	if space != "" {
-		viper.Set(util.SettingSpace, space)
-
-		err := util.SaveConfig()
-		if err != nil {
-			return "", err
-		}
-	}
-
-	result := viper.GetString(util.SettingSpace)
-	if result == "" {
-		return "", errors.New("no space specified")
-	}
-
-	return result, nil
 }
 
 func validateResourceRequirements(cpu float64, memory int) error {

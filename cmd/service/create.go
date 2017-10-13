@@ -73,7 +73,7 @@ func doCreate(alauda client.APIClient, name string, image string, opts *createOp
 		return err
 	}
 
-	opts.space, err = configSpace(opts.space)
+	opts.space, err = util.ConfigSpace(opts.space)
 	if err != nil {
 		return err
 	}
