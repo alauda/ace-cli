@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version = "1.2.0"
+var version = "1.3.0"
 
 func newVersionCmd(alauda client.APIClient) *cobra.Command {
 	versionCmd := &cobra.Command{
