@@ -21,6 +21,7 @@ func NewNodeCmd(alauda client.APIClient) *cobra.Command {
 		newInspectCmd(alauda),
 		newCordonCmd(alauda),
 		newUncordonCmd(alauda),
+		newDrainCmd(alauda),
 	)
 
 	return nodeCmd
