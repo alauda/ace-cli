@@ -7,6 +7,7 @@ type Node struct {
 	Type       string         `json:"type"`
 	Attributes NodeAttributes `json:"attr"`
 	Resources  NodeResources  `json:"resources"`
+	Labels     []NodeLabel    `json:"labels"`
 }
 
 // NodeResources describes the total and available resources on a node.
@@ -20,4 +21,10 @@ type NodeResources struct {
 // NodeAttributes describes the additional attributes of the node.
 type NodeAttributes struct {
 	Schedulable bool `json:"schedulable"`
+}
+
+// NodeLabel describes a label on the node.
+type NodeLabel struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
