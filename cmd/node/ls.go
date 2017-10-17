@@ -72,7 +72,7 @@ func printLsResult(result *client.ListNodesResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"IP", "STATE", "TYPE", "SCHEDULABLE", "RESOURCES"}
+	return []string{"IP", "STATE", "TYPE", "SCHEDULABLE", "#LABELS", "RESOURCES"}
 }
 
 func buildLsTableContent(result *client.ListNodesResult) [][]string {
@@ -80,10 +80,11 @@ func buildLsTableContent(result *client.ListNodesResult) [][]string {
 
 	for _, node := range result.Nodes {
 		schedulable := strconv.FormatBool(node.Attributes.Schedulable)
+		labels := len(node.Labels)
 		resources := fmt.Sprintf("CPUs: %s/%s, Memory: %s/%s",
 			node.Resources.AvailableCPUs, node.Resources.TotalCPUs,
 			node.Resources.AvailableMemory, node.Resources.TotalMemory)
-		content = append(content, []string{node.IP, node.State, node.Type, schedulable, resources})
+		content = append(content, []string{node.IP, node.State, node.Type, schedulable, strconv.Itoa(int(labels)), resources})
 	}
 
 	return content
