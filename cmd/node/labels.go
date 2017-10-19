@@ -3,6 +3,7 @@ package node
 import (
 	"errors"
 	"fmt"
+	"strconv"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -63,14 +64,14 @@ func printLabelsResult(result *client.Node) {
 }
 
 func buildLabelsTableHeader() []string {
-	return []string{"KEY", "VALUE"}
+	return []string{"KEY", "VALUE", "EDITABLE"}
 }
 
 func buildLabelsTableContent(node *client.Node) [][]string {
 	var content [][]string
 
 	for _, label := range node.Labels {
-		content = append(content, []string{label.Key, label.Value})
+		content = append(content, []string{label.Key, label.Value, strconv.FormatBool(label.Editable)})
 	}
 
 	return content

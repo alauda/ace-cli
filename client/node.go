@@ -25,6 +25,7 @@ type NodeAttributes struct {
 
 // NodeLabel describes a label on the node.
 type NodeLabel struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key      string `json:"key"`
+	Value    string `json:"value"`
+	Editable bool   `json:"editable"`
 }
