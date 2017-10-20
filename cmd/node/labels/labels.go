@@ -1,4 +1,4 @@
-package node
+package labels
 
 import (
 	"errors"
@@ -14,7 +14,8 @@ type labelsOptions struct {
 	cluster string
 }
 
-func newLabelsCmd(alauda client.APIClient) *cobra.Command {
+// NewLabelsCmd creates a new node labels command.
+func NewLabelsCmd(alauda client.APIClient) *cobra.Command {
 	var opts labelsOptions
 
 	labelsCmd := &cobra.Command{
@@ -30,6 +31,10 @@ func newLabelsCmd(alauda client.APIClient) *cobra.Command {
 	}
 
 	labelsCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster")
+
+	labelsCmd.AddCommand(
+		newSetCmd(alauda),
+	)
 
 	return labelsCmd
 }

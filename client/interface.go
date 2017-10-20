@@ -112,6 +112,7 @@ type NodeClient interface {
 	CordonNode(string, string) error
 	UncordonNode(string, string) error
 	DrainNode(string, string) error
+	SetNodeLabels(string, string, *SetNodeLabelsData) error
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

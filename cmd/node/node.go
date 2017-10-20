@@ -2,6 +2,7 @@ package node
 
 import (
 	"github.com/alauda/alauda/client"
+	"github.com/alauda/alauda/cmd/node/labels"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,7 @@ func NewNodeCmd(alauda client.APIClient) *cobra.Command {
 		newCordonCmd(alauda),
 		newUncordonCmd(alauda),
 		newDrainCmd(alauda),
-		newLabelsCmd(alauda),
+		labels.NewLabelsCmd(alauda),
 	)
 
 	return nodeCmd
