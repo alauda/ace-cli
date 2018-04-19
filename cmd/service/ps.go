@@ -14,8 +14,7 @@ type psOptions struct {
 	all     bool
 }
 
-// NewPsCmd creates a new service ps command.
-func NewPsCmd(alauda client.APIClient) *cobra.Command {
+func newPsCmd(alauda client.APIClient) *cobra.Command {
 	var opts psOptions
 
 	psCmd := &cobra.Command{

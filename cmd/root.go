@@ -51,16 +51,6 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 
 		// Adding service related commands as top level defaults.
 		service.NewServiceCmd(alauda),
-		service.NewPsCmd(alauda),
-		service.NewCreateCmd(alauda),
-		service.NewRunCmd(alauda),
-		service.NewStartCmd(alauda),
-		service.NewStopCmd(alauda),
-		service.NewRmCmd(alauda),
-		service.NewInspectCmd(alauda),
-		service.NewRestartCmd(alauda),
-		service.NewScaleCmd(alauda),
-		service.NewUpdateCmd(alauda),
 
 		// Adding image related shortcuts.
 		image.NewImagesCmd(alauda),
@@ -71,12 +61,6 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding node related shortcuts
 		node.NewNodesCmd(alauda),
 
-		// Adding app related shortcuts
-		compose.NewAppsCmd(alauda),
-
-		// Adding config related shortcuts
-		config.NewConfigsCmd(alauda),
-
 		// Adding lb related shortcuts
 		lb.NewLbsCmd(alauda),
 
@@ -85,9 +69,6 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 
 		// Adding space related shortcuts
 		space.NewSpacesCmd(alauda),
-
-		// Adding template related shortcuts
-		template.NewTemplatesCmd(alauda),
 
 		// Adding volume related shortcuts
 		volume.NewVolumesCmd(alauda),

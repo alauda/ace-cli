@@ -28,13 +28,6 @@ func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	return lsCmd
 }
 
-// NewAppsCmd creates a new alauda apps command, which is a shortcut to the compose ls command.
-func NewAppsCmd(alauda client.APIClient) *cobra.Command {
-	cmd := newBaseLsCmd(alauda)
-	cmd.Use = "apps"
-	return cmd
-}
-
 func newLsCmd(alauda client.APIClient) *cobra.Command {
 	cmd := newBaseLsCmd(alauda)
 	cmd.Use = "ls"

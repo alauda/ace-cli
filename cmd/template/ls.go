@@ -21,13 +21,6 @@ func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	return lsCmd
 }
 
-// NewTemplatesCmd creates a new alauda templates command, which is a shortcut to the template ls command.
-func NewTemplatesCmd(alauda client.APIClient) *cobra.Command {
-	cmd := newBaseLsCmd(alauda)
-	cmd.Use = "templates"
-	return cmd
-}
-
 func newLsCmd(alauda client.APIClient) *cobra.Command {
 	cmd := newBaseLsCmd(alauda)
 	cmd.Use = "ls"

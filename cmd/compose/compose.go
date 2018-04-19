@@ -8,9 +8,11 @@ import (
 // NewComposeCmd creates a new compose command.
 func NewComposeCmd(alauda client.APIClient) *cobra.Command {
 	composeCmd := &cobra.Command{
-		Use:   "compose",
-		Short: "Manage application compose",
-		Long:  ``,
+		Use:        "compose",
+		Short:      "Manage application compose",
+		Long:       ``,
+		Deprecated: "and will be removed in a subsequent release",
+		Hidden:     true,
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.HelpFunc()(cmd, args)
 		},

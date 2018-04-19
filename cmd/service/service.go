@@ -12,25 +12,27 @@ import (
 // NewServiceCmd creates a new service command.
 func NewServiceCmd(alauda client.APIClient) *cobra.Command {
 	serviceCmd := &cobra.Command{
-		Use:   "service",
-		Short: "Manage services",
-		Long:  ``,
+		Use:        "service",
+		Short:      "Manage services",
+		Long:       ``,
+		Deprecated: "and will be removed in a subsequent release",
+		Hidden:     true,
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.HelpFunc()(cmd, args)
 		},
 	}
 
 	serviceCmd.AddCommand(
-		NewCreateCmd(alauda),
-		NewRunCmd(alauda),
-		NewPsCmd(alauda),
-		NewStartCmd(alauda),
-		NewStopCmd(alauda),
-		NewRmCmd(alauda),
-		NewInspectCmd(alauda),
-		NewRestartCmd(alauda),
-		NewScaleCmd(alauda),
-		NewUpdateCmd(alauda),
+		newCreateCmd(alauda),
+		newRunCmd(alauda),
+		newPsCmd(alauda),
+		newStartCmd(alauda),
+		newStopCmd(alauda),
+		newRmCmd(alauda),
+		newInspectCmd(alauda),
+		newRestartCmd(alauda),
+		newScaleCmd(alauda),
+		newUpdateCmd(alauda),
 	)
 
 	return serviceCmd

@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewStopCmd creates a new service stop command.
-func NewStopCmd(alauda client.APIClient) *cobra.Command {
+func newStopCmd(alauda client.APIClient) *cobra.Command {
 	stopCmd := &cobra.Command{
 		Use:   "stop NAME",
 		Short: "Stop a service",

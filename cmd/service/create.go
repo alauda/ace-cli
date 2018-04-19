@@ -26,8 +26,7 @@ type createOptions struct {
 	configs    []string
 }
 
-// NewCreateCmd creates a new service create command.
-func NewCreateCmd(alauda client.APIClient) *cobra.Command {
+func newCreateCmd(alauda client.APIClient) *cobra.Command {
 	var opts createOptions
 
 	createCmd := &cobra.Command{

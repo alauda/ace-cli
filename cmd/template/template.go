@@ -8,9 +8,11 @@ import (
 // NewTemplateCmd creates a new template command.
 func NewTemplateCmd(alauda client.APIClient) *cobra.Command {
 	templateCmd := &cobra.Command{
-		Use:   "template",
-		Short: "Manage application templates",
-		Long:  ``,
+		Use:        "template",
+		Short:      "Manage application templates",
+		Long:       ``,
+		Deprecated: "and will be removed in a subsequent release",
+		Hidden:     true,
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.HelpFunc()(cmd, args)
 		},

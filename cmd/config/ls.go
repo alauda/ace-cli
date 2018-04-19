@@ -20,13 +20,6 @@ func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	return lsCmd
 }
 
-// NewConfigsCmd creates a new alauda configs command, which is a shortcut to the config ls command.
-func NewConfigsCmd(alauda client.APIClient) *cobra.Command {
-	cmd := newBaseLsCmd(alauda)
-	cmd.Use = "configs"
-	return cmd
-}
-
 func newLsCmd(alauda client.APIClient) *cobra.Command {
 	cmd := newBaseLsCmd(alauda)
 	cmd.Use = "ls"

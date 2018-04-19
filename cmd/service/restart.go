@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRestartCmd creates a new service restart command.
-func NewRestartCmd(alauda client.APIClient) *cobra.Command {
+func newRestartCmd(alauda client.APIClient) *cobra.Command {
 	restartCmd := &cobra.Command{
 		Use:   "restart NAME",
 		Short: "Restart a service",
