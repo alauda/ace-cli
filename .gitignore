@@ -27,3 +27,6 @@ _testmain.go
 
 # Go vendor
 vendor/*/
+
+# IDE
+.idea
