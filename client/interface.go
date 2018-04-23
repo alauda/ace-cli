@@ -7,14 +7,10 @@ type APIClient interface {
 	Token() string
 	Initialize(string, string, string)
 	AuthClient
-	ServiceClient
 	SpaceClient
 	ClusterClient
 	LoadBalancerClient
 	VolumeClient
-	AppClient
-	AppTemplateClient
-	ConfigClient
 	RegistryClient
 	ImageClient
 	NodeClient
@@ -23,19 +19,6 @@ type APIClient interface {
 // AuthClient is the API client for authentication related APIs.
 type AuthClient interface {
 	Login(*LoginData) (*LoginResult, error)
-}
-
-// ServiceClient is the API client for service related APIs.
-type ServiceClient interface {
-	CreateService(*CreateServiceData) error
-	ListServices(*ListServicesParams) (*ListServicesResult, error)
-	StartService(string, *ServiceParams) error
-	StopService(string, *ServiceParams) error
-	RemoveService(string, *ServiceParams) error
-	InspectService(string, *ServiceParams) (*Service, error)
-	RestartService(string, *ServiceParams) error
-	ScaleService(string, *ScaleServiceData, *ServiceParams) error
-	UpdateService(string, *UpdateServiceData, *ServiceParams) error
 }
 
 // SpaceClient is the API client for space related APIs.
@@ -63,34 +46,6 @@ type VolumeClient interface {
 	InspectVolume(string) (*Volume, error)
 	CreateVolume(*CreateVolumeData) error
 	RemoveVolume(string) error
-}
-
-// AppClient is the API client for the app related APIs.
-type AppClient interface {
-	CreateApp(*CreateAppData, string) error
-	ListApps(*ListAppsParams) (*ListAppsResult, error)
-	InspectApp(string) (*App, error)
-	StartApp(string) error
-	StopApp(string) error
-	RemoveApp(string) error
-}
-
-// AppTemplateClient is the API client for the app template related APIs.
-type AppTemplateClient interface {
-	CreateAppTemplate(*CreateAppTemplateData, string) error
-	ListAppTemplates() (*ListAppTemplatesResult, error)
-	InspectAppTemplate(string) (*AppTemplate, error)
-	DownloadAppTemplate(string, string) error
-	UpdateAppTemplate(string, *UpdateAppTemplateData, string) error
-	RemoveAppTemplate(string) error
-}
-
-// ConfigClient is the API client for the config related APIs.
-type ConfigClient interface {
-	CreateConfig(*CreateConfigData) error
-	ListConfigs() (*ListConfigsResult, error)
-	InspectConfig(string) (*Config, error)
-	RemoveConfig(string) error
 }
 
 // RegistryClient is the API client for the registry related APIs.

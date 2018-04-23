@@ -19,8 +19,6 @@ func NewLBCmd(alauda client.APIClient) *cobra.Command {
 	lbCmd.AddCommand(
 		newLsCmd(alauda),
 		newInspectCmd(alauda),
-		newBindCmd(alauda),
-		newUnbindCmd(alauda),
 	)
 
 	return lbCmd

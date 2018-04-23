@@ -7,15 +7,11 @@ import (
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/cluster"
-	"github.com/alauda/alauda/cmd/compose"
-	"github.com/alauda/alauda/cmd/config"
 	"github.com/alauda/alauda/cmd/image"
 	"github.com/alauda/alauda/cmd/lb"
 	"github.com/alauda/alauda/cmd/node"
 	"github.com/alauda/alauda/cmd/registry"
-	"github.com/alauda/alauda/cmd/service"
 	"github.com/alauda/alauda/cmd/space"
-	"github.com/alauda/alauda/cmd/template"
 	"github.com/alauda/alauda/cmd/util"
 	"github.com/alauda/alauda/cmd/volume"
 	"github.com/spf13/cobra"
@@ -49,9 +45,6 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		newLoginCmd(alauda),
 		newLogoutCmd(alauda),
 
-		// Adding service related commands as top level defaults.
-		service.NewServiceCmd(alauda),
-
 		// Adding image related shortcuts.
 		image.NewImagesCmd(alauda),
 
@@ -77,9 +70,6 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		cluster.NewClusterCmd(alauda),
 		lb.NewLBCmd(alauda),
 		volume.NewVolumeCmd(alauda),
-		compose.NewComposeCmd(alauda),
-		template.NewTemplateCmd(alauda),
-		config.NewConfigCmd(alauda),
 		registry.NewRegistryCmd(alauda),
 		image.NewImageCmd(alauda),
 		node.NewNodeCmd(alauda),
