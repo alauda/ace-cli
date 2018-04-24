@@ -68,7 +68,7 @@ func doCreate(alauda client.APIClient, name string, opts *createOptions) error {
 		ClusterID: clusterID,
 		Space:     space,
 		Size:      opts.size,
-		Namespace: alauda.Namespace(),
+		Namespace: alauda.Account(),
 	}
 
 	err = alauda.CreateVolume(&data)

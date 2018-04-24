@@ -8,7 +8,7 @@ import (
 // Client is the API client for the Alauda platform.
 type Client struct {
 	apiServer string
-	namespace string
+	account   string
 	token     string
 }
 
@@ -22,9 +22,9 @@ func (client *Client) APIServer() string {
 	return client.apiServer
 }
 
-// Namespace field.
-func (client *Client) Namespace() string {
-	return client.namespace
+// Account field.
+func (client *Client) Account() string {
+	return client.account
 }
 
 // Token field.
@@ -33,9 +33,9 @@ func (client *Client) Token() string {
 }
 
 // Initialize should be called before using the client.
-func (client *Client) Initialize(apiServer string, namespace string, token string) {
+func (client *Client) Initialize(apiServer string, account string, token string) {
 	client.apiServer = apiServer
-	client.namespace = namespace
+	client.account = account
 	client.token = token
 }
 
@@ -47,8 +47,8 @@ func (client *Client) buildURL(version string, route string, format string, a ..
 	if route != "" {
 		routeToUse := route
 
-		if version == "v1" || version == "v2" {
-			routeToUse = fmt.Sprintf("%s/%s", route, client.Namespace())
+		if version == "v1" {
+			routeToUse = fmt.Sprintf("%s/%s", route, client.Account())
 		}
 
 		return fmt.Sprintf("%s/%s/%s", versionedServer, routeToUse, path)

@@ -3,10 +3,11 @@ package client
 // APIClient is the interface implemented by the Alauda API client.
 type APIClient interface {
 	APIServer() string
-	Namespace() string
+	Account() string
 	Token() string
 	Initialize(string, string, string)
 	AuthClient
+	AppClient
 	SpaceClient
 	ClusterClient
 	LoadBalancerClient
@@ -19,6 +20,11 @@ type APIClient interface {
 // AuthClient is the API client for authentication related APIs.
 type AuthClient interface {
 	Login(*LoginData) (*LoginResult, error)
+}
+
+// AppClient is the API client for application related APIs.
+type AppClient interface {
+	ListApps(*ListAppsParams) (*ListAppsResult, error)
 }
 
 // SpaceClient is the API client for space related APIs.

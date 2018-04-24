@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/alauda/alauda/client"
+	"github.com/alauda/alauda/cmd/app"
 	"github.com/alauda/alauda/cmd/cluster"
 	"github.com/alauda/alauda/cmd/image"
 	"github.com/alauda/alauda/cmd/lb"
@@ -66,6 +67,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding volume related shortcuts
 		volume.NewVolumesCmd(alauda),
 
+		app.NewAppCmd(alauda),
 		space.NewSpaceCmd(alauda),
 		cluster.NewClusterCmd(alauda),
 		lb.NewLBCmd(alauda),

@@ -36,12 +36,12 @@ func SaveConfig() error {
 func InitializeClient(client client.APIClient) {
 	server := viper.GetString(SettingServer)
 
-	namespace := viper.GetString(SettingNamespace)
-	if namespace == "" {
-		namespace = viper.GetString(SettingUsername)
+	account := viper.GetString(SettingAccount)
+	if account == "" {
+		account = viper.GetString(SettingUsername)
 	}
 
 	token := viper.GetString(SettingToken)
 
-	client.Initialize(server, namespace, token)
+	client.Initialize(server, account, token)
 }

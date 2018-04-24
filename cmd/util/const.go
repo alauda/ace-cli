@@ -13,14 +13,17 @@ const (
 	// SettingToken is the setting for the authentication token.
 	SettingToken string = "auth.token"
 
-	// SettingNamespace is the setting for the namespace.
-	SettingNamespace string = "auth.namespace"
+	// SettingAccount is the setting for the account.
+	SettingAccount string = "auth.account"
 
 	// SettingUsername is the setting for username.
 	SettingUsername string = "auth.username"
 
 	// SettingCluster is the setting for the current cluster.
 	SettingCluster string = "context.cluster"
+
+	// SettingNamespace is the setting for the current cluster namespace.
+	SettingNamespace string = "context.namespace"
 
 	// SettingSpace is the setting for the current space.
 	SettingSpace string = "context.space"

@@ -42,7 +42,7 @@ func (client *Client) CreateVolume(data *CreateVolumeData) error {
 func (client *Client) buildCreateVolumeRequest(data *CreateVolumeData) (*rest.Request, error) {
 	request := rest.NewRequest(client.Token())
 
-	data.Namespace = client.Namespace()
+	data.Namespace = client.Account()
 
 	body, err := json.Marshal(data)
 	if err != nil {

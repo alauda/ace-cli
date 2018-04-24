@@ -40,6 +40,25 @@ func ConfigCluster(cluster string) (string, error) {
 	return result, nil
 }
 
+// ConfigNamespace uses the namespace specified by the cmd, or the one in the config, as appropriate.
+func ConfigNamespace(namespace string) (string, error) {
+	if namespace != "" {
+		viper.Set(SettingNamespace, namespace)
+
+		err := SaveConfig()
+		if err != nil {
+			return "", err
+		}
+	}
+
+	result := viper.GetString(SettingNamespace)
+	if result == "" {
+		return "", errors.New("no cluster namespace specified")
+	}
+
+	return result, nil
+}
+
 // ConfigSpace uses the space specified by the cmd, or the one in the config, as appropriate.
 func ConfigSpace(space string) (string, error) {
 	if space != "" {
