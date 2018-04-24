@@ -11,7 +11,7 @@ type nodeActionData struct {
 }
 
 func (client *Client) performActionOnNode(ip string, cluster string, data *nodeActionData) error {
-	url := client.buildURL("regions", "%s/nodes/%s/actions", cluster, ip)
+	url := client.buildURL("v1", "regions", "%s/nodes/%s/actions", cluster, ip)
 	request, err := client.buildNodeActionRequest(data)
 
 	response, err := request.Put(url)

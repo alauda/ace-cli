@@ -8,7 +8,7 @@ import (
 
 // InspectNode retrieves details about the specified node.
 func (client *Client) InspectNode(ip string, cluster string) (*Node, error) {
-	url := client.buildURL("regions", "%s/nodes/%s", cluster, ip)
+	url := client.buildURL("v1", "regions", "%s/nodes/%s", cluster, ip)
 	request := client.buildInspectNodeRequest()
 
 	response, err := request.Get(url)

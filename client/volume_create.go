@@ -19,7 +19,7 @@ type CreateVolumeData struct {
 
 // CreateVolume creates a new volume.
 func (client *Client) CreateVolume(data *CreateVolumeData) error {
-	url := client.buildURL("storage", "volumes")
+	url := client.buildURL("v1", "storage", "volumes")
 
 	request, err := client.buildCreateVolumeRequest(data)
 	if err != nil {

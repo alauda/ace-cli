@@ -8,7 +8,7 @@ import (
 
 // InspectCluster retrieves details about the specified cluster.
 func (client *Client) InspectCluster(name string) (*Cluster, error) {
-	url := client.buildURL("regions", name)
+	url := client.buildURL("v1", "regions", name)
 	request := client.buildInspectClusterRequest()
 
 	response, err := request.Get(url)

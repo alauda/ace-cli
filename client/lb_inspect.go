@@ -8,7 +8,7 @@ import (
 
 // InspectLoadBalancer retrieves details about a specific LB.
 func (client *Client) InspectLoadBalancer(name string) (*LoadBalancer, error) {
-	url := client.buildURL("load_balancers", name)
+	url := client.buildURL("v1", "load_balancers", name)
 	request := client.buildInspectLoadBalancerRequest()
 
 	response, err := request.Get(url)

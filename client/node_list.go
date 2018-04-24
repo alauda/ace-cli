@@ -13,7 +13,7 @@ type ListNodesResult struct {
 
 // ListNodes returns all nodes in a cluster.
 func (client *Client) ListNodes(cluster string) (*ListNodesResult, error) {
-	url := client.buildURL("regions", "%s/nodes", cluster)
+	url := client.buildURL("v1", "regions", "%s/nodes", cluster)
 	request := client.buildListNodesRequest()
 
 	response, err := request.Get(url)

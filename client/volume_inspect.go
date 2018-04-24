@@ -8,7 +8,7 @@ import (
 
 // InspectVolume retrieves details about a specific volume.
 func (client *Client) InspectVolume(id string) (*Volume, error) {
-	url := client.buildURL("storage", "volumes/%s", id)
+	url := client.buildURL("v1", "storage", "volumes/%s", id)
 	request := client.buildInspectVolumeRequest()
 
 	response, err := request.Get(url)

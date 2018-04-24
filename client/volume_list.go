@@ -18,7 +18,7 @@ type ListVolumesResult struct {
 
 // ListVolumes returns all volumes in a cluster.
 func (client *Client) ListVolumes(params *ListVolumesParams) (*ListVolumesResult, error) {
-	url := client.buildURL("storage", "volumes")
+	url := client.buildURL("v1", "storage", "volumes")
 	request := client.buildListVolumesRequest(params)
 
 	response, err := request.Get(url)

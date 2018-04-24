@@ -13,7 +13,7 @@ type ListRegistryProjectsResult struct {
 
 // ListRegistryProjects returns the list of projects for a registry.
 func (client *Client) ListRegistryProjects(registryName string) (*ListRegistryProjectsResult, error) {
-	url := client.buildURL("registries", "%s/projects", registryName)
+	url := client.buildURL("v1", "registries", "%s/projects", registryName)
 	request := client.buildListRegistryProjectsRequest()
 
 	response, err := request.Get(url)

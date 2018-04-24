@@ -23,7 +23,7 @@ type LoginResult struct {
 
 // Login authenticates against the Alauda server.
 func (client *Client) Login(data *LoginData) (*LoginResult, error) {
-	url := client.buildURL("", "generate-api-token")
+	url := client.buildURL("v1", "", "generate-api-token")
 
 	request, err := client.buildLoginRequest(data)
 	if err != nil {

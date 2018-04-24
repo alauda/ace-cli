@@ -22,7 +22,7 @@ type ListenerData struct {
 
 // UpdateLoadBalancer creates or removes listeners for the service endpoints on the load balancer.
 func (client *Client) UpdateLoadBalancer(name string, data *UpdateLoadBalancerData) error {
-	url := client.buildURL("load_balancers", name)
+	url := client.buildURL("v1", "load_balancers", name)
 
 	request, err := client.buildUpdateLoadBalancerRequest(data)
 	if err != nil {

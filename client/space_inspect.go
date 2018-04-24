@@ -8,7 +8,7 @@ import (
 
 // InspectSpace retrieves details about a specific space.
 func (client *Client) InspectSpace(name string) (*Space, error) {
-	url := client.buildURL("spaces", "space/%s", name)
+	url := client.buildURL("v1", "spaces", "space/%s", name)
 	request := client.buildInspectSpaceRequest()
 
 	response, err := request.Get(url)

@@ -39,14 +39,20 @@ func (client *Client) Initialize(apiServer string, namespace string, token strin
 	client.token = token
 }
 
-func (client *Client) buildURL(route string, format string, a ...interface{}) string {
+func (client *Client) buildURL(version string, route string, format string, a ...interface{}) string {
 	server := strings.TrimSuffix(client.APIServer(), "/")
+	versionedServer := fmt.Sprintf("%s/%s", server, version)
 	path := fmt.Sprintf(format, a...)
 
 	if route != "" {
-		namespacedRoute := fmt.Sprintf("%s/%s", route, client.Namespace())
-		return fmt.Sprintf("%s/%s/%s", server, namespacedRoute, path)
+		routeToUse := route
+
+		if version == "v1" || version == "v2" {
+			routeToUse = fmt.Sprintf("%s/%s", route, client.Namespace())
+		}
+
+		return fmt.Sprintf("%s/%s/%s", versionedServer, routeToUse, path)
 	}
 
-	return fmt.Sprintf("%s/%s", server, path)
+	return fmt.Sprintf("%s/%s", versionedServer, path)
 }

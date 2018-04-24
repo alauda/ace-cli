@@ -16,9 +16,9 @@ type ListImageTagsResult struct {
 func (client *Client) ListImageTags(registryName string, projectName string, imageName string) (*ListImageTagsResult, error) {
 	var url string
 	if projectName != "" {
-		url = client.buildURL("registries", "%s/projects/%s/repositories/%s/tags", registryName, projectName, imageName)
+		url = client.buildURL("v1", "registries", "%s/projects/%s/repositories/%s/tags", registryName, projectName, imageName)
 	} else {
-		url = client.buildURL("registries", "%s/repositories/%s/tags", registryName, imageName)
+		url = client.buildURL("v1", "registries", "%s/repositories/%s/tags", registryName, imageName)
 	}
 
 	request := client.buildListImageTagsRequest()

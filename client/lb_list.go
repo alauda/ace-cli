@@ -19,7 +19,7 @@ type ListLoadBalancersResult struct {
 
 // ListLoadBalancers returns all LBs in a cluster, potentially filtered by a specific service.
 func (client *Client) ListLoadBalancers(params *ListLoadBalancersParams) (*ListLoadBalancersResult, error) {
-	url := client.buildURL("load_balancers", "")
+	url := client.buildURL("v1", "load_balancers", "")
 	request := client.buildListLoadBalancersRequest(params)
 
 	response, err := request.Get(url)

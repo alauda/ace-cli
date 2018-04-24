@@ -11,7 +11,7 @@ type SetNodeLabelsData map[string]string
 
 // SetNodeLabels sets labels on the specified node.
 func (client *Client) SetNodeLabels(ip string, cluster string, data *SetNodeLabelsData) error {
-	url := client.buildURL("regions", "%s/nodes/%s/labels", cluster, ip)
+	url := client.buildURL("v1", "regions", "%s/nodes/%s/labels", cluster, ip)
 	request, err := client.buildSetNodeLabelsRequest(data)
 
 	response, err := request.Put(url)

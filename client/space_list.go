@@ -13,7 +13,7 @@ type ListSpacesResult struct {
 
 // ListSpaces returns all spaces in an account.
 func (client *Client) ListSpaces() (*ListSpacesResult, error) {
-	url := client.buildURL("spaces", "")
+	url := client.buildURL("v1", "spaces", "")
 	request := client.buildListSpacesRequest()
 
 	response, err := request.Get(url)

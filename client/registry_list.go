@@ -13,7 +13,7 @@ type ListRegistriesResult struct {
 
 // ListRegistries returns the list of all registries in the account.
 func (client *Client) ListRegistries() (*ListRegistriesResult, error) {
-	url := client.buildURL("registries", "")
+	url := client.buildURL("v1", "registries", "")
 	request := client.buildListRegistriesRequest()
 
 	response, err := request.Get(url)

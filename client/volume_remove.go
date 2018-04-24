@@ -6,7 +6,7 @@ import (
 
 // RemoveVolume deletes the specified volume.
 func (client *Client) RemoveVolume(id string) error {
-	url := client.buildURL("storage", "volumes/%s", id)
+	url := client.buildURL("v1", "storage", "volumes/%s", id)
 	request := client.buildRemoveVolumeRequest()
 
 	response, err := request.Delete(url)
