@@ -91,6 +91,11 @@ func buildLsTableContent(result *client.ListAppsResult) [][]string {
 
 	for _, app := range result.Apps {
 		content = append(content, []string{app.Resource.Name, app.Cluster.Name, app.Namespace.Name, app.Resource.State, app.Resource.Description})
+
+		for _, component := range app.Components {
+			content = append(content, []string{fmt.Sprintf("|-%s", component.Resource.Name), "", "",
+				fmt.Sprintf("%d/%d", component.Resource.Instances.Current, component.Resource.Instances.Desired), ""})
+		}
 	}
 
 	return content
