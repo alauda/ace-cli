@@ -35,13 +35,26 @@ type AppComponent struct {
 
 // AppComponentResource contains the resource definition of one component of an application.
 type AppComponentResource struct {
-	ID        string                        `json:"uuid"`
-	Name      string                        `json:"name"`
-	Instances AppComponentResourceInstances `json:"instances"`
+	ID         string                        `json:"uuid"`
+	Name       string                        `json:"name"`
+	Instances  AppComponentResourceInstances `json:"instances"`
+	Containers []AppContainer                `json:"containers"`
 }
 
 // AppComponentResourceInstances contains the desired and actual number of instances of an application component.
 type AppComponentResourceInstances struct {
 	Desired int `json:"desired"`
 	Current int `json:"current"`
+}
+
+// AppContainer defines one container of an application component.
+type AppContainer struct {
+	Image string           `json:"image"`
+	Size  AppContainerSize `json:"size"`
+}
+
+// AppContainerSize defines the size of the container.
+type AppContainerSize struct {
+	CPU    string `json:"cpu"`
+	Memory string `json:"mem"`
 }

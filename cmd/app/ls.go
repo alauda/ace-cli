@@ -83,18 +83,33 @@ func printLsResult(result *client.ListAppsResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"NAME", "CLUSTER", "NAMESPACE", "STATE", "DESCRIPTION"}
+	return []string{"NAME", "CLUSTER", "NAMESPACE", "STATE", "IMAGE", "SIZE", "DESCRIPTION"}
 }
 
 func buildLsTableContent(result *client.ListAppsResult) [][]string {
 	var content [][]string
 
 	for _, app := range result.Apps {
-		content = append(content, []string{app.Resource.Name, app.Cluster.Name, app.Namespace.Name, app.Resource.State, app.Resource.Description})
+		content = append(content, []string{app.Resource.Name, app.Cluster.Name, app.Namespace.Name, app.Resource.State, "", "", app.Resource.Description})
 
 		for _, component := range app.Components {
+			containers := component.Resource.Containers
+			image := ""
+			size := ""
+
+			if len(containers) >= 1 {
+				image = containers[0].Image
+				size = fmt.Sprintf("CPU: %s, Memory: %s", containers[0].Size.CPU, containers[0].Size.Memory)
+				containers = containers[1:]
+			}
+
 			content = append(content, []string{fmt.Sprintf("|-%s", component.Resource.Name), "", "",
-				fmt.Sprintf("%d/%d", component.Resource.Instances.Current, component.Resource.Instances.Desired), ""})
+				fmt.Sprintf("%d/%d", component.Resource.Instances.Current, component.Resource.Instances.Desired), image, size, ""})
+
+			for _, container := range containers {
+				size = fmt.Sprintf("CPU: %s, Memory: %s", container.Size.CPU, container.Size.Memory)
+				content = append(content, []string{"|", "", "", "", container.Image, size, ""})
+			}
 		}
 	}
 
