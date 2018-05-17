@@ -62,6 +62,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "volume", "inspect", "%VOLUME%"}},
 	{[]string{"alauda", "volume", "rm", "%VOLUME%"}},
 	{[]string{"alauda", "app", "ls"}},
+	{[]string{"alauda", "apps"}},
 }
 
 func TestCli(t *testing.T) {

@@ -46,35 +46,37 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		newLoginCmd(alauda),
 		newLogoutCmd(alauda),
 
-		// Adding image related shortcuts.
+		// Adding application related commands.
+		app.NewAppCmd(alauda),
+		app.NewAppsCmd(alauda),
+
+		// Adding image related commands.
+		image.NewImageCmd(alauda),
 		image.NewImagesCmd(alauda),
 
-		// Adding cluster related shortcuts
+		// Adding cluster related commands.
+		cluster.NewClusterCmd(alauda),
 		cluster.NewClustersCmd(alauda),
 
-		// Adding node related shortcuts
+		// Adding node related commands.
+		node.NewNodeCmd(alauda),
 		node.NewNodesCmd(alauda),
 
-		// Adding lb related shortcuts
+		// Adding lb related commands.
+		lb.NewLBCmd(alauda),
 		lb.NewLbsCmd(alauda),
 
-		// Adding registry related shortcuts
+		// Adding registry related commands.
+		registry.NewRegistryCmd(alauda),
 		registry.NewRegistriesCmd(alauda),
 
-		// Adding space related shortcuts
+		// Adding space related commands.
+		space.NewSpaceCmd(alauda),
 		space.NewSpacesCmd(alauda),
 
-		// Adding volume related shortcuts
-		volume.NewVolumesCmd(alauda),
-
-		app.NewAppCmd(alauda),
-		space.NewSpaceCmd(alauda),
-		cluster.NewClusterCmd(alauda),
-		lb.NewLBCmd(alauda),
+		// Adding volume related commands
 		volume.NewVolumeCmd(alauda),
-		registry.NewRegistryCmd(alauda),
-		image.NewImageCmd(alauda),
-		node.NewNodeCmd(alauda),
+		volume.NewVolumesCmd(alauda),
 	)
 }
 
