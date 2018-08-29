@@ -6,15 +6,20 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
+// ListSpacesParams defines the query parameters for the ListSpaces API.
+type ListSpacesParams struct {
+	Project string
+}
+
 // ListSpacesResult defines the response body for the ListSpaces API.
 type ListSpacesResult struct {
 	Spaces []Space
 }
 
 // ListSpaces returns all spaces in an account.
-func (client *Client) ListSpaces() (*ListSpacesResult, error) {
+func (client *Client) ListSpaces(params *ListSpacesParams) (*ListSpacesResult, error) {
 	url := client.buildURL("v1", "spaces", "")
-	request := client.buildListSpacesRequest()
+	request := client.buildListSpacesRequest(params)
 
 	response, err := request.Get(url)
 	if err != nil {
@@ -34,8 +39,12 @@ func (client *Client) ListSpaces() (*ListSpacesResult, error) {
 	return result, nil
 }
 
-func (client *Client) buildListSpacesRequest() *rest.Request {
-	return rest.NewRequest(client.Token())
+func (client *Client) buildListSpacesRequest(params *ListSpacesParams) *rest.Request {
+	request := rest.NewRequest(client.Token())
+
+	request.SetQueryParam("project_name", params.Project)
+
+	return request
 }
 
 func parseListSpacesResult(response *rest.Response) (*ListSpacesResult, error) {

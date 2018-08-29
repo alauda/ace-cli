@@ -29,7 +29,7 @@ type AppClient interface {
 
 // SpaceClient is the API client for space related APIs.
 type SpaceClient interface {
-	ListSpaces() (*ListSpacesResult, error)
+	ListSpaces(*ListSpacesParams) (*ListSpacesResult, error)
 	InspectSpace(string) (*Space, error)
 }
 

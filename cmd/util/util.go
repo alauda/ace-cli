@@ -40,6 +40,25 @@ func ConfigCluster(cluster string) (string, error) {
 	return result, nil
 }
 
+// ConfigProject uses the project specified by the cmd, or the one in the config, as appropriate.
+func ConfigProject(project string) (string, error) {
+	if project != "" {
+		viper.Set(SettingProject, project)
+
+		err := SaveConfig()
+		if err != nil {
+			return "", err
+		}
+	}
+
+	result := viper.GetString(SettingProject)
+	if result == "" {
+		return "", errors.New("no project specified")
+	}
+
+	return result, nil
+}
+
 // ConfigNamespace uses the namespace specified by the cmd, or the one in the config, as appropriate.
 func ConfigNamespace(namespace string) (string, error) {
 	if namespace != "" {

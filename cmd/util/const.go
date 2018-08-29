@@ -27,4 +27,7 @@ const (
 
 	// SettingSpace is the setting for the current space.
 	SettingSpace string = "context.space"
+
+	// SettingProject is the setting for the current project.
+	SettingProject string = "context.project"
 )

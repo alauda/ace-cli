@@ -8,14 +8,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type lsOptions struct {
+	project string
+}
+
 func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
+	var opts lsOptions
+
 	lsCmd := &cobra.Command{
 		Short: "List spaces",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return doLs(alauda)
+			return doLs(alauda, &opts)
 		},
 	}
+
+	lsCmd.Flags().StringVarP(&opts.project, "project", "p", "", "Project")
+
 	return lsCmd
 }
 
@@ -32,12 +41,21 @@ func newLsCmd(alauda client.APIClient) *cobra.Command {
 	return cmd
 }
 
-func doLs(alauda client.APIClient) error {
+func doLs(alauda client.APIClient, opts *lsOptions) error {
 	fmt.Println("[alauda] Listing spaces")
 
 	util.InitializeClient(alauda)
 
-	result, err := alauda.ListSpaces()
+	project, err := util.ConfigProject(opts.project)
+	if err != nil {
+		return err
+	}
+
+	params := client.ListSpacesParams{
+		Project: project,
+	}
+
+	result, err := alauda.ListSpaces(&params)
 	if err != nil {
 		return err
 	}
