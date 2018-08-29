@@ -30,7 +30,7 @@ type AppClient interface {
 // SpaceClient is the API client for space related APIs.
 type SpaceClient interface {
 	ListSpaces(*ListSpacesParams) (*ListSpacesResult, error)
-	InspectSpace(string) (*Space, error)
+	InspectSpace(string, *InspectSpaceParams) (*Space, error)
 }
 
 // ClusterClient is the API client for cluster related APIs.
