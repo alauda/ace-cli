@@ -2,6 +2,7 @@ package rest
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty"
 )
@@ -53,8 +54,10 @@ func (req *Request) Delete(url string) (*Response, error) {
 
 // NewRequest creates a base Request object.
 func NewRequest(token string) *Request {
+	reqID := fmt.Sprintf("alaudacli-%d", time.Now().Unix())
 	restyReq := resty.R()
 	restyReq.SetHeader("Content-Type", "application/json")
+	restyReq.SetHeader("Alauda-Request-ID", reqID)
 
 	if token != "" {
 		restyReq.SetHeader("Authorization", fmt.Sprintf("Token %s", token))
