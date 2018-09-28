@@ -13,13 +13,11 @@ type ListAppsParams struct {
 }
 
 // ListAppsResult defines the response body for the ListApps API.
-type ListAppsResult struct {
-	Apps []App `json:"results"`
-}
+type ListAppsResult []App
 
 // ListApps returns all applications in a Kubernetes namespace
 func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) {
-	url := client.buildURL("v2", "apps", "")
+	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications", params.Cluster)
 	request := client.buildListAppsRequest(params)
 
 	response, err := request.Get(url)

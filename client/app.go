@@ -1,60 +1,21 @@
 package client
 
-// App defines the response body of the InspectApp API.
-type App struct {
-	Resource   AppResource    `json:"resource"`
-	Cluster    AppCluster     `json:"cluster"`
-	Namespace  AppNamespace   `json:"namespace"`
-	Components []AppComponent `json:"services"`
-}
+import (
+	"errors"
 
-// AppResource contains the resource definition of an application.
-type AppResource struct {
-	ID          string `json:"uuid"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	State       string `json:"status"`
-}
+	appv1beta1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1beta1"
+)
 
-// AppCluster is the Kubernetes cluster in which the application is deployed.
-type AppCluster struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
+// App is composed of a list of Kubernetes resources.
+type App []KubernetesResource
 
-// AppNamespace is the Kubernetes namespace in which the applicaiton is deployed.
-type AppNamespace struct {
-	ID   string `json:"uuid"`
-	Name string `json:"name"`
-}
+// ExtractAppCrd returns the Application CRD from the resource list.
+func (app *App) ExtractAppCrd() (*appv1beta1.Application, error) {
+	for _, r := range *app {
+		if r.GetKind() == "Application" {
+			return r.ToAppCrd()
+		}
+	}
 
-// AppComponent defines one component of an application.
-type AppComponent struct {
-	Resource AppComponentResource `json:"resource"`
-}
-
-// AppComponentResource contains the resource definition of one component of an application.
-type AppComponentResource struct {
-	ID         string                        `json:"uuid"`
-	Name       string                        `json:"name"`
-	Instances  AppComponentResourceInstances `json:"instances"`
-	Containers []AppContainer                `json:"containers"`
-}
-
-// AppComponentResourceInstances contains the desired and actual number of instances of an application component.
-type AppComponentResourceInstances struct {
-	Desired int `json:"desired"`
-	Current int `json:"current"`
-}
-
-// AppContainer defines one container of an application component.
-type AppContainer struct {
-	Image string           `json:"image"`
-	Size  AppContainerSize `json:"size"`
-}
-
-// AppContainerSize defines the size of the container.
-type AppContainerSize struct {
-	CPU    string `json:"cpu"`
-	Memory string `json:"mem"`
+	return nil, errors.New("No Application CRD found")
 }
