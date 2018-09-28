@@ -17,7 +17,7 @@ type ListAppsResult []App
 
 // ListApps returns all applications in a Kubernetes namespace
 func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) {
-	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications", params.Cluster)
+	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications/%s/", params.Cluster, params.Namespace)
 	request := client.buildListAppsRequest(params)
 
 	response, err := request.Get(url)
@@ -41,8 +41,7 @@ func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) 
 func (client *Client) buildListAppsRequest(params *ListAppsParams) *rest.Request {
 	request := rest.NewRequest(client.Token())
 
-	request.SetQueryParam("cluster", params.Cluster)
-	request.SetQueryParam("namespace", params.Namespace)
+	request.SetQueryParam("project_name", "default")
 
 	return request
 }
