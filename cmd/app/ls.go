@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -83,7 +84,7 @@ func printLsResult(result *client.ListAppsResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"NAME", "NAMESPACE"}
+	return []string{"NAME", "NAMESPACE", "INSTANCES"}
 }
 
 func buildLsTableContent(result *client.ListAppsResult) [][]string {
@@ -95,7 +96,16 @@ func buildLsTableContent(result *client.ListAppsResult) [][]string {
 			return content
 		}
 
-		content = append(content, []string{crd.Name, crd.Namespace})
+		content = append(content, []string{crd.Name, crd.Namespace, ""})
+
+		deployments, err := app.ExtractDeployments()
+		if err != nil {
+			return content
+		}
+
+		for _, deployment := range deployments {
+			content = append(content, []string{fmt.Sprintf("!-%s", deployment.Name), "", strconv.Itoa(int(*deployment.Spec.Replicas))})
+		}
 	}
 
 	//	for _, app := range *result {

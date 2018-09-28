@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	appv1beta1 "github.com/kubernetes-sigs/application/pkg/apis/app/v1beta1"
+	"k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 )
 
@@ -37,4 +38,24 @@ func (k *KubernetesResource) ToAppCrd() (*appv1beta1.Application, error) {
 	err = json.Unmarshal(data, &app)
 
 	return &app, err
+}
+
+// ToDeployment converts the generic Kubernetes Resource into a Deployment.
+func (k *KubernetesResource) ToDeployment() (*v1.Deployment, error) {
+	kind := k.GetKind()
+
+	if kind != "Deployment" {
+		return nil, errors.New("Resource is not a valid Deployment")
+	}
+
+	data, err := k.Resource.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+
+	var deployment v1.Deployment
+
+	err = json.Unmarshal(data, &deployment)
+
+	return &deployment, err
 }

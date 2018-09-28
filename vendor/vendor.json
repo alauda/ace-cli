@@ -261,6 +261,12 @@
 			"revisionTime": "2017-04-07T17:21:22Z"
 		},
 		{
+			"checksumSHA1": "IG0faz9fzjmCd9te7ko+2TLcPQA=",
+			"path": "k8s.io/api/apps/v1",
+			"revision": "a191abe0b71e00ce4cde58af8002aa4c1a8bb068",
+			"revisionTime": "2018-09-25T13:13:23Z"
+		},
+		{
 			"checksumSHA1": "otXowlIdXBXMfPCA6nbUJdn9hWU=",
 			"path": "k8s.io/api/core/v1",
 			"revision": "a191abe0b71e00ce4cde58af8002aa4c1a8bb068",
