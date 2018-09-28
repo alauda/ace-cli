@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/alauda/alauda/client"
 	"github.com/alauda/alauda/cmd/util"
@@ -84,7 +83,7 @@ func printLsResult(result *client.ListAppsResult) {
 }
 
 func buildLsTableHeader() []string {
-	return []string{"NAME", "NAMESPACE", "INSTANCES"}
+	return []string{"NAME", "NAMESPACE", "INSTANCES", "IMAGE", "SIZE"}
 }
 
 func buildLsTableContent(result *client.ListAppsResult) [][]string {
@@ -96,7 +95,7 @@ func buildLsTableContent(result *client.ListAppsResult) [][]string {
 			return content
 		}
 
-		content = append(content, []string{crd.Name, crd.Namespace, ""})
+		content = append(content, []string{crd.Name, crd.Namespace, "", "", ""})
 
 		deployments, err := app.ExtractDeployments()
 		if err != nil {
@@ -104,33 +103,26 @@ func buildLsTableContent(result *client.ListAppsResult) [][]string {
 		}
 
 		for _, deployment := range deployments {
-			content = append(content, []string{fmt.Sprintf("!-%s", deployment.Name), "", strconv.Itoa(int(*deployment.Spec.Replicas))})
+			containers := deployment.Spec.Template.Spec.Containers
+			var image string
+			var size string
+
+			if len(containers) >= 1 {
+				image = containers[0].Image
+				size = fmt.Sprintf("CPU: %s, Memory: %s", containers[0].Resources.Requests.Cpu().String(), containers[0].Resources.Requests.Memory().String())
+				containers = containers[1:]
+			}
+
+			content = append(content, []string{fmt.Sprintf("|-%s", deployment.Name), "",
+				fmt.Sprintf("%d/%d", deployment.Status.Replicas, *deployment.Spec.Replicas), image, size})
+
+			for _, container := range containers {
+				image = container.Image
+				size = fmt.Sprintf("CPU: %s, Memory: %s", container.Resources.Requests.Cpu().String(), container.Resources.Requests.Memory().String())
+				content = append(content, []string{"|", "", "", image, size})
+			}
 		}
 	}
-
-	//	for _, app := range *result {
-	//		content = append(content, []string{app.Resource.Name, app.Cluster.Name, app.Namespace.Name, app.Resource.State, "", "", app.Resource.Description})
-	//
-	//		for _, component := range app.Components {
-	//			containers := component.Resource.Containers
-	//			image := ""
-	//			size := ""
-	//
-	//			if len(containers) >= 1 {
-	//				image = containers[0].Image
-	//				size = fmt.Sprintf("CPU: %s, Memory: %s", containers[0].Size.CPU, containers[0].Size.Memory)
-	//				containers = containers[1:]
-	//			}
-	//
-	//			content = append(content, []string{fmt.Sprintf("|-%s", component.Resource.Name), "", "",
-	//				fmt.Sprintf("%d/%d", component.Resource.Instances.Current, component.Resource.Instances.Desired), image, size, ""})
-	//
-	//			for _, container := range containers {
-	//				size = fmt.Sprintf("CPU: %s, Memory: %s", container.Size.CPU, container.Size.Memory)
-	//				content = append(content, []string{"|", "", "", "", container.Image, size, ""})
-	//			}
-	//		}
-	//	}
 
 	return content
 }
