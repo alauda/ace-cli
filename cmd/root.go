@@ -11,6 +11,7 @@ import (
 	"github.com/alauda/alauda/cmd/image"
 	"github.com/alauda/alauda/cmd/lb"
 	"github.com/alauda/alauda/cmd/node"
+	"github.com/alauda/alauda/cmd/project"
 	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/space"
 	"github.com/alauda/alauda/cmd/util"
@@ -65,6 +66,9 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding lb related commands.
 		lb.NewLBCmd(alauda),
 		lb.NewLbsCmd(alauda),
+
+		// Adding project related commands.
+		project.NewProjectCmd(alauda),
 
 		// Adding registry related commands.
 		registry.NewRegistryCmd(alauda),
