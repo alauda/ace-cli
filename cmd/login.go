@@ -78,7 +78,7 @@ func doLogin(alauda client.APIClient, opts *loginOptions) error {
 	}
 
 	// Login successful. Save the credentials back to config.
-	viper.Set(util.SettingNamespace, result.Namespace)
+	viper.Set(util.SettingAccount, result.Namespace)
 	viper.Set(util.SettingUsername, result.Username)
 	viper.Set(util.SettingToken, result.Token)
 
