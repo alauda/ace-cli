@@ -66,12 +66,10 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 	}
 
 	params := client.ListAppsParams{
-		Project:   project,
-		Cluster:   cluster,
-		Namespace: namespace,
+		Project: project,
 	}
 
-	result, err := alauda.ListApps(&params)
+	result, err := alauda.ListApps(cluster, namespace, &params)
 	if err != nil {
 		return err
 	}

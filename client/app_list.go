@@ -8,17 +8,15 @@ import (
 
 // ListAppsParams defines the query parameters for the ListApps API.
 type ListAppsParams struct {
-	Project   string
-	Cluster   string
-	Namespace string
+	Project string
 }
 
 // ListAppsResult defines the response body for the ListApps API.
 type ListAppsResult []App
 
 // ListApps returns all applications in a Kubernetes namespace
-func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) {
-	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications/%s/", params.Cluster, params.Namespace)
+func (client *Client) ListApps(cluster string, namespace string, params *ListAppsParams) (*ListAppsResult, error) {
+	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications/%s/", cluster, namespace)
 	request := client.buildListAppsRequest(params)
 
 	response, err := request.Get(url)

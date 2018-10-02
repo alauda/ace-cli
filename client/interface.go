@@ -24,7 +24,7 @@ type AuthClient interface {
 
 // AppClient is the API client for application related APIs.
 type AppClient interface {
-	ListApps(*ListAppsParams) (*ListAppsResult, error)
+	ListApps(string, string, *ListAppsParams) (*ListAppsResult, error)
 	InspectApp(string, string, string) (*App, error)
 }
 
