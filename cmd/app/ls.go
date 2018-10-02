@@ -9,6 +9,7 @@ import (
 )
 
 type lsOptions struct {
+	project   string
 	cluster   string
 	namespace string
 }
@@ -24,6 +25,7 @@ func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 		},
 	}
 
+	lsCmd.Flags().StringVarP(&opts.project, "project", "p", "", "Project")
 	lsCmd.Flags().StringVarP(&opts.cluster, "cluster", "c", "", "Cluster")
 	lsCmd.Flags().StringVarP(&opts.namespace, "namespace", "n", "", "Namespace")
 
@@ -48,6 +50,11 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 
 	util.InitializeClient(alauda)
 
+	project, err := util.ConfigProject(opts.project)
+	if err != nil {
+		return err
+	}
+
 	cluster, err := util.ConfigCluster(opts.cluster)
 	if err != nil {
 		return err
@@ -59,6 +66,7 @@ func doLs(alauda client.APIClient, opts *lsOptions) error {
 	}
 
 	params := client.ListAppsParams{
+		Project:   project,
 		Cluster:   cluster,
 		Namespace: namespace,
 	}

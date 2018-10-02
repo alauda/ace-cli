@@ -8,6 +8,7 @@ import (
 
 // ListAppsParams defines the query parameters for the ListApps API.
 type ListAppsParams struct {
+	Project   string
 	Cluster   string
 	Namespace string
 }
@@ -41,7 +42,7 @@ func (client *Client) ListApps(params *ListAppsParams) (*ListAppsResult, error) 
 func (client *Client) buildListAppsRequest(params *ListAppsParams) *rest.Request {
 	request := rest.NewRequest(client.Token())
 
-	request.SetQueryParam("project_name", "default")
+	request.SetQueryParam("project_name", params.Project)
 
 	return request
 }
