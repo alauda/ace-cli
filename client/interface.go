@@ -27,6 +27,7 @@ type AppClient interface {
 	ListApps(string, string, *ListAppsParams) (*ListAppsResult, error)
 	InspectApp(string, string, string) (*App, error)
 	GetAppYaml(string, string, string) (string, error)
+	StartApp(string, string, string) error
 }
 
 // SpaceClient is the API client for space related APIs.
