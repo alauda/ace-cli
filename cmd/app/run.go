@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/alauda/alauda/client"
@@ -17,11 +18,14 @@ func newRunCmd(alauda client.APIClient) *cobra.Command {
 	var opts runOptions
 
 	runCmd := &cobra.Command{
-		Use:   "run NAME",
+		Use:   "run NAME IMAGE",
 		Short: "Run an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return doRun(alauda, &opts, args[0])
+			if len(args) != 2 {
+				return errors.New("app run expects NAME and IMAGE")
+			}
+			return doRun(alauda, args[0], args[1], &opts)
 		},
 	}
 
@@ -31,7 +35,7 @@ func newRunCmd(alauda client.APIClient) *cobra.Command {
 	return runCmd
 }
 
-func doRun(alauda client.APIClient, opts *runOptions, name string) error {
+func doRun(alauda client.APIClient, name string, image string, opts *runOptions) error {
 	fmt.Println("[alauda] Running", name)
 
 	util.InitializeClient(alauda)
@@ -46,7 +50,7 @@ func doRun(alauda client.APIClient, opts *runOptions, name string) error {
 		return err
 	}
 
-	err = alauda.RunApp(cluster, namespace, name)
+	err = alauda.RunApp(cluster, namespace, name, image)
 	if err != nil {
 		return err
 	}

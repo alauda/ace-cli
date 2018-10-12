@@ -23,10 +23,10 @@ type AppMetaData struct {
 }
 
 // RunApp creates and runs a single-deployment application
-func (client *Client) RunApp(cluster string, namespace string, name string) error {
+func (client *Client) RunApp(cluster string, namespace string, name string, image string) error {
 	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications", cluster)
 
-	request, err := client.buildRunAppRequest(namespace, name)
+	request, err := client.buildRunAppRequest(namespace, name, image)
 	if err != nil {
 		return err
 	}
@@ -41,10 +41,10 @@ func (client *Client) RunApp(cluster string, namespace string, name string) erro
 	return err
 }
 
-func (client *Client) buildRunAppRequest(namespace string, name string) (*rest.Request, error) {
+func (client *Client) buildRunAppRequest(namespace string, name string, image string) (*rest.Request, error) {
 	request := rest.NewRequest(client.Token())
 
-	deployment, err := makeDeployment(namespace, name)
+	deployment, err := makeDeployment(namespace, name, image)
 	if err != nil {
 		return nil, err
 	}
@@ -74,13 +74,13 @@ func (client *Client) buildRunAppRequest(namespace string, name string) (*rest.R
 	return request, nil
 }
 
-func makeDeployment(namespace string, name string) (*v1.Deployment, error) {
+func makeDeployment(namespace string, name string, image string) (*v1.Deployment, error) {
 	replicas := int32(1)
 
 	labels := make(map[string]string)
 	labels["app"] = name
 
-	podSpec, err := makePodSpec(name)
+	podSpec, err := makePodSpec(name, image)
 	if err != nil {
 		return nil, err
 	}
@@ -110,12 +110,12 @@ func makeDeployment(namespace string, name string) (*v1.Deployment, error) {
 	return &deployment, nil
 }
 
-func makePodSpec(name string) (*corev1.PodSpec, error) {
+func makePodSpec(name string, image string) (*corev1.PodSpec, error) {
 	spec := corev1.PodSpec{
 		Containers: []corev1.Container{
 			{
 				Name:  name,
-				Image: "nginx:1.7.9",
+				Image: image,
 			},
 		},
 	}
