@@ -59,3 +59,17 @@ func (k *KubernetesResource) ToDeployment() (*v1.Deployment, error) {
 
 	return &deployment, err
 }
+
+// NewKubernetesResourceFromDeployment creates a generic Kubernetes Resource from a Deployment
+func NewKubernetesResourceFromDeployment(d *v1.Deployment) (*KubernetesResource, error) {
+	data, err := json.Marshal(d)
+	if err != nil {
+		return nil, err
+	}
+
+	var k KubernetesResource
+
+	err = json.Unmarshal(data, &k.Resource)
+
+	return &k, err
+}

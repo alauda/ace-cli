@@ -30,6 +30,7 @@ type AppClient interface {
 	StartApp(string, string, string) error
 	StopApp(string, string, string) error
 	DeleteApp(string, string, string) error
+	RunApp(string, string, string) error
 }
 
 // SpaceClient is the API client for space related APIs.
