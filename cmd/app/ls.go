@@ -39,7 +39,7 @@ func NewAppsCmd(alauda client.APIClient) *cobra.Command {
 	return cmd
 }
 
-func newLsCmd(alauda client.APIClient) *cobra.Command {
+func NewLsCmd(alauda client.APIClient) *cobra.Command {
 	cmd := newBaseLsCmd(alauda)
 	cmd.Use = "ls"
 	return cmd
