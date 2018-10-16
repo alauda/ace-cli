@@ -14,7 +14,7 @@ type inspectOptions struct {
 	namespace string
 }
 
-func newInspectCmd(alauda client.APIClient) *cobra.Command {
+func NewInspectCmd(alauda client.APIClient) *cobra.Command {
 	var opts inspectOptions
 
 	inspectCmd := &cobra.Command{
