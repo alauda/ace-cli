@@ -13,7 +13,7 @@ type yamlOptions struct {
 	namespace string
 }
 
-func newYamlCmd(alauda client.APIClient) *cobra.Command {
+func NewYamlCmd(alauda client.APIClient) *cobra.Command {
 	var opts yamlOptions
 
 	yamlCmd := &cobra.Command{
