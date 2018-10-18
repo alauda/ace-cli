@@ -13,7 +13,7 @@ type startOptions struct {
 	namespace string
 }
 
-func newStartCmd(alauda client.APIClient) *cobra.Command {
+func NewStartCmd(alauda client.APIClient) *cobra.Command {
 	var opts startOptions
 
 	startCmd := &cobra.Command{
