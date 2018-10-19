@@ -13,7 +13,7 @@ type stopOptions struct {
 	namespace string
 }
 
-func newStopCmd(alauda client.APIClient) *cobra.Command {
+func NewStopCmd(alauda client.APIClient) *cobra.Command {
 	var opts stopOptions
 
 	stopCmd := &cobra.Command{

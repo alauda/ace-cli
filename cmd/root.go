@@ -54,6 +54,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		app.NewInspectCmd(alauda),
 		app.NewYamlCmd(alauda),
 		app.NewStartCmd(alauda),
+		app.NewStopCmd(alauda),
 
 		// Adding image related commands.
 		image.NewImageCmd(alauda),
