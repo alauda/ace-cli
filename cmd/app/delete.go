@@ -13,7 +13,7 @@ type deleteOptions struct {
 	namespace string
 }
 
-func newDeleteCmd(alauda client.APIClient) *cobra.Command {
+func NewDeleteCmd(alauda client.APIClient) *cobra.Command {
 	var opts deleteOptions
 
 	deleteCmd := &cobra.Command{
