@@ -14,7 +14,7 @@ type runOptions struct {
 	namespace string
 }
 
-func newRunCmd(alauda client.APIClient) *cobra.Command {
+func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	var opts runOptions
 
 	runCmd := &cobra.Command{
