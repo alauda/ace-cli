@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/alauda/alauda/client"
@@ -22,6 +23,9 @@ func NewYamlCmd(alauda client.APIClient) *cobra.Command {
 		Short: "Retrieve the YAML of an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return errors.New("app yaml expects NAME")
+			}
 			return doGetYaml(alauda, &opts, args[0])
 		},
 	}
