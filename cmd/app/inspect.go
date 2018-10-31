@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/alauda/alauda/client"
@@ -23,6 +24,9 @@ func NewInspectCmd(alauda client.APIClient) *cobra.Command {
 		Short: "Inspect an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return errors.New("app inspect expects NAME")
+			}
 			return doInspect(alauda, &opts, args[0])
 		},
 	}
