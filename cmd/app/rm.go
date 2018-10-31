@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/alauda/alauda/client"
@@ -13,6 +14,7 @@ type rmOptions struct {
 	namespace string
 }
 
+// NewRmCmd returns a new alauda app rm command.
 func NewRmCmd(alauda client.APIClient) *cobra.Command {
 	var opts rmOptions
 
@@ -21,6 +23,9 @@ func NewRmCmd(alauda client.APIClient) *cobra.Command {
 		Short: "Remove an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return errors.New("app rm expects NAME")
+			}
 			return doRm(alauda, &opts, args[0])
 		},
 	}
