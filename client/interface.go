@@ -29,7 +29,7 @@ type AppClient interface {
 	GetAppYaml(string, string, string) (string, error)
 	StartApp(string, string, string) error
 	StopApp(string, string, string) error
-	DeleteApp(string, string, string) error
+	RemoveApp(string, string, string) error
 	RunApp(string, string, string, string) error
 }
 

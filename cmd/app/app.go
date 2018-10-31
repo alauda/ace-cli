@@ -22,7 +22,7 @@ func NewAppCmd(alauda client.APIClient) *cobra.Command {
 		NewYamlCmd(alauda),
 		NewStartCmd(alauda),
 		NewStopCmd(alauda),
-		NewDeleteCmd(alauda),
+		NewRmCmd(alauda),
 		NewRunCmd(alauda),
 	)
 

@@ -4,8 +4,8 @@ import (
 	"github.com/alauda/alauda/client/rest"
 )
 
-// DeleteApp deletes a specific application
-func (client *Client) DeleteApp(cluster string, namespace string, name string) error {
+// RemoveApp removes a specific application
+func (client *Client) RemoveApp(cluster string, namespace string, name string) error {
 	url := client.buildURL("v2", "kubernetes", "clusters/%s/applications/%s/%s", cluster, namespace, name)
 	request := client.buildDeleteAppRequest()
 
