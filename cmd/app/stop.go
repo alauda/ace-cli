@@ -13,6 +13,7 @@ type stopOptions struct {
 	namespace string
 }
 
+// NewStopCmd creates a new alauda app stop command.
 func NewStopCmd(alauda client.APIClient) *cobra.Command {
 	var opts stopOptions
 

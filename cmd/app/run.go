@@ -14,6 +14,7 @@ type runOptions struct {
 	namespace string
 }
 
+// NewRunCmd creates a new alauda app run command.
 func NewRunCmd(alauda client.APIClient) *cobra.Command {
 	var opts runOptions
 

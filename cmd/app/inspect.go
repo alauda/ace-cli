@@ -14,6 +14,7 @@ type inspectOptions struct {
 	namespace string
 }
 
+// NewInspectCmd creates a new alauda app inspect command.
 func NewInspectCmd(alauda client.APIClient) *cobra.Command {
 	var opts inspectOptions
 

@@ -14,7 +14,7 @@ type rmOptions struct {
 	namespace string
 }
 
-// NewRmCmd returns a new alauda app rm command.
+// NewRmCmd creates a new alauda app rm command.
 func NewRmCmd(alauda client.APIClient) *cobra.Command {
 	var opts rmOptions
 

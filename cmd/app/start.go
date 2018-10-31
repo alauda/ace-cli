@@ -13,6 +13,7 @@ type startOptions struct {
 	namespace string
 }
 
+// NewStartCmd creates a new alauda app start command.
 func NewStartCmd(alauda client.APIClient) *cobra.Command {
 	var opts startOptions
 

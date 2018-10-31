@@ -13,6 +13,7 @@ type yamlOptions struct {
 	namespace string
 }
 
+// NewYamlCmd creates a new alauda app yaml command.
 func NewYamlCmd(alauda client.APIClient) *cobra.Command {
 	var opts yamlOptions
 
