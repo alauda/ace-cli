@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/alauda/alauda/client"
@@ -22,6 +23,9 @@ func NewStartCmd(alauda client.APIClient) *cobra.Command {
 		Short: "Start an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return errors.New("app start expects NAME")
+			}
 			return doStart(alauda, &opts, args[0])
 		},
 	}
