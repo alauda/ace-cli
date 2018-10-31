@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/alauda/alauda/client"
@@ -22,6 +23,9 @@ func NewStopCmd(alauda client.APIClient) *cobra.Command {
 		Short: "Stop an application",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return errors.New("app stop expects NAME")
+			}
 			return doStop(alauda, &opts, args[0])
 		},
 	}
