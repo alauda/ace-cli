@@ -39,6 +39,7 @@ func NewAppsCmd(alauda client.APIClient) *cobra.Command {
 	return cmd
 }
 
+// NewLsCmd creates a new alauda app ls command.
 func NewLsCmd(alauda client.APIClient) *cobra.Command {
 	cmd := newBaseLsCmd(alauda)
 	cmd.Use = "ls"
