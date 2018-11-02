@@ -11,7 +11,6 @@ type APIClient interface {
 	SpaceClient
 	ClusterClient
 	LoadBalancerClient
-	VolumeClient
 	RegistryClient
 	ImageClient
 	NodeClient
@@ -50,14 +49,6 @@ type LoadBalancerClient interface {
 	ListLoadBalancers(*ListLoadBalancersParams) (*ListLoadBalancersResult, error)
 	InspectLoadBalancer(string) (*LoadBalancer, error)
 	UpdateLoadBalancer(string, *UpdateLoadBalancerData) error
-}
-
-// VolumeClient is the API client for volume related APIs.
-type VolumeClient interface {
-	ListVolumes(*ListVolumesParams) (*ListVolumesResult, error)
-	InspectVolume(string) (*Volume, error)
-	CreateVolume(*CreateVolumeData) error
-	RemoveVolume(string) error
 }
 
 // RegistryClient is the API client for the registry related APIs.

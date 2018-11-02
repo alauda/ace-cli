@@ -15,7 +15,6 @@ import (
 	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/space"
 	"github.com/alauda/alauda/cmd/util"
-	"github.com/alauda/alauda/cmd/volume"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -84,10 +83,6 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding space related commands.
 		space.NewSpaceCmd(alauda),
 		space.NewSpacesCmd(alauda),
-
-		// Adding volume related commands
-		volume.NewVolumeCmd(alauda),
-		volume.NewVolumesCmd(alauda),
 	)
 }
 
