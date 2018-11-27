@@ -10,41 +10,32 @@ Usage:
   alauda [command]
 
 Available Commands:
-  apps        List apps
+  app         Manage applications
+  apps        List applications
   cluster     Manage clusters
   clusters    List clusters
-  compose     Manage application compose
-  config      Manage configurations
-  configs     List configurations
-  create      Create a new service
   help        Help about any command
   image       Manage images
   images      List images
-  inspect     Inspect a service
+  inspect     Inspect an application
   lb          Manage load balancers
   lbs         List load balancers
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
+  ls          List applications
   node        Manage nodes
   nodes       List nodes
-  ps          List services
+  project     Manage projects
   registries  List registries
   registry    Manage registries
-  restart     Restart a service
-  rm          Remove a service
-  run         Create and start a new service
-  scale       Scale a service to the specified number of instances
-  service     Manage services
+  rm          Remove an application
+  run         Run an application
   space       Manage spaces
   spaces      List spaces
-  start       Start a service
-  stop        Stop a service
-  template    Manage application templates
-  templates   List app templates
-  update      Update a service
+  start       Start an application
+  stop        Stop an application
   version     Display version of Alauda CLI
-  volume      Manage volumes
-  volumes     List volumes
+  yaml        Retrieve the YAML of an application
 
 Flags:
       --config string   config file (default: $HOME/.alauda.yml)
