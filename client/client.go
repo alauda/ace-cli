@@ -47,7 +47,10 @@ func (client *Client) buildURL(version string, route string, format string, a ..
 	if route != "" {
 		routeToUse := route
 
-		if version == "v1" {
+		// TODO: Update the list of routes that require Account in the URL
+		var useAccount = (version == "v1") || (route == "regions")
+
+		if useAccount {
 			routeToUse = fmt.Sprintf("%s/%s", route, client.Account())
 		}
 
