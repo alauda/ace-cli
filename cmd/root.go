@@ -9,8 +9,6 @@ import (
 	"github.com/alauda/alauda/cmd/app"
 	"github.com/alauda/alauda/cmd/cluster"
 	"github.com/alauda/alauda/cmd/image"
-	"github.com/alauda/alauda/cmd/lb"
-	"github.com/alauda/alauda/cmd/node"
 	"github.com/alauda/alauda/cmd/project"
 	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/space"
@@ -66,12 +64,12 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		cluster.NewClustersCmd(alauda),
 
 		// Adding node related commands.
-		node.NewNodeCmd(alauda),
-		node.NewNodesCmd(alauda),
+		// node.NewNodeCmd(alauda),
+		// node.NewNodesCmd(alauda),
 
 		// Adding lb related commands.
-		lb.NewLBCmd(alauda),
-		lb.NewLbsCmd(alauda),
+		// lb.NewLBCmd(alauda),
+		// lb.NewLbsCmd(alauda),
 
 		// Adding project related commands.
 		project.NewProjectCmd(alauda),
