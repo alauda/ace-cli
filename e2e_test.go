@@ -30,8 +30,14 @@ var cliTests = []struct {
 	{[]string{"alauda", "cluster", "get"}},
 	{[]string{"alauda", "cluster", "set", "%CLUSTER%"}},
 	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
-	{[]string{"alauda", "app", "ls"}},
 	{[]string{"alauda", "apps"}},
+	{[]string{"alauda", "app", "ls"}},
+	{[]string{"alauda", "app", "run", "%APP%", "index.alauda.cn/alauda/hello-world:latest"}},
+	{[]string{"alauda", "app", "inspect", "%APP%"}},
+	{[]string{"alauda", "app", "yaml", "%APP%"}},
+	{[]string{"alauda", "app", "stop", "%APP%"}},
+	{[]string{"alauda", "app", "start", "%APP%"}},
+	{[]string{"alauda", "app", "rm", "%APP%"}},
 }
 
 func TestCli(t *testing.T) {
