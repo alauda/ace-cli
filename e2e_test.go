@@ -13,18 +13,12 @@ import (
 
 const (
 	settingCluster string = "test.cluster"
-	settingSpace   string = "test.space"
 	settingApp     string = "test.app"
 )
 
 var cliTests = []struct {
 	args []string
 }{
-	{[]string{"alauda", "spaces"}},
-	{[]string{"alauda", "space", "ls"}},
-	{[]string{"alauda", "space", "get"}},
-	{[]string{"alauda", "space", "set", "%SPACE%"}},
-	{[]string{"alauda", "space", "inspect", "%SPACE%"}},
 	{[]string{"alauda", "clusters"}},
 	{[]string{"alauda", "cluster", "ls"}},
 	{[]string{"alauda", "cluster", "get"}},
@@ -64,6 +58,5 @@ func bind(args []string) {
 	for i := range args {
 		args[i] = strings.Replace(args[i], "%APP%", viper.GetString(settingApp), -1)
 		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
-		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)
 	}
 }
