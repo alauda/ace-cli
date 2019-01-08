@@ -12,6 +12,7 @@ import (
 )
 
 const (
+	settingProject string = "test.project"
 	settingCluster string = "test.cluster"
 	settingApp     string = "test.app"
 )
@@ -19,6 +20,8 @@ const (
 var cliTests = []struct {
 	args []string
 }{
+	{[]string{"alauda", "project", "get"}},
+	{[]string{"alauda", "project", "set", "%PROJECT%"}},
 	{[]string{"alauda", "clusters"}},
 	{[]string{"alauda", "cluster", "ls"}},
 	{[]string{"alauda", "cluster", "get"}},
@@ -56,7 +59,8 @@ func TestCli(t *testing.T) {
 
 func bind(args []string) {
 	for i := range args {
-		args[i] = strings.Replace(args[i], "%APP%", viper.GetString(settingApp), -1)
+		args[i] = strings.Replace(args[i], "%PROJECT", viper.GetString(settingProject), -1)
 		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
+		args[i] = strings.Replace(args[i], "%APP%", viper.GetString(settingApp), -1)
 	}
 }
