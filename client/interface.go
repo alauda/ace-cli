@@ -14,6 +14,7 @@ type APIClient interface {
 	RegistryClient
 	ImageClient
 	NodeClient
+	ProjectClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -71,6 +72,11 @@ type NodeClient interface {
 	UncordonNode(string, string) error
 	DrainNode(string, string) error
 	SetNodeLabels(string, string, *SetNodeLabelsData) error
+}
+
+// ProjectClient is the API client for project related APIs.
+type ProjectClient interface {
+	ListProjects() (*ListProjectsResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.
