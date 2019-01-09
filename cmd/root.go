@@ -72,6 +72,7 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 
 		// Adding project related commands.
 		project.NewProjectCmd(alauda),
+		project.NewProjectsCmd(alauda),
 
 		// Adding registry related commands.
 		registry.NewRegistryCmd(alauda),

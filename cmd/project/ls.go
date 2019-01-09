@@ -20,6 +20,13 @@ func newBaseLsCmd(alauda client.APIClient) *cobra.Command {
 	return lsCmd
 }
 
+// NewProjectsCmd creates a new alauda projects command, which is a shortcut to the projects ls command.
+func NewProjectsCmd(alauda client.APIClient) *cobra.Command {
+	cmd := newBaseLsCmd(alauda)
+	cmd.Use = "projects"
+	return cmd
+}
+
 func newLsCmd(alauda client.APIClient) *cobra.Command {
 	cmd := newBaseLsCmd(alauda)
 	cmd.Use = "ls"
