@@ -20,6 +20,7 @@ const (
 var cliTests = []struct {
 	args []string
 }{
+	{[]string{"alauda", "project", "ls"}},
 	{[]string{"alauda", "project", "get"}},
 	{[]string{"alauda", "project", "set", "%PROJECT%"}},
 	{[]string{"alauda", "clusters"}},
