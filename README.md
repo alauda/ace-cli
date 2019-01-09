@@ -18,20 +18,15 @@ Available Commands:
   image       Manage images
   images      List images
   inspect     Inspect an application
-  lb          Manage load balancers
-  lbs         List load balancers
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
   ls          List applications
-  node        Manage nodes
-  nodes       List nodes
   project     Manage projects
+  projects    List projects
   registries  List registries
   registry    Manage registries
   rm          Remove an application
   run         Run an application
-  space       Manage spaces
-  spaces      List spaces
   start       Start an application
   stop        Stop an application
   version     Display version of Alauda CLI
