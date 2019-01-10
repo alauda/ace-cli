@@ -13,7 +13,7 @@ type ListClustersResult struct {
 
 // ListClusters returns all clusters in an account.
 func (client *Client) ListClusters() (*ListClustersResult, error) {
-	url := client.buildURL("v1", "regions", "")
+	url := client.buildURL("v2", "regions", "")
 	request := client.buildListClustersRequest()
 
 	response, err := request.Get(url)
