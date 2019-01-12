@@ -77,6 +77,7 @@ type NodeClient interface {
 // ProjectClient is the API client for project related APIs.
 type ProjectClient interface {
 	ListProjects() (*ListProjectsResult, error)
+	InspectProject(string) (*Project, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

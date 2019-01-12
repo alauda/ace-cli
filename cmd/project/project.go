@@ -20,6 +20,7 @@ func NewProjectCmd(alauda client.APIClient) *cobra.Command {
 		newGetCmd(alauda),
 		newSetCmd(alauda),
 		newLsCmd(alauda),
+		newInspectCmd(alauda),
 	)
 
 	return projectCmd
