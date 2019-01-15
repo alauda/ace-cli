@@ -11,6 +11,7 @@ import (
 	"github.com/alauda/alauda/cmd/image"
 	"github.com/alauda/alauda/cmd/project"
 	"github.com/alauda/alauda/cmd/registry"
+	"github.com/alauda/alauda/cmd/space"
 	"github.com/alauda/alauda/cmd/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -79,8 +80,8 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		registry.NewRegistriesCmd(alauda),
 
 		// Adding space related commands.
-		// space.NewSpaceCmd(alauda),
-		// space.NewSpacesCmd(alauda),
+		space.NewSpaceCmd(alauda),
+		space.NewSpacesCmd(alauda),
 	)
 }
 
