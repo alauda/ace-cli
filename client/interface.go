@@ -15,6 +15,7 @@ type APIClient interface {
 	ImageClient
 	NodeClient
 	ProjectClient
+	NamespaceClient
 }
 
 // AuthClient is the API client for authentication related APIs.
@@ -78,6 +79,11 @@ type NodeClient interface {
 type ProjectClient interface {
 	ListProjects() (*ListProjectsResult, error)
 	InspectProject(string) (*Project, error)
+}
+
+// NamespaceClient is the API client for namespace related APIs.
+type NamespaceClient interface {
+	ListNamespaces(string) (*ListNamespacesResult, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

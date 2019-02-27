@@ -9,6 +9,7 @@ import (
 	"github.com/alauda/alauda/cmd/app"
 	"github.com/alauda/alauda/cmd/cluster"
 	"github.com/alauda/alauda/cmd/image"
+	"github.com/alauda/alauda/cmd/namespace"
 	"github.com/alauda/alauda/cmd/project"
 	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/space"
@@ -82,6 +83,10 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding space related commands.
 		space.NewSpaceCmd(alauda),
 		space.NewSpacesCmd(alauda),
+
+		// Adding namespace related commands.
+		namespace.NewNamespaceCmd(alauda),
+		namespace.NewNamespacesCmd(alauda),
 	)
 }
 
