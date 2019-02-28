@@ -21,6 +21,8 @@ Available Commands:
   login       Log onto the Alauda platform
   logout      Log out of the Alauda platform
   ls          List applications
+  namespace   Manage namespaces
+  namespaces  List namespaces
   project     Manage projects
   projects    List projects
   registries  List registries
