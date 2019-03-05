@@ -38,6 +38,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "cluster", "inspect", "%CLUSTER%"}},
 	{[]string{"alauda", "namespaces"}},
 	{[]string{"alauda", "namespace", "ls"}},
+	{[]string{"alauda", "namespace", "get"}},
 	{[]string{"alauda", "apps"}},
 	{[]string{"alauda", "app", "ls"}},
 	{[]string{"alauda", "app", "run", "%APP%", "index.alauda.cn/alauda/hello-world:latest"}},
