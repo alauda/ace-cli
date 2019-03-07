@@ -12,10 +12,11 @@ import (
 )
 
 const (
-	settingProject string = "test.project"
-	settingSpace   string = "test.space"
-	settingCluster string = "test.cluster"
-	settingApp     string = "test.app"
+	settingProject   string = "test.project"
+	settingSpace     string = "test.space"
+	settingCluster   string = "test.cluster"
+	settingNamespace string = "test.namespace"
+	settingApp       string = "test.app"
 )
 
 var cliTests = []struct {
@@ -39,6 +40,7 @@ var cliTests = []struct {
 	{[]string{"alauda", "namespaces"}},
 	{[]string{"alauda", "namespace", "ls"}},
 	{[]string{"alauda", "namespace", "get"}},
+	{[]string{"alauda", "namespace", "set", "%NAMESPACE%"}},
 	{[]string{"alauda", "apps"}},
 	{[]string{"alauda", "app", "ls"}},
 	{[]string{"alauda", "app", "run", "%APP%", "index.alauda.cn/alauda/hello-world:latest"}},
@@ -74,6 +76,7 @@ func bind(args []string) {
 		args[i] = strings.Replace(args[i], "%PROJECT%", viper.GetString(settingProject), -1)
 		args[i] = strings.Replace(args[i], "%SPACE%", viper.GetString(settingSpace), -1)
 		args[i] = strings.Replace(args[i], "%CLUSTER%", viper.GetString(settingCluster), -1)
+		args[i] = strings.Replace(args[i], "%NAMESPACE%", viper.GetString(settingNamespace), -1)
 		args[i] = strings.Replace(args[i], "%APP%", viper.GetString(settingApp), -1)
 	}
 }
