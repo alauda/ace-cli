@@ -84,6 +84,7 @@ type ProjectClient interface {
 // NamespaceClient is the API client for namespace related APIs.
 type NamespaceClient interface {
 	ListNamespaces(string) (*ListNamespacesResult, error)
+	InspectNamespace(string, string) (*Namespace, error)
 }
 
 // Type checking to ensure Client correctly implements AlaudaClient.

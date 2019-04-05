@@ -20,6 +20,7 @@ func NewNamespaceCmd(alauda client.APIClient) *cobra.Command {
 		newLsCmd(alauda),
 		newGetCmd(alauda),
 		newSetCmd(alauda),
+		newInspectCmd(alauda),
 	)
 
 	return namespaceCmd
