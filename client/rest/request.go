@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty"
+	"gopkg.in/resty.v1"
 )
 
 // Request implements the Alauda REST request.

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/go-resty/resty"
+	"gopkg.in/resty.v1"
 )
 
 // Response implements the Alauda REST response.
