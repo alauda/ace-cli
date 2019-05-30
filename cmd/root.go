@@ -14,6 +14,7 @@ import (
 	"github.com/alauda/alauda/cmd/registry"
 	"github.com/alauda/alauda/cmd/space"
 	"github.com/alauda/alauda/cmd/util"
+	"github.com/alauda/alauda/cmd/kubectl"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -87,6 +88,9 @@ func addCommands(cmd *cobra.Command, alauda client.APIClient) {
 		// Adding namespace related commands.
 		namespace.NewNamespaceCmd(alauda),
 		namespace.NewNamespacesCmd(alauda),
+
+		// Adding embedded kubectl commands.
+		kubectl.NewKubectlCmd(),
 	)
 }
 
