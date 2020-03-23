@@ -1,4 +1,6 @@
-# alauda-cli
+This tool has be deprecated and archived.
+
+# ace-cli
 The command-line interface for Alauda.io.
 
 ## Usage
